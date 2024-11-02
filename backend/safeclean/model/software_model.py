@@ -9,6 +9,7 @@ class Software(models.Model):
         ("Malware", "Malware"),
         ("Goodware", "Goodware")
     ])
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="softwares", null=True)
 
     def delete():
         super().delete()
