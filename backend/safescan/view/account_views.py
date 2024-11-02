@@ -1,7 +1,7 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from django.contrib.auth import authenticate, login, get_user_model
+from django.contrib.auth import login, get_user_model
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail

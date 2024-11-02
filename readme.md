@@ -1,6 +1,6 @@
-# SafeClean
+# SafeScan
 
-RestFul API/Backend/Server para o website Safeclean, voltado para verificação de malware por meio da utilização de IA.<br>
+RestFul API/Backend/Server para o website SafeScan, voltado para verificação de malware por meio da utilização de IA.<br>
 Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT - PE, 4º período, curso Análise e Desenvolvimento de Sistemas.
 
 # Pré-requisitos
@@ -17,13 +17,13 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
 
 1. Acesse:
 
-    https://safeclean.vercel.app/
+    https://safescan.vercel.app/
 
 2. Ou clone o repositorio:
 
-        git clone https://github.com/Louiexz/SafeClean.git
+        git clone https://github.com/Louiexz/SafeScan.git
 
-        cd SafeClean
+        cd SafeScan
 
 3. Instale as dependências:
 
@@ -67,7 +67,7 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
         │   ├── asgi.py         # Configuração para ASGI
         │   └── wsgi.py         # Configuração para WSGI
         │
-        ├── safeclean/   # Aplicativo Django
+        ├── safescan/         # Aplicativo Django
         │   ├── migrations/     # Arquivos de migração de banco de dados
         │   ├── model/          # Diretório dos modelos de db
         │   ├── serializer/     # Diretório dos modelos de serializers dos modelos de db
@@ -77,11 +77,11 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
         │   ├── tests.py        # Testes do aplicativo
         │   └── urls.py         # URLs específicas do aplicativo
         │
-        ├── manage.py           # Script de gerenciamento do projeto
+        ├── manage.py         # Script de gerenciamento do projeto
         │
-        ├── requirements.txt    # Dependências do projeto
+        ├── requirements.txt  # Dependências do projeto
         │
-        └── db.sqlite3          # Banco de dados SQLite (Criado com o migrate)
+        └── db.sqlite3        # Banco de dados SQLite (Criado com o migrate)
 
 ## Autores e contribuições:
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.

@@ -1,6 +1,6 @@
 from django.urls import path
 
-from safeclean.view import *
+from safescan.view import *
 
 urlpatterns = [
     path("sign-in", sign_in, name="sign-in"),
