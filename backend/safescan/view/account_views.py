@@ -1,13 +1,10 @@
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework import status
+from .views import *
+
 from django.contrib.auth import login, get_user_model
-from django.contrib.auth.hashers import check_password
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.core.mail import send_mail
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
-from ..serializer import RegisterSerializer
 
 User = get_user_model()
 token_generator = PasswordResetTokenGenerator()
@@ -25,7 +22,7 @@ def sign_in(request):
             return Response({"error": "Username e password são obrigatórios."}, status=status.HTTP_400_BAD_REQUEST)
 
         user = User.objects.get(username=username)
-
+        user.refresh_from_db()
         if check_password(password, user.password):
             login(request, user)
             return Response({"message": "Login bem-sucedido"}, status=status.HTTP_200_OK)

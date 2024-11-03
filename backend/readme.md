@@ -1,13 +1,11 @@
 # SafeScan
 
-Website SafeScan, voltado para verificação de malware por meio da utilização de IA.<br>
+RestFul API/Backend/Server para o website SafeScan, voltado para verificação de malware por meio da utilização de IA.<br>
 Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT - PE, 4º período, curso Análise e Desenvolvimento de Sistemas.
 
 # Pré-requisitos
 ## Certifique-se de ter o seguinte instalado antes de começar:
-
     Python3
-    npm
 
 ## Funcionalidades
 
@@ -33,43 +31,32 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
 
         python install -r requirements.txt
 
-        cd backend ou cd frontend
+        cd backend
 
-4. Para o backend:
-        - Crie um arquivo .env e declare as seguintes secrets :
 
-                SECRET_KEY
-                DEBUG
-                ALLOWED_HOSTS
-                EMAIL_HOST_USER
-                EMAIL_HOST_PASSWORD
-                DEFAULT_FROM_EMAIL
-                API_KEY
+4. Crie um arquivo .env e declare as seguintes secrets:
+
+        SECRET_KEY
+        DEBUG
+        ALLOWED_HOSTS
+        EMAIL_HOST_USER
+        EMAIL_HOST_PASSWORD
+        DEFAULT_FROM_EMAIL
+        API_KEY
+
+4. Realize a migração:
+
+        python manage.py migrate
         
-        - Realize a migração:
+5. Efetue os testes:
 
-                python manage.py migrate
-        
-        - Efetue os testes:
+        pytest
 
-                pytest
+6. Execute a aplicação e Acesse:
 
-        - Execute a aplicação e Acesse:
-        
-                python manage.py runserver
+        python manage.py runserver
 
-                http://127.0.0.1:8000/
-
-5. No Frontend:
-
-        - Execute a aplicação:
-
-                npm install
-                npm run preview
-        
-        - Acesse:
-
-                http://localhost:5173/
+        http://127.0.0.1:8000/
 
 
 ## Estrutura do projeto
@@ -99,16 +86,9 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
         ├── requirements.txt  # Dependências do projeto
         │
         └── db.sqlite3        # Banco de dados SQLite (Criado com o migrate)
-        frontend/
-        |
-        └── project-safescan/
-            ├──
-          
+
 ## Autores e contribuições:
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
 
-Artur Ramos - [@Arturdev05](https://github.com/Arturdev05)<br>
-Carlos Eduardo - [@carlos-1ima](https://github.com/carlos-1ima)<br>
 Luiz Augusto - [@Louiexz](https://github.com/Louiexz)<br>
-Paulo Arthur -<br>
 Vinicius José - [@ViniciusRKX](https://github.com/ViniciusRKX)

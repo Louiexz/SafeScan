@@ -1,15 +1,13 @@
 from .views import *
 
-import os
 from ..serializer import ProfileSerializer, SoftwareSerializer
-from django.contrib.auth.hashers import check_password
 
 @api_view(["GET", "PUT", "DELETE"])
 def view_profile(request):
-    try:
+    if not request.user.is_authenticated:
+        return Response({"error": "Usuário deslogado."}, status=status.HTTP_404_NOT_FOUND)
+    else:
         profileData = User.objects.get(username=request.user.username)
-    except User.DoesNotExist:
-        return Response({"error": "Usuário não encontrado."}, status=status.HTTP_404_NOT_FOUND)
 
     if request.method == "GET":
         profileData.password = "*****"
@@ -33,7 +31,7 @@ def view_profile(request):
                 "data": serializer.data
             }, status=status.HTTP_200_OK)
 
-    if request.method == "PUT":
+    elif request.method == "PUT":
         serializer = ProfileSerializer(profileData, data=request.data)
 
         if serializer.is_valid():
@@ -51,9 +49,9 @@ def view_profile(request):
                     return Response({"message": "Este email já existe."}, status=status.HTTP_401_UNAUTHORIZED)
                 
                 # Verifica se a nova senha é igual à senha atual
-                if password == request.user.password:
+                if check_password(password, request.user.password):
                     return Response({"message": "A nova senha não pode ser igual à senha anterior."}, status=status.HTTP_401_UNAUTHORIZED)
-
+                serializer.validated_data["password"] = make_password(password)
                 serializer.save()
                 return Response({"message": "Profile updated successfully."}, status=status.HTTP_200_OK)
             
@@ -61,7 +59,7 @@ def view_profile(request):
                 # Captura qualquer outro erro inesperado
                 return Response({"message": "An unexpected error occurred.", "error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-    if request.method == "DELETE":
+    elif request.method == "DELETE":
         profileData.delete()
         return Response({'message': 'Profile deleted successfully.'},
                       status=status.HTTP_204_NO_CONTENT)

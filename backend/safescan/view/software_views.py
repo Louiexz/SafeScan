@@ -2,23 +2,22 @@ from .views import *
 import vt
 from decouple import config
 
-@api_view(["GET", "POST", "PUT", "DELETE"])
+@api_view(["GET", "POST", "PUT"])
 def view_software(request):
-    softwareData = Software.objects.all()
-    
     if request.method == "GET":
+        softwareData = Software.objects.all()
         serializer = SoftwareSerializer(softwareData, many=True)
         return Response({"message":"All softwares data.", "data":serializer.data},
                         status=status.HTTP_200_OK)
 
     elif request.method == "POST":
-        try:
-            client = vt.Client(config("API_KEY"))
-        except Exception as e:
+        if request.data.get("file") or request.data.get("url"):
+            try:
+                client = vt.Client(config("API_KEY"))
+            except Exception as e:
                 return Response({"message":"Not connected with VirusTotal's API."},
                                 status=status.HTTP_400_BAD_REQUEST)
-    
-        if client:
+            
             if request.data.get("file"):
                 file_name = request.data.get("file")
                 try:
@@ -42,7 +41,7 @@ def view_software(request):
                     return Response({"message": "Error retrieving URL.", "error": str(e)},
                                     status=status.HTTP_400_BAD_REQUEST)
                 
-        else:
+        elif request.data.get("name") and request.data.get("status"):
             # Usar na ia:
             # request.data.get("localizacao_rede")
             # request.data.get("mensagens_chamada")
@@ -60,7 +59,7 @@ def view_software(request):
                                     status=status.HTTP_401_UNAUTHORIZED)
 
                 if request.user.is_authenticated:
-                    serializer.user = request.user
+                    serializer.validated_data["user"] = request.user
                 
                 serializer.save()
                 return Response({"message":"Software created sucessfully.", "data":serializer.data
@@ -70,27 +69,18 @@ def view_software(request):
                         }, status=status.HTTP_204_NO_CONTENT)
     
     elif request.method == "PUT":
-        if request.user.is_authenticated:
-            software = softwareData.get(name=request.data.get('name'))
-            serializer = SoftwareSerializer(software, data=request.data)
-            
-            if serializer.is_valid():
-                serializer.user = request.user
-                serializer.save()
-                return Response({"message":"Software updated sucessfully.", "data":serializer.data},
-                                status=status.HTTP_200_OK)
-        return Response({"message":"Authenticate to update software."},
-                        status=status.HTTP_401_UNAUTHORIZED)
-    
-    elif request.method == "DELETE":
-        if request.user.is_authenticated:
-            software = softwareData.get(name=request.data.get('name'))
-            if software:
-                software.delete()
-                return Response({'message': 'Software deleted successfully.'},
-                        status=status.HTTP_204_NO_CONTENT)
-        return Response({"message":"Authenticate to delete software."},
-                        status=status.HTTP_401_UNAUTHORIZED)
+        if not request.user.is_authenticated:
+            return Response({"message": "Authenticate to update software."},
+                            status=status.HTTP_401_UNAUTHORIZED)
+        
+        software = Software.objects.get(pk=request.data.get('id'), user=request.user)
+        serializer = SoftwareSerializer(software, data=request.data)
+        
+        if serializer.is_valid():
+            serializer.user = request.user
+            serializer.save()
+            return Response({"message":"Software updated sucessfully.", "data":serializer.data},
+                            status=status.HTTP_200_OK)
     
     return Response({'message': 'Invalid method.'},
                       status=status.HTTP_405_METHOD_NOT_ALLOWED)

@@ -26,4 +26,4 @@ class ProfileSerializer(serializers.ModelSerializer):
 class SoftwareSerializer(serializers.ModelSerializer):
     class Meta:
         model=Software
-        fields=["name", "status", "created_at", "updated_at"]
+        fields=["name", "status"]

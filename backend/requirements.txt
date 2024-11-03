@@ -11,6 +11,8 @@ idna==3.10
 multidict==6.1.0
 propcache==0.2.0
 python-decouple==3.8
+pytest==8.3.3
+pytest-django==4.9.0
 sqlparse==0.5.1
 typing_extensions==4.12.2
 vt-py==0.18.4
