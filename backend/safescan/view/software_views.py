@@ -64,13 +64,14 @@ def view_software(request):
                 serializer.save()
                 return Response({"message":"Software created sucessfully.", "data":serializer.data
                                  }, status=status.HTTP_201_CREATED)
+        
         return Response({"message":"""Check software by: url, file or boolean questions
 (localizacao_rede, mensagens_chamada, sistema_processos, audio_hardware, armazenamento_externo)."""
                         }, status=status.HTTP_204_NO_CONTENT)
     
     elif request.method == "PUT":
         if not request.user.is_authenticated:
-            return Response({"message": "Authenticate to update software."},
+            return Response({"error": "Authenticate to update software."},
                             status=status.HTTP_401_UNAUTHORIZED)
         
         software = Software.objects.get(pk=request.data.get('id'), user=request.user)
@@ -82,5 +83,22 @@ def view_software(request):
             return Response({"message":"Software updated sucessfully.", "data":serializer.data},
                             status=status.HTTP_200_OK)
     
-    return Response({'message': 'Invalid method.'},
+    return Response({'error': 'Invalid method.'},
                       status=status.HTTP_405_METHOD_NOT_ALLOWED)
+
+@api_view(["POST"])
+def delete_software(request, id):
+    if request.method == "POST":
+        if id:
+            try:
+                # Tenta buscar o software pelo ID
+                software = Software.objects.get(pk=id)
+                software.delete()
+                return Response({"message": "Software deletado."}, status=status.HTTP_200_OK)
+            except Software.DoesNotExist:
+                # Se o software não existir, retorna 404
+                return Response({"error": "Software não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+            except Exception as e:
+                # Trata qualquer outra exceção
+                print(e)
+                return Response({"error": "Erro ao deletar software."}, status=status.HTTP_400_BAD_REQUEST)

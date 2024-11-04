@@ -42,27 +42,27 @@ def view_profile(request):
 
                 # Verifica se o username já está em uso por outro usuário
                 if User.objects.filter(username=username).exists():
-                    return Response({"message": "Este usuário já existe."}, status=status.HTTP_401_UNAUTHORIZED)
+                    return Response({"error": "Este usuário já existe."}, status=status.HTTP_401_UNAUTHORIZED)
 
                 # Verifica se o email já está em uso por outro usuário
                 if User.objects.filter(email=email).exists():
-                    return Response({"message": "Este email já existe."}, status=status.HTTP_401_UNAUTHORIZED)
+                    return Response({"error": "Este email já existe."}, status=status.HTTP_401_UNAUTHORIZED)
                 
                 # Verifica se a nova senha é igual à senha atual
                 if check_password(password, request.user.password):
-                    return Response({"message": "A nova senha não pode ser igual à senha anterior."}, status=status.HTTP_401_UNAUTHORIZED)
+                    return Response({"error": "A nova senha não pode ser igual à senha anterior."}, status=status.HTTP_401_UNAUTHORIZED)
                 serializer.validated_data["password"] = make_password(password)
                 serializer.save()
                 return Response({"message": "Profile updated successfully."}, status=status.HTTP_200_OK)
             
             except Exception as e:
                 # Captura qualquer outro erro inesperado
-                return Response({"message": "An unexpected error occurred.", "error": str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        
+                return Response({"error": "An unexpected error occurred."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
     elif request.method == "DELETE":
         profileData.delete()
         return Response({'message': 'Profile deleted successfully.'},
                       status=status.HTTP_204_NO_CONTENT)
 
-    return Response({'message': 'Invalid method.'},
+    return Response({'error': 'Invalid method.'},
                       status=status.HTTP_405_METHOD_NOT_ALLOWED)

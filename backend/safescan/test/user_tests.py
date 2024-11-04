@@ -1,5 +1,11 @@
 from .tests import *
 
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+
+token_generator = PasswordResetTokenGenerator()
+
 class UserModelTest(TestCase):
     def setUp(self):
         self.user = User.objects.create(
@@ -7,7 +13,7 @@ class UserModelTest(TestCase):
             email="seuemail@gmail.com",
             password=make_password("suasenha")
         )
-   
+
     def test_login_users(self):
         response = self.client.post(reverse("sign-in"), {
             "username":"Novouser2",
@@ -50,3 +56,20 @@ class UserModelTest(TestCase):
         response = self.client.delete(reverse("profile"))
         self.assertEqual(response.status_code, 204)
         self.assertEqual(User.objects.count(), 0)
+
+    def test_reset_password(self):
+        self.client.login(username="Novouser2", password="suasenha")
+        response = self.client.post(reverse("forgot-password"), {
+            "email":"novoemail@gmail.com",
+        }, content_type="application/json")
+        self.assertEqual(response.status_code, 200)
+
+    def test_reset_password(self):
+        uid = urlsafe_base64_encode(force_bytes(self.user.pk))
+        token = token_generator.make_token(self.user)
+        response = self.client.patch(reverse("reset-password", kwargs={'uidb64': uid, 'token': token}), {
+            "password":"suasenha1",
+        }, content_type="application/json")
+        self.user.refresh_from_db()
+        self.assertEqual(response.status_code, 202)
+        self.assertTrue(check_password("suasenha1", self.user.password))

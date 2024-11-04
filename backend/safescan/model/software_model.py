@@ -10,9 +10,6 @@ class Software(models.Model):
         ("Goodware", "Goodware")
     ])
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="softwares", null=True)
-
-    def delete():
-        super().delete()
-
+    
     def __str__(self):
         return f"Software '{self.name}', Created at: {self.created_at}, Last update: {self.updated_at} Status: {self.status}."
