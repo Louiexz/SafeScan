@@ -17,7 +17,7 @@ def view_profile(request):
             softwareData = Software.objects.filter(user_id=request.user.id)
             
             # Serializa a lista de softwares do usuário
-            softwareSerialize = SoftwareSerializer(softwareData, many=True)
+            softwareSerialize = ProfileSoftwareSerializer(softwareData, many=True)
 
             return Response({
                 "message": "User profile data.",

@@ -23,6 +23,17 @@ class ProfileSerializer(serializers.ModelSerializer):
         model = User
         fields = ["username", "email", "password"]
 
+
+class ProfileSoftwareSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Software
+        fields=["id", "name", "status", "created_at", "updated_at"]
+
+class GetSoftwareSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Software
+        fields=["name", "status", "created_at", "updated_at"]
+
 class SoftwareSerializer(serializers.ModelSerializer):
     class Meta:
         model=Software

@@ -65,7 +65,11 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
         - Execute a aplicação:
 
                 npm install
-                npm run preview
+                npm run dev
+        
+        - Crie um arquivo .env e declare as seguintes secrets :
+
+                NODE_ENV = production ou outro
         
         - Acesse:
 
@@ -92,17 +96,18 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
         │   ├── apps.py         # Configurações do aplicativo
         │   └── urls.py         # URLs específicas do aplicativo
         │
-        ├── pytest.ini        # Script de testes
+        ├── pytest.ini        # Script de testes backend
         |
         ├── manage.py         # Script de gerenciamento do projeto
         │
         ├── requirements.txt  # Dependências do projeto
         │
-        └── db.sqlite3        # Banco de dados SQLite (Criado com o migrate)
+        └── db.sqlite3        # Banco de dados SQLite (Mude em settings para criar com o migrate)
         frontend/
         |
         └── project-safescan/
             ├──
+            └──
           
 ## Autores e contribuições:
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.

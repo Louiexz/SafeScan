@@ -16,6 +16,8 @@ MY_APPS = [
 ]
 THIRD_APPS = [
     "rest_framework",
+    'django_vite',
+    'corsheaders',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -34,8 +36,28 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
+CORS_ALLOW_CREDENTIALS = True
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+]
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+]
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'origin',
+    'x-csrftoken',
+]
 SESSION_COOKIE_AGE = 1800
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
@@ -60,19 +82,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', default='5432'),
     }
 }
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -100,14 +119,43 @@ DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+LANGUAGE_CODE = 'pt-br'
+TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
-
 USE_TZ = True
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'safescan/static',  # Diretório onde os arquivos do Vite serão gerados para desenvolvimento
+]
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+# Defina o STATIC_ROOT para produção
+STATIC_ROOT = BASE_DIR / 'staticfiles'  # Local onde 'collectstatic' colocará os arquivos em produção 'django.db.models.BigAutoField'
+
+VITE_MANIFEST_PATH = BASE_DIR / 'safescan/static/manifest.json'
+VITE_APP_DIR = BASE_DIR.parent / 'frontend'          # Diretório onde o Vite está configurado (frontend)
+VITE_DEV_MODE = DEBUG                          # Ativa o modo de desenvolvimento do Vite quando DEBUG está True
+VITE_STATIC_ROOT = BASE_DIR / 'safescan/static'     # Diretório onde o Vite deve colocar os arquivos em produção
+
+if VITE_APP_DIR is None or not VITE_APP_DIR.exists():
+    raise ValueError("VITE_APP_DIR não está configurado corretamente.")
+    
+if VITE_STATIC_ROOT is None or not VITE_STATIC_ROOT.exists():
+    raise ValueError("VITE_STATIC_ROOT não está configurado corretamente.")
+
+# Template Configuration
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [BASE_DIR / 'safescan/templates'],  # Diretório dos templates Django
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+            ],
+        },
+    },
+]

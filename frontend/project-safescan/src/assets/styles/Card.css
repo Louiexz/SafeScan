@@ -1,0 +1,14 @@
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 20px
+}
+
+.card {
+    background-color: green;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    min-height: 20px;
+    padding: 10px 5px;
+}

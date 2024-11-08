@@ -6,9 +6,10 @@ from decouple import config
 def view_software(request):
     if request.method == "GET":
         softwareData = Software.objects.all()
-        serializer = SoftwareSerializer(softwareData, many=True)
+        serializer = GetSoftwareSerializer(softwareData, many=True)
+
         return Response({"message":"All softwares data.", "data":serializer.data},
-                        status=status.HTTP_200_OK)
+                    status=status.HTTP_200_OK)
 
     elif request.method == "POST":
         if request.data.get("file") or request.data.get("url"):
