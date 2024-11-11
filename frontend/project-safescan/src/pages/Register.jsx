@@ -1,90 +1,60 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useMutation } from 'react-query';
-
-const postData = async (data) => {
-  const response = await fetch('http://127.0.0.1:8000/sign-in', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-  });
-
-  if (!response.ok) {
-    throw new Error('Falha ao enviar os dados');
-  }
-
-  return response.json();
-};
+import { useNavigate } from 'react-router-dom';
+import { register } from '../services/authService';  // Importe a função register
+import '../assets/styles/Card.css'
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const mutation = useMutation(postData, {
-    onSuccess: (data) => {
-      // O que fazer em caso de sucesso (por exemplo, exibir uma mensagem)
-      console.log('Dados enviados com sucesso:', data);
+  const mutation = useMutation(register, {
+    onSuccess: () => {
+      navigate('/login');  // Redireciona para a página de login após o registro
     },
     onError: (error) => {
-      // O que fazer em caso de erro
       console.error('Erro ao enviar os dados:', error);
     },
   });
 
   const handleSubmit = (event) => {
     event.preventDefault();
-
-    const dataToSend = {
-      username: name,
-      email: email,
-      password: password
-    };
-
-    // Chama a mutação para enviar os dados
-    mutation.mutate(dataToSend);
+    mutation.mutate({ username: name, email, password });
   };
 
   return (
-    <div className='content'>
+    <div className="content">
       <h1>Register</h1>
       <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Nome</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </div>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Nome"
+          required
+        /><br/>
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          required
+        /><br/>
+        <input
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+          required
+        /><br/>
         <button type="submit" disabled={mutation.isLoading}>
           {mutation.isLoading ? 'Enviando...' : 'Enviar'}
         </button>
-        {mutation.isError && <p style={{ color: 'red' }}>Erro: {mutation.error.message}</p>}
-        {mutation.isSuccess && <p style={{ color: 'green' }}>Dados enviados com sucesso!</p>}
+        {mutation.isError && (
+          <p style={{ color: 'red' }}>Erro: {mutation.error.message}</p>
+        )}
       </form>
     </div>
   );

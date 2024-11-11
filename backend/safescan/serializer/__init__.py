@@ -1,2 +1,2 @@
 from .serializers import UserSerializer, RegisterSerializer, ProfileSerializer
-from .serializers import GetSoftwareSerializer, SoftwareSerializer, ProfileSoftwareSerializer
+from .serializers import GetSoftwareSerializer, CreateSoftwareSerializer, ProfileSoftwareSerializer

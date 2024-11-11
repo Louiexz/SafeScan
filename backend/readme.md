@@ -39,14 +39,31 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
 4. Para o backend:
         - Crie um arquivo .env e declare as seguintes secrets :
 
-                SECRET_KEY
-                DEBUG
-                ALLOWED_HOSTS
-                EMAIL_HOST_USER
-                EMAIL_HOST_PASSWORD
-                DEFAULT_FROM_EMAIL
-                API_KEY
+                SECRET_KEY (Key do django, use alguma gerada por ele)
+                DEBUG (Seta respostas detalhadas de erro ou não)
+                ALLOWED_HOSTS (Sites que irão poder se comunicar)
+                EMAIL_HOST_USER (Email para enviar recuperação de senha ao usuário)
+                EMAIL_HOST_PASSWORD (Sua senha para enviar recuperação de senha ao usuário)
+                DEFAULT_FROM_EMAIL (Email para enviar recuperação de senha ao usuário)
+                API_KEY (Api key da API VirusTotal)
+                CORS_ALLOWED_ORIGINS (Permissão para sites externos utilizarem métodos HTTP)
         
+        - Use as seguintes variaveis em caso de banco externo:
+        
+                DB_NAME 
+                DB_USER
+                DB_PASSWORD
+                DB_HOST
+                DB_PORT
+        
+        - Ou implemente o banco local:
+                DATABASES = {
+                        'default': {
+                                'ENGINE': 'django.db.backends.sqlite3',
+                                'NAME': BASE_DIR / 'db.sqlite3',
+                        }
+                }        
+
         - Realize a migração:
 
                 python manage.py migrate
@@ -57,7 +74,7 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
 
         - Execute a aplicação e Acesse:
         
-                python manage.py runserver
+                gunicorn backend.wsgi
 
                 http://127.0.0.1:8000/
 

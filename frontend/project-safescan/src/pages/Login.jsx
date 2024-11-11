@@ -1,34 +1,20 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useMutation } from 'react-query';
-
-const postData = async (data) => {
-  const response = await fetch('http://127.0.0.1:8000/sign-in', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(data),
-    credentials: 'include', // Para enviar e receber cookies de sessão
-  });
-
-  if (!response.ok) {
-    throw new Error('Falha ao fazer login');
-  }
-
-  return response.json();
-};
+import { useNavigate } from 'react-router-dom';
+import { login } from '../services/authService';  // Importa a função de login
+import '../assets/styles/Card.css'
 
 const Login = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
-  const mutation = useMutation(postData, {
+  const mutation = useMutation(login, {
     onSuccess: (data) => {
-      // O que fazer em caso de sucesso (por exemplo, exibir uma mensagem)
-      console.log('Dados enviados com sucesso:', data);
+      console.log('Login bem-sucedido:', data);
+      navigate('/profile');  // Redireciona o usuário para o perfil após login
     },
     onError: (error) => {
-      // O que fazer em caso de erro
       console.error('Erro ao enviar os dados:', error);
     },
   });
@@ -38,10 +24,9 @@ const Login = () => {
 
     const dataToSend = {
       username: name,
-      password: password
+      password: password,
     };
 
-    // Chama a mutação para enviar os dados
     mutation.mutate(dataToSend);
   };
 
@@ -49,10 +34,10 @@ const Login = () => {
     <div className='content'>
       <h1>Login</h1>
 
-      {mutation.isSuccess && <p style={{ color: 'green' }}>Dados enviados com sucesso!</p>}
+      {mutation.isSuccess && <p style={{ color: 'green' }}>Login bem-sucedido!</p>}
       <form onSubmit={handleSubmit}>
         <div>
-          <label htmlFor="name">Nome</label>
+          <label htmlFor="name">Username</label>
           <input
             type="text"
             id="name"
@@ -76,6 +61,9 @@ const Login = () => {
         </button>
         {mutation.isError && <p style={{ color: 'red' }}>Erro: {mutation.error.message}</p>}
       </form>
+      <button type="button" onClick={() => navigate('/forgot')}>
+        Forgot password
+      </button>
     </div>
   );
 };

@@ -13,7 +13,7 @@ class SoftwareModelTest(TestCase):
         )
 
     def test_software_url(self):
-        response = self.client.post(reverse("software"), {
+        response = self.client.post(reverse("virustotal"), {
             "url": "https://gitlab.com/"
         })
         self.assertEqual(response.status_code, 200)
@@ -43,26 +43,9 @@ class SoftwareModelTest(TestCase):
         software = Software.objects.get(name="NovoSoftware3")
         return software
 
-    def test_update_software(self):
-        self.client.login(username="Novouser", password="suasenha")
-        software_logged = self.create_software_logged()
-        response = self.client.put(reverse("software"), {
-            "id": software_logged.id,
-            "name": "NovoSoftware1",
-            "status": "Goodware"
-        }, content_type="application/json")
-
-        software_logged.refresh_from_db()
-
-        # Verifica se a resposta é bem-sucedida
-        self.assertEqual(response.status_code, 200)
-
-        # Verifica se existe alteração no status do software
-        self.assertEqual(software_logged.status, "Goodware")
-
     def test_delete_software(self):
         self.client.login(username="Novouser", password="suasenha")  # Garantindo que o usuário esteja logado
-        response = self.client.post(reverse("delete-software", kwargs={"id": self.software.id}))
+        response = self.client.delete(reverse("delete-software", kwargs={"id": self.software.id}))
 
         # Verifica se a resposta é bem-sucedida
         self.assertEqual(response.status_code, 200)

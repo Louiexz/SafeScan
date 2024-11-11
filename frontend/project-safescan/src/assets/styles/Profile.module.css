@@ -1,0 +1,11 @@
+label, input {
+    padding: 5px 10px;
+}   
+label {
+    color: black;
+    background-color: antiquewhite;
+}
+input {
+    background-color: transparent;
+    border: 0.01px solid black;
+}

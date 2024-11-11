@@ -15,9 +15,11 @@ MY_APPS = [
     "safescan.apps.SafeScanConfig",
 ]
 THIRD_APPS = [
-    "rest_framework",
+    'rest_framework',
     'django_vite',
     'corsheaders',
+    'rest_framework.authtoken',
+    'django_extensions',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -29,20 +31,19 @@ INSTALLED_APPS = [
 ] + MY_APPS + THIRD_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
 ]
 CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_HTTPONLY = False  # Permite o acesso ao CSRF cookie por JavaScript
+CSRF_COOKIE_NAME = "csrftoken"  # O nome do cookie CSRF, que será acessado pelo frontend
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-]
 CORS_ALLOW_METHODS = [
     'GET',
     'POST',
@@ -50,6 +51,16 @@ CORS_ALLOW_METHODS = [
     'PATCH',
     'DELETE',
 ]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:8000",
+]
+CORS_ORIGINS_WHITELIST = [
+    "http://localhost:5173",
+    "http://127.0.0.1:8000",
+]
+
 CORS_ALLOW_HEADERS = [
     'accept',
     'accept-encoding',
@@ -59,11 +70,17 @@ CORS_ALLOW_HEADERS = [
     'x-csrftoken',
 ]
 SESSION_COOKIE_AGE = 1800
+SESSION_COOKIE_SAMESITE = 'None'  # Permite o envio de cookies em requisições cross-origin
+SESSION_COOKIE_SECURE = True  # Garante que o cookie só será enviado sobre HTTPS
 
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 ROOT_URLCONF = 'backend.urls'
-
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+}
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -116,13 +133,12 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
 LANGUAGE_CODE = 'pt-br'
 TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
 USE_TZ = True
+
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
@@ -130,9 +146,9 @@ STATICFILES_DIRS = [
 ]
 
 # Defina o STATIC_ROOT para produção
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Local onde 'collectstatic' colocará os arquivos em produção 'django.db.models.BigAutoField'
+STATIC_ROOT = BASE_DIR / 'safescan/static/.vite/'  # Local onde 'collectstatic' colocará os arquivos em produção 'django.db.models.BigAutoField'
 
-VITE_MANIFEST_PATH = BASE_DIR / 'safescan/static/manifest.json'
+VITE_MANIFEST_PATH = BASE_DIR / '/static/'
 VITE_APP_DIR = BASE_DIR.parent / 'frontend'          # Diretório onde o Vite está configurado (frontend)
 VITE_DEV_MODE = DEBUG                          # Ativa o modo de desenvolvimento do Vite quando DEBUG está True
 VITE_STATIC_ROOT = BASE_DIR / 'safescan/static'     # Diretório onde o Vite deve colocar os arquivos em produção
@@ -142,20 +158,3 @@ if VITE_APP_DIR is None or not VITE_APP_DIR.exists():
     
 if VITE_STATIC_ROOT is None or not VITE_STATIC_ROOT.exists():
     raise ValueError("VITE_STATIC_ROOT não está configurado corretamente.")
-
-# Template Configuration
-TEMPLATES = [
-    {
-        'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'safescan/templates'],  # Diretório dos templates Django
-        'APP_DIRS': True,
-        'OPTIONS': {
-            'context_processors': [
-                'django.template.context_processors.debug',
-                'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
-                'django.contrib.messages.context_processors.messages',
-            ],
-        },
-    },
-]

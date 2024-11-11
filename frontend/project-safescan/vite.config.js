@@ -7,10 +7,10 @@ export default defineConfig({
   base: process.env.NODE_ENV === 'production' ? '/static/' : '/',  // Base URL dos assets para produção e desenvolvimento
   build: {
     manifest: true,  // Gera um arquivo de manifesto para o Django usar
-    outDir: resolve(__dirname, '../backend/safescan/static'), // Diretório de saída para os arquivos compilados no Django
+    outDir: resolve(__dirname, '../../backend/safescan/static'), // Diretório de saída para os arquivos compilados no Django
     rollupOptions: {
       input: {
-        index: resolve(__dirname, 'src/index.html')
+        index: resolve(__dirname, './index.html')
       }
     }
   }

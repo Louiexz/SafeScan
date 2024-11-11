@@ -26,7 +26,10 @@ body {
   min-height: 100dvh;
 }
 .content {
-  padding: 25vh 0vw;
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  min-height: 100dvh;
 }
 h1 {
   font-size: 3.2em;
