@@ -1,68 +1,76 @@
 from .views import *
 
-from ..serializer import ProfileSerializer, SoftwareSerializer
+from ..serializer import ProfileSerializer
 
-@api_view(["GET", "PUT", "DELETE"])
-def view_profile(request):
-    if not request.user.is_authenticated:
-        return Response({"error": "Usuário deslogado."}, status=status.HTTP_404_NOT_FOUND)
-    else:
-        profileData = User.objects.get(username=request.user.username)
+class view_profile(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes = [IsAuthenticated]
 
-    if request.method == "GET":
-        profileData.password = "*****"
-        serializer = ProfileSerializer(profileData)
+    def get(self, request):
+        # Ocultar a senha antes de serializar (não deve ser serializada)
+        user_data = request.user
+        user_data.password = "*****"  # Oculta a senha
+
+        # Serializa os dados do usuário
+        serializer = ProfileSerializer(user_data)
+        
+        # Recupera os softwares associados ao usuário
+        softwareData = Software.objects.filter(user_id=request.user.id)
+        softwareSerialize = ProfileSoftwareSerializer(softwareData, many=True)
+
+        return Response({
+            "message": "User profile data.",
+            "data": serializer.data,
+            "softwares": softwareSerialize.data
+        }, status=status.HTTP_200_OK)
+
+class update_profile(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def put(self, request):
         try:
-            # Busca todos os softwares associados ao usuário logado
-            softwareData = Software.objects.filter(user_id=request.user.id)
-            
-            # Serializa a lista de softwares do usuário
-            softwareSerialize = SoftwareSerializer(softwareData, many=True)
-
-            return Response({
-                "message": "User profile data.",
-                "data": serializer.data,
-                "softwares": softwareSerialize.data
-            }, status=status.HTTP_200_OK)
-        except Exception as e:
-            print(e)
-            return Response({
-                "message": "User profile data.",
-                "data": serializer.data
-            }, status=status.HTTP_200_OK)
-
-    elif request.method == "PUT":
-        serializer = ProfileSerializer(profileData, data=request.data)
+            user = User.objects.filter(pk=request.user.pk)
+        except Exception:
+            return Response({"error": "Dados inválidos."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        serializer = ProfileSerializer(user, data=request.data, partial=True)
 
         if serializer.is_valid():
-            try:
-                username = serializer.validated_data.get("username")
-                password = serializer.validated_data.get("password")
-                email = serializer.validated_data.get("email")
+            username = serializer.validated_data.get("username")
+            email = serializer.validated_data.get("email")
+            password = serializer.validated_data.get("password")
 
-                # Verifica se o username já está em uso por outro usuário
-                if User.objects.filter(username=username).exists():
-                    return Response({"error": "Este usuário já existe."}, status=status.HTTP_401_UNAUTHORIZED)
+            # Verifica se o username já está em uso por outro usuário
+            if username and User.objects.filter(username=username).exclude(id=user.id).exists():
+                return Response({"error": "Este nome de usuário já está em uso."},
+                                status=status.HTTP_400_BAD_REQUEST)
 
-                # Verifica se o email já está em uso por outro usuário
-                if User.objects.filter(email=email).exists():
-                    return Response({"error": "Este email já existe."}, status=status.HTTP_401_UNAUTHORIZED)
-                
-                # Verifica se a nova senha é igual à senha atual
-                if check_password(password, request.user.password):
-                    return Response({"error": "A nova senha não pode ser igual à senha anterior."}, status=status.HTTP_401_UNAUTHORIZED)
-                serializer.validated_data["password"] = make_password(password)
-                serializer.save()
-                return Response({"message": "Profile updated successfully."}, status=status.HTTP_200_OK)
-            
-            except Exception as e:
-                # Captura qualquer outro erro inesperado
-                return Response({"error": "An unexpected error occurred."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            # Verifica se o email já está em uso por outro usuário
+            if email and User.objects.filter(email=email).exclude(id=user.id).exists():
+                return Response({"error": "Este email já está em uso."},
+                                status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == "DELETE":
-        profileData.delete()
-        return Response({'message': 'Profile deleted successfully.'},
-                      status=status.HTTP_204_NO_CONTENT)
+            # Verifica se a nova senha é igual à senha atual
+            if password and check_password(password, user.password):
+                return Response({"error": "A nova senha não pode ser igual à senha anterior."},
+                                status=status.HTTP_400_BAD_REQUEST)
 
-    return Response({'error': 'Invalid method.'},
-                      status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            # Salva as alterações no perfil
+            serializer.save()
+            return Response({"message": "Perfil atualizado com sucesso."},
+                            status=status.HTTP_200_OK)
+
+        # Se a validação falhar
+        return Response({"error": "Dados inválidos."}, status=status.HTTP_400_BAD_REQUEST)
+
+def patch(self, request):
+    # Alterna o status de ativação do perfil
+    if request.user.is_active:
+        request.user.is_active = False
+        message = "Perfil desativado com sucesso."
+    else:
+        request.user.is_active = True
+        message = "Perfil reativado com sucesso."
+
+    request.user.save()
+    return Response({'message': message}, status=status.HTTP_204_NO_CONTENT)

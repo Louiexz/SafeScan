@@ -7,15 +7,18 @@ SECRET_KEY = config("SECRET_KEY")
 
 DEBUG = config("DEBUG", default=False)
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv(), default="localhost")
-
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv(), default="127.0.0.1")
 # Application definition
 
 MY_APPS = [
     "safescan.apps.SafeScanConfig",
 ]
 THIRD_APPS = [
-    "rest_framework",
+    'rest_framework',
+    'django_vite',
+    'corsheaders',
+    'rest_framework.authtoken',
+    'django_extensions',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -27,21 +30,56 @@ INSTALLED_APPS = [
 ] + MY_APPS + THIRD_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+CORS_ALLOW_CREDENTIALS = True
+CSRF_COOKIE_HTTPONLY = False  # Permite o acesso ao CSRF cookie por JavaScript
+CSRF_COOKIE_NAME = "csrftoken"  # O nome do cookie CSRF, que será acessado pelo frontend
 
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'PUT',
+    'PATCH',
+    'DELETE',
+]
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:8000",
+]
+CORS_ORIGINS_WHITELIST = [
+    "http://localhost:5173",
+    "http://127.0.0.1:8000",
+]
+
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'origin',
+    'x-csrftoken',
+]
 SESSION_COOKIE_AGE = 1800
-
+SESSION_COOKIE_SAMESITE = 'None'  # Permite o envio de cookies em requisições cross-origin
+SESSION_COOKIE_SECURE = True  # Somente em HTTPS
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
 ROOT_URLCONF = 'backend.urls'
 
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # For token-based auth (API tokens)
+    ],
+}
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -60,19 +98,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'backend.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': config("DB_NAME"),
+        'USER': config("DB_USER"),
+        'PASSWORD': config("DB_PASSWORD"),
+        'HOST': config("DB_HOST"),
+        'PORT': config("DB_PORT"),
     }
 }
-
-# Password validation
-# https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -97,17 +132,28 @@ EMAIL_HOST_USER = config("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD")
 DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL")
 
-# Internationalization
-# https://docs.djangoproject.com/en/5.1/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+LANGUAGE_CODE = 'pt-br'
+TIME_ZONE = 'America/Sao_Paulo'
 USE_I18N = True
-
 USE_TZ = True
 
-STATIC_URL = 'static/'
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR / 'safescan/static',  # Diretório onde os arquivos do Vite serão gerados para desenvolvimento
+]
+
+# Defina o STATIC_ROOT para produção
+STATIC_ROOT = BASE_DIR / 'safescan/static/.vite/'  # Local onde 'collectstatic' colocará os arquivos em produção 'django.db.models.BigAutoField'
+
+VITE_MANIFEST_PATH = BASE_DIR / '/static/'
+VITE_APP_DIR = BASE_DIR.parent / 'frontend'          # Diretório onde o Vite está configurado (frontend)
+VITE_DEV_MODE = DEBUG                          # Ativa o modo de desenvolvimento do Vite quando DEBUG está True
+VITE_STATIC_ROOT = BASE_DIR / 'safescan/static'     # Diretório onde o Vite deve colocar os arquivos em produção
+
+if VITE_APP_DIR is None or not VITE_APP_DIR.exists():
+    raise ValueError("VITE_APP_DIR não está configurado corretamente.")
+    
+if VITE_STATIC_ROOT is None or not VITE_STATIC_ROOT.exists():
+    raise ValueError("VITE_STATIC_ROOT não está configurado corretamente.")
