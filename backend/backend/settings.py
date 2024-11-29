@@ -19,6 +19,7 @@ THIRD_APPS = [
     'corsheaders',
     'rest_framework.authtoken',
     'django_extensions',
+    'drf_yasg',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -73,13 +74,35 @@ SESSION_COOKIE_SAMESITE = 'None'  # Permite o envio de cookies em requisições 
 SESSION_COOKIE_SECURE = True  # Somente em HTTPS
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,  # Disable session authentication for Swagger UI
+    'TAGS': [
+        {
+            'name': 'Profile',
+            'description': 'Operations related to profile management.',
+        },
+        {
+            'name': 'Software',
+            'description': 'Operations related to software.',
+        },
+        {
+            'name': 'User',
+            'description': 'Operations related to user management.',
+        },
+    ],
+    'OPERATIONS_SORTER': 'method',  # Sorts operations by HTTP method in the Swagger UI
+    'PERSIST_AUTH': True,  # Ensures that the session stays after reloading the page
+    'DOC_EXPANSION': 'none',  # Keeps API documentation collapsed by default
+}
+
 ROOT_URLCONF = 'backend.urls'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',  # For token-based auth (API tokens)
+        'rest_framework.authentication.TokenAuthentication',
     ],
 }
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -100,14 +123,10 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config("DB_NAME"),
-        'USER': config("DB_USER"),
-        'PASSWORD': config("DB_PASSWORD"),
-        'HOST': config("DB_HOST"),
-        'PORT': config("DB_PORT"),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-}
+}       
 
 AUTH_PASSWORD_VALIDATORS = [
     {

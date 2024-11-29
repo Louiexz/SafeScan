@@ -10,6 +10,9 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.authentication import SessionAuthentication
 from rest_framework.authentication import TokenAuthentication
 
+from drf_yasg.utils import swagger_auto_schema
+from drf_yasg import openapi
+
 from django.urls import get_resolver
 from rest_framework.response import Response
 

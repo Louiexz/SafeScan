@@ -55,6 +55,17 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
                 DB_PASSWORD
                 DB_HOST
                 DB_PORT
+
+                DATABASES = {
+                        'default': {
+                                'ENGINE': 'django.db.backends.postgresql',
+                                'NAME': config('DB_NAME'),
+                                'USER': config('DB_USER'),
+                                'PASSWORD': config('DB_PASSWORD'),
+                                'HOST': config('DB_HOST'),
+                                'PORT': config('DB_PORT', default='5432'),
+                        }
+                }
         
         - Ou implemente o banco local:
                 DATABASES = {

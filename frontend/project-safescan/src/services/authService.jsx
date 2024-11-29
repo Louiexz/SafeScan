@@ -14,9 +14,12 @@ export const login = async (data) => {
 // Função de logout
 export const logout = async () => {
   try {
-    window.location.href ='/login';
-    localStorage.removeItem('token');
-    return api.get('/sign-out');
+    // Primeiro, remova o token e faça a requisição de logout
+    await localStorage.clear();
+    await api.delete('/sign-out');
+    
+    // Depois que a requisição for bem-sucedida, redirecione para a página de login
+    window.location.href = '/login';
   } catch (error) {
     console.error("Erro ao tentar fazer logout:", error);
   }

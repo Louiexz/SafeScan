@@ -13,6 +13,7 @@ const Login = () => {
     onSuccess: (data) => {
       console.log('Login bem-sucedido:', data);
       navigate('/profile');  // Redireciona o usuário para o perfil após login
+      window.location.reload()
     },
     onError: (error) => {
       console.error('Erro ao enviar os dados:', error);

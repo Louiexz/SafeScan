@@ -2,10 +2,53 @@ from .views import *
 
 from ..serializer import ProfileSerializer
 
-class view_profile(APIView):
-    authentication_classes = [TokenAuthentication]
+class ViewProfile(APIView):
     permission_classes = [IsAuthenticated]
-
+    @swagger_auto_schema(
+        operation_description="Get user data using token",
+        request_body=None,  # O token é geralmente passado via header, não no corpo da requisição
+        responses={
+            200: openapi.Response(
+                description="Profile data",
+                examples={
+                    'application/json': {
+                        "message": "Successfully fetched user profile data",
+                        "data": {
+                            "name": "Random User",
+                            "email": "youremail@example.com",
+                            "softwares": [
+                                {
+                                    "name": "Software A",
+                                    "status": "Goodware"
+                                },
+                                {
+                                    "name": "Software B",
+                                    "status": "Malware"
+                                }
+                            ]
+                        }
+                    }
+                }
+            ),
+            400: openapi.Response(
+                description="Bad request, invalid parameters",
+                examples={
+                    'application/json': {
+                        "error": "Invalid request parameters."
+                    }
+                }
+            ),
+            401: openapi.Response(
+                description="Unauthorized, invalid or missing token",
+                examples={
+                    'application/json': {
+                        "error": "Authentication token is missing or invalid."
+                    }
+                }
+            ),
+        },
+        tags=["Profile"]
+    )
     def get(self, request):
         # Ocultar a senha antes de serializar (não deve ser serializada)
         user_data = request.user
@@ -24,9 +67,51 @@ class view_profile(APIView):
             "softwares": softwareSerialize.data
         }, status=status.HTTP_200_OK)
 
-class update_profile(APIView):
+class UpdateProfile(APIView):
     permission_classes = [IsAuthenticated]
     
+    @swagger_auto_schema(
+        operation_description="Update user data",
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "name": openapi.Schema(type=openapi.TYPE_STRING, description="Name of the user"),
+                "email": openapi.Schema(type=openapi.TYPE_STRING, description="Email address of the user"),
+                "password": openapi.Schema(type=openapi.TYPE_STRING, description="Password of the user (for update)"),
+            },
+            required=["name", "email"],  # Assuming 'name' and 'email' are required, 'password' is optional
+        ),
+        responses={
+            200: openapi.Response(
+                description="User profile updated successfully",
+                examples={
+                    'application/json': {
+                        "message": "User profile updated successfully",
+                        "data": {
+                            "name": "Updated Name",
+                            "email": "updatedemail@example.com",
+                            "password": "",  # Password is usually not returned
+                        },
+                        "softwares": [
+                            {
+                                "name": "Software A",
+                                "status": "Goodware"
+                            }
+                        ]
+                    }
+                }
+            ),
+            400: openapi.Response(
+                description="Bad request, invalid parameters",
+                examples={
+                    'application/json': {
+                        "error": "Invalid parameters provided."
+                    }
+                }
+            ),
+        },
+        tags=["Profile"]
+    )
     def put(self, request):
         try:
             user = User.objects.filter(pk=request.user.pk)
@@ -41,12 +126,12 @@ class update_profile(APIView):
             password = serializer.validated_data.get("password")
 
             # Verifica se o username já está em uso por outro usuário
-            if username and User.objects.filter(username=username).exclude(id=user.id).exists():
+            if username and User.objects.filter(username=username).exists():
                 return Response({"error": "Este nome de usuário já está em uso."},
                                 status=status.HTTP_400_BAD_REQUEST)
 
             # Verifica se o email já está em uso por outro usuário
-            if email and User.objects.filter(email=email).exclude(id=user.id).exists():
+            if email and User.objects.filter(email=email).exists():
                 return Response({"error": "Este email já está em uso."},
                                 status=status.HTTP_400_BAD_REQUEST)
 
@@ -63,6 +148,40 @@ class update_profile(APIView):
         # Se a validação falhar
         return Response({"error": "Dados inválidos."}, status=status.HTTP_400_BAD_REQUEST)
 
+@swagger_auto_schema(
+    operation_description="Desative ou reative o perfil do usuário",
+    request_body=None,  # Não há necessidade de corpo na requisição
+    responses={
+        200: openapi.Response(
+            description="Perfil do usuário atualizado com sucesso",
+            examples={
+                'application/json': {
+                    "message": "Perfil do usuário atualizado com sucesso.",
+                    "data": {
+                        "name": "Nome Atualizado",
+                        "email": "emailatualizado@example.com",
+                        "password": "",  # A senha não é retornada por questões de segurança
+                    },
+                    "softwares": [
+                        {
+                            "name": "Software A",
+                            "status": "Goodware"
+                        }
+                    ]
+                }
+            }
+        ),
+        400: openapi.Response(
+            description="Requisição mal formada, parâmetros inválidos",
+            examples={
+                'application/json': {
+                    "error": "Parâmetros inválidos fornecidos."
+                }
+            }
+        ),
+    },
+    tags=["Profile"]
+)
 def patch(self, request):
     # Alterna o status de ativação do perfil
     if request.user.is_active:

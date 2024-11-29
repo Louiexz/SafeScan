@@ -8,13 +8,62 @@ from django.utils.encoding import force_bytes
 from django.contrib.auth import authenticate, get_user_model
 from django.contrib.auth.hashers import check_password
 from django.contrib.auth import logout
+from rest_framework.authtoken.models import Token
 
 token_generator = PasswordResetTokenGenerator()
 User = get_user_model()
 
 from django.contrib.auth import authenticate, login
-from rest_framework.authtoken.models import Token
-class sign_in(APIView):
+
+class SignIn(APIView):
+    @swagger_auto_schema(
+        operation_description="Login account",
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Username for login'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, description='Password for the user')
+            },
+            required=['username', 'password'],  # Making fields required
+        ),
+        responses={
+            200: openapi.Response(
+                description="User logged in successfully",
+                examples={
+                    'application/json': {
+                        "message": "User logged in successfully.",
+                        "token": "your_generated_token_here"
+                    }
+                }
+            ),
+            400: openapi.Response(
+                description="Bad request, invalid data",
+                examples={
+                    'application/json': {
+                        "error": "Invalid credentials. Please check the username and password."
+                    }
+                }
+            ),
+            401: openapi.Response(
+                description="Unauthorized, invalid credentials",
+                examples={
+                    'application/json': {
+                        "error": "Invalid username or password."
+                    }
+                }
+            ),
+            422: openapi.Response(
+                description="Validation error",
+                examples={
+                    'application/json': {
+                        "error": "Validation failed. Please check your input data."
+                    }
+                }
+            ),
+        },
+        tags=["User"]
+    )
+
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
@@ -38,12 +87,42 @@ class sign_in(APIView):
             }, status=status.HTTP_200_OK)
         else:
             return Response({"error": "Credenciais inválidas ou usuário inativo"}, status=status.HTTP_401_UNAUTHORIZED)
-    
-class sign_out(APIView):
-    authentication_classes = [TokenAuthentication]
+
+class SignOut(APIView):
     permission_classes = [IsAuthenticated]
 
-    def get(self, request):
+    @swagger_auto_schema(
+        operation_description="Log out account",
+        request_body=None,  # Nenhum corpo de requisição para o logout
+        responses={
+            200: openapi.Response(
+                description="User logout successfully",
+                examples={
+                    'application/json': {
+                        "message": "User logout successfully."
+                    }
+                }
+            ),
+            400: openapi.Response(
+                description="Bad request, invalid data",
+                examples={
+                    'application/json': {
+                        "error": "Invalid request. Please try again."
+                    }
+                }
+            ),
+            422: openapi.Response(
+                description="Validation error",
+                examples={
+                    'application/json': {
+                        "error": "Validation failed. See field errors for more details."
+                    }
+                }
+            ),
+        },
+        tags=["User"]
+    )
+    def delete(self, request):
         # Deleta o token do usuário atual
         try:
             # Busca o token associado ao usuário
@@ -53,22 +132,106 @@ class sign_out(APIView):
         except Token.DoesNotExist:
             return Response({"message": "Token não encontrado"}, status=status.HTTP_400_BAD_REQUEST)
 
-class sign_up(APIView):
-    def get(self, request):
-        return Response({"message": "Enter Username, email and password to register."}, status=status.HTTP_200_OK)
-    
+class SignUp(APIView):
+    # Handling POST request to create a new user with Swagger documentation
+    @swagger_auto_schema(
+        operation_description="Create a new user",
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'username': openapi.Schema(type=openapi.TYPE_STRING, description='Username for login'),
+                'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email address of the user'),
+                'password': openapi.Schema(type=openapi.TYPE_STRING, description='Password for the user')
+            },
+            required=['username', 'email', 'password'],  # Making fields required
+        ),
+        responses={
+            201: openapi.Response(
+                description="User created successfully",
+                examples={
+                    'application/json': {
+                        "message": "User created successfully."
+                    }
+                }
+            ),
+            400: openapi.Response(
+                description="Bad request, invalid data",
+                examples={
+                    'application/json': {
+                        "error": "User not created. Check if data is valid."
+                    }
+                }
+            ),
+            422: openapi.Response(
+                description="Validation error",
+                examples={
+                    'application/json': {
+                        "error": "Validation failed. See field errors for more details."
+                    }
+                }
+            ),
+        },
+        tags=["User"]
+    )
     def post(self, request):
+        # Deserialize the request data into the serializer
         serializer = RegisterSerializer(data=request.data)
 
+        # Check if the data is valid
         if serializer.is_valid():
+            # Save the new user to the database
             serializer.save()
             return Response({"message": "User created successfully."}, status=status.HTTP_201_CREATED)
-        return Response({"error": "User not created."}, status=status.HTTP_400_BAD_REQUEST)
+        
+        # If validation fails, return error details
+        return Response({"error": serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
 
-class forgot_password(APIView):
-    def get(self, request):
-        return Response({"message": "Enter email to forgot password."}, status=status.HTTP_200_OK)
-    
+class ForgotPassword(APIView):
+    @swagger_auto_schema(
+        operation_description="Forgot password",
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'email': openapi.Schema(type=openapi.TYPE_STRING, description='Email address of the user'),
+            },
+            required=['email'],  # Making email field required
+        ),
+        responses={
+            200: openapi.Response(
+                description="Password reset email sent successfully",
+                examples={
+                    'application/json': {
+                        "message": "Password reset link has been sent to your email."
+                    }
+                }
+            ),
+            400: openapi.Response(
+                description="Bad request, invalid data",
+                examples={
+                    'application/json': {
+                        "error": "Invalid email format. Please check the email address."
+                    }
+                }
+            ),
+            404: openapi.Response(
+                description="User not found",
+                examples={
+                    'application/json': {
+                        "error": "No user found with this email address."
+                    }
+                }
+            ),
+            422: openapi.Response(
+                description="Validation error",
+                examples={
+                    'application/json': {
+                        "error": "Validation failed. Please check the email address."
+                    }
+                }
+            ),
+        },
+        tags=["User"]
+    )
     def post(self, request):
         email = request.data.get('email')
         if not email:
@@ -95,7 +258,44 @@ class forgot_password(APIView):
         except smtplib.SMTPException as e:
             return Response({'error': f'Erro ao enviar o e-mail de recuperação de senha: {str(e)}'}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-class reset_password_confirm(APIView):
+class ResetPasswordConfirm(APIView):
+    @swagger_auto_schema(
+        operation_description="Reset password (set a new password)",
+        request_body=openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                'password': openapi.Schema(type=openapi.TYPE_STRING, description='New password for the user')
+            },
+            required=['password'],  # Making password field required
+        ),
+        responses={
+            200: openapi.Response(
+                description="Password reset successfully",
+                examples={
+                    'application/json': {
+                        "message": "Your password has been successfully reset."
+                    }
+                }
+            ),
+            400: openapi.Response(
+                description="Bad request, invalid data",
+                examples={
+                    'application/json': {
+                        "error": "Password is required and must meet the security criteria."
+                    }
+                }
+            ),
+            404: openapi.Response(
+                description="Invalid or expired reset link",
+                examples={
+                    'application/json': {
+                        "error": "The reset link is invalid or has expired."
+                    }
+                }
+            ),
+        },
+        tags=["User"]
+    )
     def patch(self, request, uidb64, token):
         try:
             # Decodifica o uid e tenta buscar o usuário
