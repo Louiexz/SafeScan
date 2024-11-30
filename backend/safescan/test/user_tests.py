@@ -1,7 +1,5 @@
 from .tests import *
 
-import json
-
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
@@ -28,20 +26,33 @@ class UserModelTest(TestCase):
         headers = {"Authorization": f"Token {token}"}
         return response, headers
 
+    
     def test_login_users(self):
         response, headers = self.login()
         self.assertEqual(response.status_code, 200)
     
     def test_logout_users(self):
-        login, headers = self.login()
+        response_login, headers = self.login()
 
         # Send the DELETE request with the token in the headers
         response = self.client.delete(reverse("sign-out"), HTTP_AUTHORIZATION=headers["Authorization"])
 
         self.assertEqual(response.status_code, 200)
     
+    def test_create_user(self):
+        response = self.client.post(reverse("sign-up"), {
+            "username": "Novouser1",
+            "email": "seuemail2@gmail.com",
+            "password": "suasenha5"
+        })
+
+        self.assertEqual(response.status_code, 201)
+        user = User.objects.get(username="Novouser1")
+        self.assertEqual(user.email, "seuemail2@gmail.com")
+        self.assertTrue(check_password("suasenha5", user.password))
+    
     def test_create_software_logged(self):
-        login, headers = self.login()
+        response_login, headers = self.login()
 
         response = self.client.post(reverse("software_form_auth"), {
             "name": "NovoSoftware2",
@@ -62,33 +73,19 @@ class UserModelTest(TestCase):
         self.assertEqual(software.label, "Malware")
 
     def test_update_user(self):
-        login, headers = self.login()
+        response_login, headers = self.login()
 
         response = self.client.put(reverse("profile-update"), {
-        json.dumps({
             "username": "UserAtualizado",
-            "email": "novoemail@gmail.com",
-            "password": "suasenha2",
-        }),
+            "email": "novoemail3@gmail.com",
+            "password": "suasenhanova2"
         }, HTTP_AUTHORIZATION=headers["Authorization"], content_type="application/json")
 
         self.user.refresh_from_db()
         self.assertEqual(response.status_code, 200)
         self.assertEqual(self.user.username, "UserAtualizado")
-        self.assertEqual(self.user.email, "novoemail@gmail.com")
-        self.assertEqual(self.user.password, "suasenha2")
-
-    def test_create_user(self):
-        response = self.client.post(reverse("sign-up"), {
-            "username": "Novouser1",
-            "email": "seuemail2@gmail.com",
-            "password": "suasenha5"
-        })
-
-        self.assertEqual(response.status_code, 201)
-        user = User.objects.get(username="Novouser1")
-        self.assertEqual(user.email, "seuemail2@gmail.com")
-        self.assertTrue(check_password("suasenha5", user.password))
+        self.assertEqual(self.user.email, "novoemail3@gmail.com")
+        self.assertTrue(check_password("suasenhanova2", self.user.password))
     
     def test_list_users(self):
         login, headers = self.login()

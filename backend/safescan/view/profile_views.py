@@ -114,24 +114,29 @@ class UpdateProfile(APIView):
     )
     def put(self, request):
         try:
-            user = User.objects.filter(pk=request.user.pk)
-        except Exception:
-            return Response({"error": "Dados inválidos."}, status=status.HTTP_400_BAD_REQUEST)
-        
+            # Filtra o usuário atual com base no ID (pk) do usuário autenticado
+            user = User.objects.get(pk=request.user.pk)  # Usar get() ao invés de filter() para pegar um único objeto
+        except User.DoesNotExist:
+            return Response({"error": "Usuário não encontrado."}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+
+        # Serializa os dados de entrada para atualizar o perfil do usuário
         serializer = ProfileSerializer(user, data=request.data, partial=True)
 
         if serializer.is_valid():
+            # Recupera os dados enviados para verificar a existência de username ou email
             username = serializer.validated_data.get("username")
             email = serializer.validated_data.get("email")
             password = serializer.validated_data.get("password")
 
             # Verifica se o username já está em uso por outro usuário
-            if username and User.objects.filter(username=username).exists():
+            if username and username and User.objects.filter(username=username).exclude(pk=user.pk).exists():
                 return Response({"error": "Este nome de usuário já está em uso."},
                                 status=status.HTTP_400_BAD_REQUEST)
 
             # Verifica se o email já está em uso por outro usuário
-            if email and User.objects.filter(email=email).exists():
+            if email and User.objects.filter(email=email).exclude(pk=user.pk).exists():
                 return Response({"error": "Este email já está em uso."},
                                 status=status.HTTP_400_BAD_REQUEST)
 

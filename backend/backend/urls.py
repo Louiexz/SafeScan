@@ -17,7 +17,7 @@ urlpatterns = [
     path("api/software", ViewSoftware.as_view(), name='software'),
     path("api/software_form_unauth", SoftwareFormUnauth.as_view(), name='software_form_unauth'),
     path("api/virustotal", ViewUrlFile.as_view(), name='virustotal'),
-        
+    
     # Incluindo as URLs do app safescan (se houver outras urls neste app)
     path('', include('safescan.urls')),  # Verifique se você tem um safescan/urls.py
 ]

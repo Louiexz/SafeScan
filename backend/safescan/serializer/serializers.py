@@ -15,6 +15,17 @@ class UserSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
 
 class RegisterSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(
+        max_length=150,
+        min_length=5,
+    )
+    email = serializers.EmailField(
+        min_length=6,
+    )
+    password = serializers.CharField(
+        write_only=True,
+        min_length=8,
+    )
     class Meta:
         model=User
         fields=["username", "email", "password"]
@@ -25,6 +36,17 @@ class RegisterSerializer(serializers.ModelSerializer):
         return super().create(validated_data)
 
 class ProfileSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(
+        max_length=150,
+        min_length=5,
+    )
+    email = serializers.EmailField(
+        min_length=6,
+    )
+    password = serializers.CharField(
+        write_only=True,
+        min_length=8,
+    )
     class Meta:
         model = User
         fields = ["username", "email", "password"]
@@ -58,3 +80,12 @@ class CreateSoftwareSerializer(serializers.ModelSerializer):
         fields = ["name", 'localizacao_rede', 'bluetooth_funcionalidades',
                   'arquivos_confOS','sms', 'midia_audio', 'camera', 'rede_operadora',
                   'sim_pais', 'biblioteca_class', 'pacotes', 'user']
+    
+    def validate_name(self, value):
+        """
+        Validação customizada para garantir que o nome do software seja único.
+        """
+        # Verifica se o software com o nome já existe no banco de dados
+        if Software.objects.filter(name=value).exists():
+            raise serializers.ValidationError("Este nome de software já está em uso.")
+        return value
