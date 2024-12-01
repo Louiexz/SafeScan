@@ -10,7 +10,7 @@ def transform_groups(data):
             'ACCESS_COARSE_LOCATION','ACCESS_FINE_LOCATION','CHANGE_NETWORK_STATE','WAKE_LOCK'
         ],
         'bluetooth_funcionalidades': [
-            'BLUETOOTH','SEND_SMS','RECEIVE_BOOT_COMPLETED','GET_TASKS'
+            'BLUETOOTH','RECEIVE_BOOT_COMPLETED','GET_TASKS'
         ],
         'arquivos_confOS': [
             'WRITE_EXTERNAL_STORAGE','SYSTEM_ALERT_WINDOW', 'DISABLE_KEYGUARD',
