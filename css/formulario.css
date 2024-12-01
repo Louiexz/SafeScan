@@ -1,0 +1,148 @@
+.formulario {
+  width: 100%;
+  max-width: 1440;
+  height: 769px;
+  background: linear-gradient(
+    90deg,
+    rgba(9, 241, 86, 0.6) 88%,
+    rgba(25, 52, 34, 0.6) 47%
+  );
+}
+
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+ 
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns:  1fr 2fr;
+  height: 100%;
+  max-width: 1440px;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #38b963 20%, #1A3522 50%);
+}
+ .right-grid img {
+  width: 100%;
+  height: 773px;
+  object-fit: cover;
+}
+
+.comentar textarea {
+  width: 200px;
+  overflow: hidden;
+  height: 10px;
+  resize: none;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+.left-grid {
+  font-family: "Aldrich", sans-serif;
+  font-weight: normal;
+  display: flex;
+  flex-direction: column;  
+  align-items: center;
+  padding-left: 20px;
+  
+}
+
+.left-grid h1 {
+  font-family: "Aldrich", sans-serif;
+  font-weight: normal;
+}
+
+.left-grid p{
+  font-weight: 600;
+  color: #000000;
+  font-family: "Albert Sans", sans-serif;
+  font-size: 16px;
+  margin-top: 3px;
+}
+.left-grid h2{
+  font-size: 16px;
+  font-family: "Albert Sans", sans-serif;
+  font-weight: bold;
+}
+.left-grid span{
+  font-size: 16px;
+  font-family: "Albert Sans", sans-serif;
+  font-weight: bolder;
+}
+.comentar {
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  width: 100%;
+  height: 100px;
+}
+.questions {
+  display: flex;
+  flex-direction: column; 
+  gap: 15px; 
+  padding: 15px
+}
+
+.question {
+  display: flex;
+  flex-direction: column; 
+}
+
+.buttons {
+  display: flex;
+  gap: 10px; 
+  margin-top: 15px;
+  
+}
+
+button {
+
+  background-color: #FFFFFF;
+  color: #000000;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 69px;
+  height:28px ;
+  font-family:"Albert Sans", sans-serif;
+  justify-content: center;
+  font-weight: bolder;
+  font-size: 16px;
+ 
+}
+
+button:hover {
+  background-color: #8d8989;
+}
+.grid-container{
+  max-width: 100%;
+  overflow: hidden;
+  
+}
+.submit {
+  display: flex;
+  justify-content: start; 
+  padding: 10px;
+}
+
+.submit button {
+  width: 120px; 
+  height: 40px; 
+  font-family: "Albert Sans", sans-serif;
+  background-color: #1E1E1E;
+  color: #FFFFFF;
+  border: none;
+  border-radius: 5px;
+  font-weight: bolder;
+  font-size: 16px;
+}
+
+.submit button:hover {
+  background-color: #444444;
+}

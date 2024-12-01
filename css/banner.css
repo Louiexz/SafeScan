@@ -1,0 +1,42 @@
+.container {
+  width: 100%;
+}
+
+.banner-softAi {
+  background: linear-gradient(to right, #38b963 20%, #1A3522 50%);
+  padding: 50px;
+  display: flex;
+justify-content: center;
+}
+
+.hero-image {
+  width: 675px;
+  height: 493px;
+}
+
+.banner-content {
+  margin-left: 50px;
+  padding: 35px;
+}
+
+
+.banner-content .headline {
+  font-size: 50px;
+  text-transform: uppercase;
+  font-family: "Aldrich", sans-serif;
+  line-height: 65px;
+}
+
+.banner-content .description {
+  font-size: 22px;
+  font-family: "Albert Sans", sans-serif;
+  font-weight: bold;
+  text-align: left;
+  padding: 15px;
+}
+.banner-content h1{
+  font-family: "aldrich", sans-serif ;
+  font-weight: lighter;
+  font-size: 50px;
+
+}

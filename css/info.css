@@ -1,0 +1,44 @@
+  .information h1{
+  text-align: center;
+  margin-top: 25px;
+  font-family: "Aldrich", sans-serif;
+  font-weight: lighter;
+  justify-content: center;  
+  align-items: center;   
+  
+  }
+  .information {
+    text-align: center;
+    padding: 30px;
+    justify-content: center;  
+  align-items: center;   
+  }
+  .info{
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 220px;
+    align-items: center; 
+    height: 350px;
+    font-size: 30px;
+    
+  }
+  .form, .respostas, .resultados {
+    display: flex;                   
+    flex-direction: column;          
+    justify-content: center;         
+    align-items: center;             
+    text-align: center; 
+  }
+  h2{
+    font-size: 22px;
+    font-family: "Albert Sans", sans-serif;
+    font-weight: bolder;
+  }
+  p{
+    font-size: 16px;
+    margin-top: 0;
+    font-family:"Albert Sans", sans-serif ;
+    font-weight: lighter;
+  }
