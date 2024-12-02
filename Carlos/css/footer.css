@@ -1,78 +1,73 @@
 footer {
-    background-color: #0B0A0A;
+    background-color: #0b0a0a;
     color: #fff;
-    padding: 35px;
+    padding: 60px;
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.footer-container {
+  }
+  
+  .footer-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    max-width: 1200px;
-}
-
-.logo-section {
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+  
+  .logo-section {
     display: flex;
     align-items: center;
-}
-
-.footer-logo {
+  }
+  
+  .footer-logo {
     width: 80px;
     height: 80px;
     margin-right: 10px;
-}
-
-.logo-section h1 {
+  }
+  
+  .logo-section h1 {
     font-family: "Jura", sans-serif;
     font-size: 30px;
     font-weight: bold;
     color: #fff;
     margin-left: -8px;
-}
-
-.contato,
-.endereco {
+  }
+  
+  .contato,
+  .endereco {
     font-family: "Albert Sans", sans-serif;
     font-size: 16px;
     font-weight: 300;
     text-align: left;
     line-height: 2.2;
-}
-
-.contato h2,
-.endereco h2 {
-    font-family: "Albert Sans", sans-serif;
-    font-size: 20px;
-    font-weight: 500;
-    text-align: left;
-    color: #fff;
-    display: inline-block;
-    padding-bottom: 5px;
-    width: 100%;
-}
-
-.contato {
+  }
+  
+  .contato {
     position: relative;
-    left: 140px;
-}
-
-.endereco {
-    position: relative;
-    bottom: 30px;
-    right: 100px;
-}
-
-.bi-instagram,
-.bi-twitter-x,
-.bi-facebook {
+  }
+  
+  .bi-instagram,
+  .bi-twitter-x,
+  .bi-facebook {
     font-size: 22px;
     color: #fff;
     padding: 8px;
     position: relative;
-    left: -9px;
     top: 5px;
-}
+  }
+  @media (max-width: 1000px) {
+    .footer-container {
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      text-align: center;
+    }
+  
+    .contato,
+    .endereco {
+      text-align: center;
+    }
+  }
+  

@@ -23,68 +23,64 @@
     </header>
     <main>
         <section class="banner">
-            <h2>
-                <span class="linha-white">Your First Line of Defense</span><br>
-                <span class="linha-black">Against Digital Threats.</span>
-            </h2>
-            <p>Developed with cutting-edge AI technology detecting and<br>
-                fighting malware with efficiency and precision.</p>
-            <div class="secao-form">
-                <form class="form-login" action="#" method="POST">
-                    <label class="label-login" for="username">Username</label>
-                    <input class="input-login" type="text" id="username-login" name="username"
-                        placeholder="Enter your username" required>
+            <div class="left">
+                <div>
+                    <span class="linha-white">Your First Line of Defense</span><br>
+                    <span class="linha-black">Against Digital Threats.</span>
+                </div>
+                <p>Developed with cutting-edge AI technology detecting and<br>
+                    fighting malware with efficiency and precision.</p>
+                <div class="secao-form">
+                    <form class="form-login" action="#" method="POST">
+                        <label class="label-login" for="username">Username</label>
+                        <input class="input-login" type="text" id="username-login" name="username" placeholder="Enter your username" required>
 
-                    <label class="label-login" for="password">Password</label>
-                    <input class="input-login" type="password" id="password-login" name="password"
-                        placeholder="Enter your password" required>
+                        <label class="label-login" for="password">Password</label>
+                        <input class="input-login" type="password" id="password-login" name="password" placeholder="Enter your password" required>
 
-                    <div class="links">
-                        <a href="#">Forgot password?</a>
-                        <a onclick="togglePopup()">Sign up</a>
-                    </div>
+                        <div class="links">
+                            <a href="#">Forgot password?</a>
+                            <a onclick="togglePopup()">Sign up</a>
+                        </div>
 
-                    <button class="button-login" type="submit">Sign in</button>
-                </form>
-            </div>
-            <div id="popup-container" class="popup">
-                <div class="overlay">
-                    <div class="popup-content">
-                        <h2>Sign up</h2>
-                        <form>
-                            <label class="label-registro" for="username">Username</label>
-                            <input class="input-registro" type="text" id="username" name="username"
-                                placeholder="Enter your username">
+                        <button class="button-login" type="submit">Sign in</button>
+                    </form>
+                </div>
+                <div id="popup-container" class="popup">
+                    <div class="overlay">
+                        <div class="popup-content">
+                            <h2>Sign up</h2>
+                            <form>
+                                <label class="label-registro" for="username">Username</label>
+                                <input class="input-registro" type="text" id="username" name="username" placeholder="Enter your username">
 
-                            <label class="label-registro" for="email">E-mail</label>
-                            <input class="input-registro" type="email" id="email" name="email"
-                                placeholder="Enter your e-mail">
+                                <label class="label-registro" for="email">E-mail</label>
+                                <input class="input-registro" type="email" id="email" name="email" placeholder="Enter your e-mail">
 
-                            <label class="label-registro" for="confirm-email">Confirm e-mail</label>
-                            <input class="input-registro" type="email" id="confirm-email" name="confirm-email"
-                                placeholder="Confirm your e-mail">
+                                <label class="label-registro" for="confirm-email">Confirm e-mail</label>
+                                <input class="input-registro" type="email" id="confirm-email" name="confirm-email" placeholder="Confirm your e-mail">
 
-                            <label class="label-registro" for="password">Password</label>
-                            <input class="input-registro" type="password" id="password" name="password"
-                                placeholder="Enter your password">
+                                <label class="label-registro" for="password">Password</label>
+                                <input class="input-registro" type="password" id="password" name="password" placeholder="Enter your password">
 
-                            <label class="label-registro" for="confirm-password">Confirm password</label>
-                            <input class="input-registro" type="password" id="confirm-password" name="confirm-password"
-                                placeholder="Confirm your password">
+                                <label class="label-registro" for="confirm-password">Confirm password</label>
+                                <input class="input-registro" type="password" id="confirm-password" name="confirm-password" placeholder="Confirm your password">
 
-                            <div class="botoes">
-                                <button class="botao-registro" type="">Sign up</button>
-                                <button class="botao-voltar-registro" onclick="togglePopup()"
-                                    type="button">Back</button>
-                            </div>
-                        </form>
+                                <div class="botoes">
+                                    <button class="botao-registro" type="">Sign up</button>
+                                    <button class="botao-voltar-registro" onclick="togglePopup()" type="button">Back</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="secao-img">
-                <div class="container-img">
-                    <img class="img-desktop" src="./Asserts/img-desktop-login.png" alt="Desktop verde tech">
-                    <img class="img-robo" src="./Asserts/img-ia-login.png" alt="Parte superior (cabeça) de um robô">
+            <div class="right">
+                <div class="secao-img">
+                    <div class="container-img">
+                        <img class="img-desktop" src="./Asserts/img-desktop-login.png" alt="Desktop verde tech">
+                        <img class="img-robo" src="./Asserts/img-ia-login.png" alt="Parte superior (cabeça) de um robô">
+                    </div>
                 </div>
             </div>
         </section>
