@@ -1,21 +1,19 @@
 footer {
-  background-color: #0B0A0A;
+  background-color: #0b0a0a;
   color: #fff;
   padding: 60px;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 0;
-  width: 100%; 
-  position: relative;
-  bottom: 0;    
 }
+
 .footer-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
+  padding-left: 100px;
+  padding-right: 100px;
 }
 
 .logo-section {
@@ -48,13 +46,6 @@ footer {
 
 .contato {
   position: relative;
-  left: 140px;
-}
-
-.endereco {
-  position: relative;
-  bottom: 30px;
-  right: 100px;
 }
 
 .bi-instagram,
@@ -64,6 +55,18 @@ footer {
   color: #fff;
   padding: 8px;
   position: relative;
-  left: -9px;
   top: 5px;
+}
+@media (max-width: 1000px) {
+  .footer-container {
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .contato,
+  .endereco {
+    text-align: center;
+  }
 }
