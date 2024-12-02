@@ -3,22 +3,29 @@
 }
 
 .banner-softAi {
-  background: linear-gradient(to right, #38b963 20%, #1A3522 50%);
+  background: linear-gradient(
+    to right,
+    #38b963 1%,
+    #22c759 10%,
+    #266138 40%,
+    #1a3522 80%
+  );
   padding: 50px;
   display: flex;
-justify-content: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .hero-image {
-  width: 675px;
-  height: 493px;
+  width: 100%;
+  height: auto;
+  max-width: 675px;
 }
 
 .banner-content {
-  margin-left: 50px;
   padding: 35px;
+  box-sizing: border-box;
 }
-
 
 .banner-content .headline {
   font-size: 50px;
@@ -34,9 +41,43 @@ justify-content: center;
   text-align: left;
   padding: 15px;
 }
-.banner-content h1{
-  font-family: "aldrich", sans-serif ;
+.banner-content h1 {
+  font-family: "aldrich", sans-serif;
   font-weight: lighter;
   font-size: 50px;
-
+  text-align: center;
 }
+.banner-content p {
+  width: 100%;  
+  word-wrap: break-word; 
+}
+
+@media (max-width: 1080px) {
+  .banner-softAi {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .hero-image {
+    width: 100%;
+    width: 675px;
+    max-height: 493px;
+  }
+
+  .banner-content h1 {
+    text-align: center;
+  }
+  .banner-content p {
+    text-align: center;
+  }
+}
+
+@media (max-width: 730px) {
+  .hero-image {
+    width: 100%;
+    height: auto;
+    max-width: 500px;
+  }
+  
+}
+
