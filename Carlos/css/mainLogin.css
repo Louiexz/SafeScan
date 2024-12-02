@@ -1,0 +1,139 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+}
+
+.banner {
+    background: linear-gradient(
+        to bottom, 
+        #09762A 0%, 
+        #0DA93C 25%, 
+        #0FC245 47%, 
+        #10DC4F 82%
+    );
+    color: #fff;
+    padding: 30px 20px;
+}
+
+.banner h2 {
+    font-size: 28px;
+    line-height: 1.2;
+    text-align: left;
+    margin-left: 80px;
+}
+
+.banner p {
+    font-family: "Albert Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    margin-left: 80px;
+}
+
+.banner .linha-white {
+    font-family: "Aldrich", sans-serif;
+    font-size: 42px;
+    font-weight: normal;
+    color:#fff;
+}
+
+.banner .linha-black {
+    font-family: "Aldrich", sans-serif;
+    font-size: 42px;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.78);
+}
+
+.secao-form {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    margin-left: 80px;
+    margin-top: 20px;
+}
+
+.form-login {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #0B0A0A;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.);
+    font-family: sans-serif;
+}
+
+.label-login {
+    color: #fff;
+    font-weight: normal;
+}
+
+.input-login {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+form .links {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+}
+
+form .links a {
+    color: #28a745;
+    font-weight: normal;
+}
+
+.button-login {
+    background: linear-gradient(
+        to bottom, 
+        #09762A 0%, 
+        #0DA93C 25%, 
+        #0FC245 47%, 
+        #10DC4F 82%
+    );
+    margin-top: 10px;
+    padding: 10px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: 16px;
+}
+
+form button:hover {
+    background: linear-gradient(
+        to left, 
+        #0DA93C 5%, 
+        #0FC245 27%, 
+        #10DC4F 50%
+    );
+}
+
+.secao-img {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+}
+
+.container-img img {
+    position: absolute;
+    bottom: 0;
+    left: 650px;
+}
+
+.img-desktop {
+    z-index: 2;
+}
