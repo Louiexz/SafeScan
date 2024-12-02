@@ -1,6 +1,6 @@
-# SafeScan
+# Soft.ai
 
-Website SafeScan, voltado para verificação de malware por meio da utilização de IA.<br>
+Website Soft.ai, voltado para verificação de malware por meio da utilização de IA.<br>
 Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT - PE, 4º período, curso Análise e Desenvolvimento de Sistemas.
 
 # Pré-requisitos
@@ -19,14 +19,13 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
 
 1. Acesse:
 
-    https://safescan.vercel.app/
+    https://soft.ai.vercel.app/
 
 2. Ou clone o repositorio:
 
-        git clone https://github.com/Louiexz/SafeScan.git
+        git clone https://github.com/Louiexz/Soft.ai.git
 
-        cd SafeScan
-
+        cd Soft.ai
 
 3. Instale as dependências:
 
@@ -100,7 +99,7 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
         │   ├── asgi.py         # Configuração para ASGI
         │   └── wsgi.py         # Configuração para WSGI
         │
-        ├── safescan/         # Aplicativo Django
+        ├── soft/         # Aplicativo Django
         │   ├── migrations/     # Arquivos de migração de banco de dados
         │   ├── model/          # Diretório dos modelos de db
         │   ├── serializer/     # Diretório dos modelos de serializers dos modelos de db

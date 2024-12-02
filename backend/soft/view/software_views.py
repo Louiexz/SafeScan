@@ -6,40 +6,48 @@ from decouple import config
 def transform_groups(data):
     # Mapeamento dos grupos de campos
     field_groups = {
-        'localizacao_rede': [
-            'ACCESS_COARSE_LOCATION','ACCESS_FINE_LOCATION','CHANGE_NETWORK_STATE','WAKE_LOCK'
-        ],
-        'bluetooth_funcionalidades': [
-            'BLUETOOTH','RECEIVE_BOOT_COMPLETED','GET_TASKS'
-        ],
-        'arquivos_confOS': [
-            'WRITE_EXTERNAL_STORAGE','SYSTEM_ALERT_WINDOW', 'DISABLE_KEYGUARD',
-            'KILL_BACKGROUND_PROCESSES'
-        ],
-        'sms': [
-            'READ_SMS','SEND_SMS','RECEIVE_SMS',
-            'Landroid/telephony/SmsManager;->sendMultipartTextMessage'
-        ],
-        'midia_audio': [
-            'VIBRATE','Landroid/media/AudioRecord;->startRecording'
-        ],
-        'camera': [
+        'localizacao': [
+            'ACCESS_COARSE_LOCATION',
+            'ACCESS_FINE_LOCATION',
             'Landroid/location/LocationManager;->getLastKgoodwarewnLocation',
-            'Landroid/telephony/TelephonyManager;->getCellLocation'
-        ],
-        'rede_operadora': [
+            'Landroid/telephony/TelephonyManager;->getCellLocation',
+            'Landroid/telephony/TelephonyManager;->getSimOperator',
+            'Landroid/telephony/TelephonyManager;->getSimCountryIso',
+            'Landroid/telephony/TelephonyManager;->getSimOperatorName',
             'Landroid/telephony/TelephonyManager;->getNetworkCountryIso',
             'Landroid/telephony/TelephonyManager;->getNetworkOperator',
             'Landroid/telephony/TelephonyManager;->getNetworkOperatorName',
         ],
-        'sim_pais': [
-            'Landroid/telephony/TelephonyManager;->getSimOperator',
-            'Landroid/telephony/TelephonyManager;->getSimCountryIso',
-            'Landroid/telephony/TelephonyManager;->getSimOperatorName'
+        'rede':[
+            'CHANGE_NETWORK_STATE',
+            'Ljava/net/URL;->openConnection',
         ],
-        'biblioteca_class': [
-            'Ljava/lang/System;->load', 'Ljava/lang/System;->loadLibrary',
-            'Ldalvik/system/DexClassLoader;->loadClass','Ljava/net/URL;->openConnection'
+        'bluetooth': [
+            'BLUETOOTH'
+        ],
+        'armazenamento':[
+            'WRITE_EXTERNAL_STORAGE'
+        ],
+        'sistema': [
+            'WAKE_LOCK'
+            'RECEIVE_BOOT_COMPLETED',
+            'GET_TASKS'
+            'SYSTEM_ALERT_WINDOW',
+            'DISABLE_KEYGUARD',
+            'KILL_BACKGROUND_PROCESSES'
+        ],
+        'message': [
+            'READ_SMS','SEND_SMS','RECEIVE_SMS',
+            'Landroid/telephony/SmsManager;->sendMultipartTextMessage'
+        ],
+        'midia_audio': [
+            'VIBRATE',
+            'Landroid/media/AudioRecord;->startRecording'
+        ],
+        'biblioteca_classes': [
+            'Ljava/lang/System;->load',
+            'Ljava/lang/System;->loadLibrary',
+            'Ldalvik/system/DexClassLoader;->loadClass',
         ],
         'pacotes': [
             'Landroid/content/pm/PackageManager;->getInstalledPackages'
@@ -83,9 +91,8 @@ class SoftwareFormBase(APIView):
                 software_data['erro']
                 return Response({
                     "message": """
-                        Dados inválidos. Inclua 'name', 'localizacao_rede', 'bluetooth_funcionalidades',
-                        'arquivos_confOS', 'sms',' midia_audio', 'camera', 'rede_operadora', 'sim_pais', 'biblioteca_class',
-                        'pacotes' para criar um software.
+Dados inválidos. Inclua 'name', 'localizacao', 'rede', 'bluetooth', 'armazenamento', 'sistema',
+'message', 'midia_audio', 'biblioteca_classes', 'pacotes' para criar um software.
                     """
                 }, status=status.HTTP_400_BAD_REQUEST)
             except Exception: pass
@@ -102,9 +109,9 @@ class SoftwareFormBase(APIView):
             }, status=status.HTTP_201_CREATED)
         else:
             return Response({
-                "message": """Dados inválidos. Inclua 'name', 'localizacao_rede', 'bluetooth_funcionalidades',
-                'arquivos_confOS', 'sms',' midia_audio', 'camera', 'rede_operadora', 'sim_pais', 'biblioteca_class',
-                'pacotes' para criar um software."""
+                "message": """
+Dados inválidos. Inclua 'name', 'localizacao', 'rede', 'bluetooth', 'armazenamento', 'sistema',
+'message', 'midia_audio', 'biblioteca_classes', 'pacotes' para criar um software."""
             }, status=status.HTTP_400_BAD_REQUEST)
 
 class SoftwareFormAuth(SoftwareFormBase):
@@ -128,9 +135,9 @@ class SoftwareFormAuth(SoftwareFormBase):
                 'biblioteca_class': openapi.Schema(type=openapi.TYPE_STRING, description="Class library"),
                 'pacotes': openapi.Schema(type=openapi.TYPE_STRING, description="Packages used by the software"),
             },
-            required=['name', 'localizacao_rede', 'bluetooth_funcionalidades',
-                'arquivos_confOS', 'sms',' midia_audio', 'camera', 'rede_operadora',
-                'sim_pais', 'biblioteca_class','pacotes' ],  # Defining the mandatory fields for software creation
+            required=['name', 'localizacao', 'rede', 'bluetooth',
+                      'armazenamento', 'sistema', 'message', 'midia_audio',
+                      'biblioteca_classes'],  # Defining the mandatory fields for software creation
         ),
         responses={
             200: openapi.Response(
@@ -157,25 +164,25 @@ class SoftwareFormAuth(SoftwareFormBase):
 
 class SoftwareFormUnauth(SoftwareFormBase):
     @swagger_auto_schema(
+            
         operation_description="Create software unauthenticated",
         request_body=openapi.Schema(
             type=openapi.TYPE_OBJECT,
             properties={
                 'name': openapi.Schema(type=openapi.TYPE_STRING, description="Name of the software"),
-                'localizacao_rede': openapi.Schema(type=openapi.TYPE_STRING, description="Network location of the software"),
-                'bluetooth_funcionalidades': openapi.Schema(type=openapi.TYPE_STRING, description="Bluetooth functionalities"),
-                'arquivos_confOS': openapi.Schema(type=openapi.TYPE_STRING, description="Configuration files for OS"),
-                'sms': openapi.Schema(type=openapi.TYPE_STRING, description="SMS functionalities"),
-                'midia_audio': openapi.Schema(type=openapi.TYPE_STRING, description="Audio media functionalities"),
-                'camera': openapi.Schema(type=openapi.TYPE_STRING, description="Camera functionalities"),
-                'rede_operadora': openapi.Schema(type=openapi.TYPE_STRING, description="Carrier network"),
-                'sim_pais': openapi.Schema(type=openapi.TYPE_STRING, description="SIM country"),
-                'biblioteca_class': openapi.Schema(type=openapi.TYPE_STRING, description="Class library"),
+                'localizacao': openapi.Schema(type=openapi.TYPE_STRING, description="Network location of the software"),
+                'rede': openapi.Schema(type=openapi.TYPE_STRING, description="Carrier network"),
+                'bluetooth': openapi.Schema(type=openapi.TYPE_STRING, description="Bluetooth functionalities"),
+                'armazenamento': openapi.Schema(type=openapi.TYPE_STRING, description="Camera functionalities"),
+                'sistema': openapi.Schema(type=openapi.TYPE_STRING, description="Configuration functions or OS"),
+                'message': openapi.Schema(type=openapi.TYPE_STRING, description="SMS functionalities"),
+                'midia_audio': openapi.Schema(type=openapi.TYPE_STRING, description="Media functionalities and vibration"),
+                'biblioteca_classes': openapi.Schema(type=openapi.TYPE_STRING, description="SIM country"),
                 'pacotes': openapi.Schema(type=openapi.TYPE_STRING, description="Packages used by the software"),
             },
-            required=['name', 'localizacao_rede', 'bluetooth_funcionalidades',
-                'arquivos_confOS', 'sms',' midia_audio', 'camera', 'rede_operadora',
-                'sim_pais', 'biblioteca_class','pacotes' ],  # Defining the mandatory fields for software creation
+            required=['name', 'localizacao', 'rede', 'bluetooth',
+                      'armazenamento', 'sistema', 'message', 'midia_audio',
+                      'biblioteca_classes'],  # Defining the mandatory fields for software creation
         ),
         responses={
             200: openapi.Response(

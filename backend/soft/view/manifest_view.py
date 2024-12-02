@@ -11,4 +11,4 @@ def get_vite_manifest():
 
 def index(request):
     manifest = get_vite_manifest()
-    return render(request, 'safescan/index.html', {'manifest': manifest})
+    return render(request, 'soft/index.html', {'manifest': manifest})

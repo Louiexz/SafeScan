@@ -77,9 +77,8 @@ class GetSoftwareSerializer(serializers.ModelSerializer):
 class CreateSoftwareSerializer(serializers.ModelSerializer):
     class Meta:
         model = Software
-        fields = ["name", 'localizacao_rede', 'bluetooth_funcionalidades',
-                  'arquivos_confOS','sms', 'midia_audio', 'camera', 'rede_operadora',
-                  'sim_pais', 'biblioteca_class', 'pacotes', 'user']
+        fields = ["name", 'localizacao', 'rede', 'bluetooth', 'armazenamento',
+                  'sistema', 'message', 'midia_audio', 'biblioteca_classes', 'pacotes', 'user']
     
     def validate_name(self, value):
         """

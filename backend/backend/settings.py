@@ -1,17 +1,18 @@
 from pathlib import Path
 from decouple import config, Csv
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY")
 
-DEBUG = config("DEBUG", default=False)
+DEBUG = False
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv(), default="127.0.0.1")
 # Application definition
 
 MY_APPS = [
-    "safescan.apps.SafeScanConfig",
+    "soft.apps.SoftConfig",
 ]
 THIRD_APPS = [
     'rest_framework',
@@ -157,21 +158,14 @@ USE_TZ = True
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-# URLs para acessar os arquivos estáticos
-STATIC_URL = '/static/'  # Caminho público para arquivos estáticos
+STATIC_URL = 'static/'
 
-# Diretórios de arquivos estáticos para o desenvolvimento
-STATICFILES_DIRS = [
-    BASE_DIR / 'static',  # Diretório onde seus arquivos estáticos estão
-]
-
-# Diretório onde os arquivos estáticos serão coletados para produção
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # Local onde 'collectstatic' colocará os arquivos para produção
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
 """VITE_MANIFEST_PATH = BASE_DIR / 'static/'
 VITE_APP_DIR = BASE_DIR.parent / 'frontend'          # Diretório onde o Vite está configurado (frontend)
 VITE_DEV_MODE = DEBUG                          # Ativa o modo de desenvolvimento do Vite quando DEBUG está True
-VITE_STATIC_ROOT = BASE_DIR / 'safescan/static'     # Diretório onde o Vite deve colocar os arquivos em produção
+VITE_STATIC_ROOT = BASE_DIR / 'soft/static'     # Diretório onde o Vite deve colocar os arquivos em produção
 
 if VITE_APP_DIR is None or not VITE_APP_DIR.exists():
     raise ValueError("VITE_APP_DIR não está configurado corretamente.")

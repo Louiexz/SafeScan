@@ -1,6 +1,8 @@
 from django.contrib import admin
 from django.urls import include, path
-from safescan.view import *
+from soft.view import *
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -18,6 +20,6 @@ urlpatterns = [
     path("api/software_form_unauth", SoftwareFormUnauth.as_view(), name='software_form_unauth'),
     path("api/virustotal", ViewUrlFile.as_view(), name='virustotal'),
     
-    # Incluindo as URLs do app safescan (se houver outras urls neste app)
-    path('', include('safescan.urls')),  # Verifique se você tem um safescan/urls.py
-]
+    # Incluindo as URLs do app soft (se houver outras urls neste app)
+    path('', include('soft.urls')),  # Verifique se você tem um soft/urls.py
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

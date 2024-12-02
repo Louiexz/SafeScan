@@ -245,12 +245,12 @@ class ForgotPassword(APIView):
         try:
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = token_generator.make_token(user)
-            reset_link = f"http://localhost:5173/confirm/{uid}/{token}"
+            reset_link = f"https://soft.ai.vercel.app/confirm/{uid}/{token}"
      
             send_mail(
                 "Recuperação de senha",
                 f"Use o link abaixo para redefinir sua senha:\n{reset_link}",
-                "fluizlucas@gmail.com",  # Substitua pelo seu endereço de e-mail de envio
+                "thesoft.ai@gmail.com",  # Substitua pelo seu endereço de e-mail de envio
                 [user.email],
             )
             return Response({'message': 'Email para recuperação de senha enviado.'}, status=status.HTTP_200_OK)
