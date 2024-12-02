@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Soft.AI - Login</title>
-    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/style.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Aldrich&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Aldrich&display=swap');
@@ -18,7 +18,7 @@
     <header>
         <div>
             <img src="./Asserts/logo-Soft-IA.png" alt="Logo Soft.IA">
-            <h1>Soft.IA</h1>
+            <h1>Soft.AI</h1>
         </div>
     </header>
     <main>
@@ -32,19 +32,54 @@
             <div class="secao-form">
                 <form class="form-login" action="#" method="POST">
                     <label class="label-login" for="username">Username</label>
-                    <input class="input-login" type="text" id="username" name="username"
+                    <input class="input-login" type="text" id="username-login" name="username"
                         placeholder="Enter your username" required>
 
                     <label class="label-login" for="password">Password</label>
-                    <input class="input-login" type="password" id="password" name="password" placeholder="Enter your password" required>
+                    <input class="input-login" type="password" id="password-login" name="password"
+                        placeholder="Enter your password" required>
 
                     <div class="links">
                         <a href="#">Forgot password?</a>
-                        <a href="./registro.html">Sign up</a>
+                        <a onclick="togglePopup()">Sign up</a>
                     </div>
 
                     <button class="button-login" type="submit">Sign in</button>
                 </form>
+            </div>
+            <div id="popup-container" class="popup">
+                <div class="overlay">
+                    <div class="popup-content">
+                        <h2>Sign up</h2>
+                        <form>
+                            <label class="label-registro" for="username">Username</label>
+                            <input class="input-registro" type="text" id="username" name="username"
+                                placeholder="Enter your username">
+
+                            <label class="label-registro" for="email">E-mail</label>
+                            <input class="input-registro" type="email" id="email" name="email"
+                                placeholder="Enter your e-mail">
+
+                            <label class="label-registro" for="confirm-email">Confirm e-mail</label>
+                            <input class="input-registro" type="email" id="confirm-email" name="confirm-email"
+                                placeholder="Confirm your e-mail">
+
+                            <label class="label-registro" for="password">Password</label>
+                            <input class="input-registro" type="password" id="password" name="password"
+                                placeholder="Enter your password">
+
+                            <label class="label-registro" for="confirm-password">Confirm password</label>
+                            <input class="input-registro" type="password" id="confirm-password" name="confirm-password"
+                                placeholder="Confirm your password">
+
+                            <div class="botoes">
+                                <button class="botao-registro" type="">Sign up</button>
+                                <button class="botao-voltar-registro" onclick="togglePopup()"
+                                    type="button">Back</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
             <div class="secao-img">
                 <div class="container-img">
@@ -58,21 +93,24 @@
         <div class="footer-container">
             <div class="logo-section">
                 <img class="footer-logo" src="./Asserts/logo-Soft-IA.png" alt="Logo Soft.IA">
-                <h1>Soft.IA</h1>
+                <h1>Soft.AI</h1>
             </div>
             <div class="contato">
+                <h2>Contact</h2>
                 <p>(81) 1122-3344</p>
-                <p>support@softia.com</p>
+                <p>support@softai.com</p>
                 <a href="https://www.instagram.com"><i class="bi-instagram"></i></a>
                 <a href="https://www.facebook.com/login/?locale=pt_BR"><i class="bi-facebook"></i></a>
                 <a href="https://x.com/?lang=pt-br"><i class="bi-twitter-x"></i></a>
             </div>
             <div class="endereco">
+                <h2>Location</h2>
                 <p>123, Security Avenue</p>
                 <p>Recife, PE, 12345678, BR</p>
             </div>
         </div>
     </footer>
+    <script src="./script.js"></script>
 </body>
 
 </html>

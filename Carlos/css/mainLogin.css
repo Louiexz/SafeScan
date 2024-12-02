@@ -2,6 +2,7 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    
 }
 
 body {
@@ -90,6 +91,8 @@ form .links {
 form .links a {
     color: #28a745;
     font-weight: normal;
+    cursor: pointer;
+    text-decoration: underline;
 }
 
 .button-login {
@@ -135,5 +138,5 @@ form button:hover {
 }
 
 .img-desktop {
-    z-index: 2;
+    z-index: 1;
 }

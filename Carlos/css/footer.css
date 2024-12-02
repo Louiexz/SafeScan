@@ -1,7 +1,7 @@
 footer {
     background-color: #0B0A0A;
     color: #fff;
-    padding: 60px;
+    padding: 35px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,6 +41,18 @@ footer {
     font-weight: 300;
     text-align: left;
     line-height: 2.2;
+}
+
+.contato h2,
+.endereco h2 {
+    font-family: "Albert Sans", sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    text-align: left;
+    color: #fff;
+    display: inline-block;
+    padding-bottom: 5px;
+    width: 100%;
 }
 
 .contato {
