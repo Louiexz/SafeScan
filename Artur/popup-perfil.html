@@ -4,32 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="stylesheet" href="./css-popup/popup-NOVO.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="./css-popup/popup-perfil.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Aldrich&display=swap');
+        @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+      </style>
 </head>
 <body>
-    <div class="popup-container">
-        <form class="popup-form">
-            <div class="form-group">
-                <label for="software-name">Nome do software</label>
-                <div class="input-container">
-                    <input type="text" id="software-name" placeholder="Digite o nome do software" readonly>
-                    <button type="button" class="edit-button"><i class="bi bi-pencil-square"></i></button>
+    <div class="popup-perfil">
+        <form class="popup-form-perfil">
+            <div class="group-perfil">
+                <label class="title-perg" for="software-name">Software name</label>
+                <div class="input-perfil">
+                    <input type="text" id="software-name" placeholder="Enter the name of the software" readonly>
+                    <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
                 </div>
             </div>
-
             <div class="form-grid">
                 <div class="form-group">
-                    <label>Localização?</label>
-                    <div class="radio-group">
-                        <button type="button" class="radio-button">Sim</button>
-                        <button type="button" class="radio-button">Não</button>
-                        <button type="button" class="edit-button"><i class="bi bi-pencil-square"></i></button>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Rede?</label>
+                    <label class="title-perg">Location?</label>
                     <div class="radio-group">
                         <button type="button" class="radio-button">Sim</button>
                         <button type="button" class="radio-button">Não</button>
@@ -38,78 +32,77 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Armazenamento externo?</label>
+                    <label class="title-perg">Network?</label>
                     <div class="radio-group">
                         <button type="button" class="radio-button">Sim</button>
                         <button type="button" class="radio-button">Não</button>
-                        <button type="button" class="edit-button"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Mensagens?</label>
+                    <label class="title-perg">External storage?</label>
                     <div class="radio-group">
                         <button type="button" class="radio-button">Sim</button>
                         <button type="button" class="radio-button">Não</button>
-                        <button type="button" class="edit-button"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Bluetooth?</label>
+                    <label class="title-perg">Messages?</label>
                     <div class="radio-group">
                         <button type="button" class="radio-button">Sim</button>
                         <button type="button" class="radio-button">Não</button>
-                        <button type="button" class="edit-button"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Modificações no sistema e controle de processos?</label>
+                    <label class="title-perg">Bluetooth?</label>
                     <div class="radio-group">
                         <button type="button" class="radio-button">Sim</button>
                         <button type="button" class="radio-button">Não</button>
-                        <button type="button" class="edit-button"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Execução de código?</label>
+                    <label class="title-perg">Modifications to the system and process control?</label>
                     <div class="radio-group">
                         <button type="button" class="radio-button">Sim</button>
                         <button type="button" class="radio-button">Não</button>
-                        <button type="button" class="edit-button"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Pacotes?</label>
+                    <label class="title-perg">Code execution?</label>
                     <div class="radio-group">
                         <button type="button" class="radio-button">Sim</button>
                         <button type="button" class="radio-button">Não</button>
-                        <button type="button" class="edit-button"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Gravação de áudio ou vibração?</label>
+                    <label class="title-perg">Packages?</label>
                     <div class="radio-group">
                         <button type="button" class="radio-button">Sim</button>
                         <button type="button" class="radio-button">Não</button>
-                        <button type="button" class="edit-button"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label>Armazenamento e execução de código externo?</label>
+                    <label class="title-perg">Audio recording or vibration?</label>
                     <div class="radio-group">
                         <button type="button" class="radio-button">Sim</button>
                         <button type="button" class="radio-button">Não</button>
-                        <button type="button" class="edit-button"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
                     </div>
                 </div>
             </div>
-
             <div class="form-actions">
                 <button type="submit" class="save-button">Salvar</button>
                 <button type="button" class="back-button">Voltar</button>

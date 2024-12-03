@@ -5,7 +5,9 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Albert Sans", sans-serif;
+    font-weight: 500;
+    color: #fff;
     background-color: rgba(0, 0, 0, 0.2);
     display: flex;
     justify-content: center;
@@ -13,39 +15,43 @@ body {
     height: 100vh;
 }
 
-.popup-container {
+.popup-perfil {
     background: linear-gradient(
-        to top,
+        to bottom,
         #09762A 0%, 
         #0DA93C 25%, 
         #0FC245 47%, 
-        #10DC4F 82%
+        #09762A 82%
     );
+    display: block;
     border-radius: 15px;
     padding: 20px;
-    width: 80%;
+    width: 70%;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-.popup-form {
+.popup-form-perfil {
     display: flex;
     flex-direction: column;
+    
 }
 
-.form-group {
+.group-perfil {
     margin-bottom: 20px;
 }
 
-.label {
+.title-perg {
     margin-bottom: 10px;
-    font-size: 14px;
-    font-weight: bold;
+    font-size: 15px;
+    font-weight: 500;
 }
 
-.input-container {
+.input-perfil {
     display: flex;
     align-items: center;
     width: 400px;
+    margin-top: 10px;
+    gap: 9px;
 }
 
 input {
@@ -53,7 +59,8 @@ input {
     flex: 1;
     border: 1px solid #ddd;
     border-radius: 5px;
-    font-size: 16px;
+    font-family: "Albert Sans", sans-serif;
+    font-size: 14px;
     color: #555;
 }
 
@@ -61,7 +68,8 @@ input {
     background: none;
     border: none;
     cursor: pointer;
-    margin-left: 10px;
+    margin-top: 12px;
+    margin-left: 5px;
     font-size: 16px;
     color: #fff;
 }
@@ -69,7 +77,7 @@ input {
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    gap: 10px;
 }
 
 .radio-group {
@@ -79,22 +87,26 @@ input {
 }
 
 .radio-button {
-    padding: 10px 20px;
-    background-color: #333;
-    color: #fff;
+    margin-top: 13px;
+    padding: 8px 20px;
+    background-color: #fff;
+    color: #0B0A0A;
+    font-family: "Albert Sans", sans-serif;
+    font-weight: 650;
     border: none;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .radio-button:hover {
-    background-color: #555;
+    background-color: #ddd;
 }
 
 .form-actions {
     display: flex;
     justify-content: space-between;
-    margin-top: 20px;
+    margin-top: 40px;
+    gap: 15px;
 }
 
 .save-button,
@@ -102,16 +114,20 @@ input {
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
-    font-size: 16px;
+    font-family: "Albert Sans", sans-serif;
+    font-size: 15px;
     cursor: pointer;
 }
 
 .save-button {
     background-color: #333;
     color: #fff;
+    font-weight: 300;
 }
 
 .back-button {
     background-color: #ddd;
     color: #333;
+    font-weight: 500;
+    margin-right: 865px;
 }
