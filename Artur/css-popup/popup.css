@@ -1,0 +1,50 @@
+body {
+
+    margin: 0;
+    padding: 0;
+    font-family: "Albert Sans", sans-serif;
+    font-weight: bold;
+    color: #ffff;
+  }
+  .popup-container{
+ 
+
+    background: linear-gradient(
+        to right,
+        #38b963 1%,
+        #22c759 10%,
+        #266138 40%,
+        #1a3522 80%
+      );
+      width: 1060px;
+      height: 641px;
+      top: 50%;
+      left: 50%;
+  }
+  .popup {
+   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 200px;
+  }
+  .left, .right{
+  padding: 25px;;
+}
+  
+  .comentar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;   
+    padding-left: 85px;
+  }
+  .comentar textarea {
+    max-width: 200px;
+    overflow: hidden;
+    height: 10px;
+    resize: none;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }  
