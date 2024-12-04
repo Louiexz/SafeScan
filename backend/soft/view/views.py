@@ -2,8 +2,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from rest_framework.response import Response
 from django.contrib.auth.hashers import make_password, check_password
 from ..model import Software, User
-from ..serializer import UserSerializer, RegisterSerializer
-from ..serializer import ProfileSerializer, CreateSoftwareSerializer, GetSoftwareSerializer, ProfileSoftwareSerializer
+from ..serializer import *
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated

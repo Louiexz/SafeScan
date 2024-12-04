@@ -1,44 +1,42 @@
-import './assets/styles/App.css';
-import './assets/styles/Header.css';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
-import Home from './pages/Home';
-import Software from "./pages/Software1";
-import About from './pages/About';
-import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
-import Forgot from './pages/Forgot';
-import Confirm from './pages/Confirm';
-import PrivateRoute from './components/PrivateRoute';  // Importe o PrivateRoute
+import head from './assets/styles/Header.module.css';
+import style from './assets/styles/Footer.module.css'
+
+import Navigation from './components/Navigation';
 
 const App = () => {
   return (
-    <Router>
-      <div>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/Software">Software</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/register">Register</Link>
-          <Link to="/profile">Profile</Link>
-          <Link to="/about">About</Link>
-        </nav>
-
-        <div id="app">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/software" element={<Software />} />
-            <Route path="/about" element={<About />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/forgot" element={<Forgot />} />
-            <Route path="/confirm/:uidb64/:token" element={<Confirm />} />
-            {/* Proteger a rota do perfil */}
-            <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-          </Routes>
+    <>
+      <header className={head.header}>
+        <div>
+            <img src="./Asserts/logo-Soft-IA.png" alt="Logo Soft.IA"/>
+            <h1>Soft.AI</h1>
         </div>
-      </div>
-    </Router>
+      </header>
+      <Navigation/>
+      <footer>
+        <div className={style.footerContainer}>
+            <div className={style.logoSection}>
+                <img className={style.footerLogo}
+                  src="../assets/images/logo-Soft-IA.png"
+                  alt="Logo Soft.IA"/>
+                <h1>Soft.AI</h1>
+            </div>
+            <div className={style.contato}>
+                <h2>Contact</h2>
+                <p>(81) 1122-3344</p>
+                <p>support@softai.com</p>
+                <a href="https://www.instagram.com"><i className={style.biInstagram}></i></a>
+                <a href="https://www.facebook.com/login/?locale=pt_BR"><i className={style.bFacebook}></i></a>
+                <a href="https://x.com/?lang=pt-br"><i className={style.biTwitterX}></i></a>
+            </div>
+            <div className={style.endereco}>
+                <h2>Location</h2>
+                <p>123, Security Avenue</p>
+                <p>Recife, PE, 12345678, BR</p>
+            </div>
+        </div>
+      </footer>
+    </>
   );
 };
 

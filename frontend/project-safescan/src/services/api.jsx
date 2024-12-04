@@ -8,7 +8,7 @@ const token = localStorage.getItem('token');  // Obtém o token salvo no localSt
 
 // Configuração padrão do Axios
 const api = axios.create({
-  baseURL: 'https://safescan.onrender.com/api',
+  baseURL: 'http://127.0.0.1:8000/api',
   headers: {
     'Content-Type': 'application/json',
     'X-CSRFToken': csrftoken,

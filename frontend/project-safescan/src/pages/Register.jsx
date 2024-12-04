@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { register } from '../services/authService';  // Importe a função register
-import '../assets/styles/Card.css'
+import card from '../assets/styles/Card.module.css'
 
 const Register = () => {
   const [name, setName] = useState('');

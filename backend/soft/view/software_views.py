@@ -3,71 +3,6 @@ import vt
 from ml_model.ai_model import make_prediction
 from decouple import config
 
-def transform_groups(data):
-    # Mapeamento dos grupos de campos
-    field_groups = {
-        'localizacao': [
-            'ACCESS_COARSE_LOCATION',
-            'ACCESS_FINE_LOCATION',
-            'Landroid/location/LocationManager;->getLastKgoodwarewnLocation',
-            'Landroid/telephony/TelephonyManager;->getCellLocation',
-            'Landroid/telephony/TelephonyManager;->getSimOperator',
-            'Landroid/telephony/TelephonyManager;->getSimCountryIso',
-            'Landroid/telephony/TelephonyManager;->getSimOperatorName',
-            'Landroid/telephony/TelephonyManager;->getNetworkCountryIso',
-            'Landroid/telephony/TelephonyManager;->getNetworkOperator',
-            'Landroid/telephony/TelephonyManager;->getNetworkOperatorName',
-        ],
-        'rede':[
-            'CHANGE_NETWORK_STATE',
-            'Ljava/net/URL;->openConnection',
-        ],
-        'bluetooth': [
-            'BLUETOOTH'
-        ],
-        'armazenamento':[
-            'WRITE_EXTERNAL_STORAGE'
-        ],
-        'sistema': [
-            'WAKE_LOCK'
-            'RECEIVE_BOOT_COMPLETED',
-            'GET_TASKS'
-            'SYSTEM_ALERT_WINDOW',
-            'DISABLE_KEYGUARD',
-            'KILL_BACKGROUND_PROCESSES'
-        ],
-        'message': [
-            'READ_SMS','SEND_SMS','RECEIVE_SMS',
-            'Landroid/telephony/SmsManager;->sendMultipartTextMessage'
-        ],
-        'midia_audio': [
-            'VIBRATE',
-            'Landroid/media/AudioRecord;->startRecording'
-        ],
-        'biblioteca_classes': [
-            'Ljava/lang/System;->load',
-            'Ljava/lang/System;->loadLibrary',
-            'Ldalvik/system/DexClassLoader;->loadClass',
-        ],
-        'pacotes': [
-            'Landroid/content/pm/PackageManager;->getInstalledPackages'
-        ]
-    }
-
-    software = {}  # Dicionário para armazenar os valores dos campos
-
-    # Iterando sobre os grupos de campos
-    for group, fields in field_groups.items():
-        group_value = data.get(group)
-        
-        # Se o campo do grupo não existir, podemos registrar um erro ou simplesmente continuar
-        if group_value is None: return {"erro":True}
-        
-        # Atribui o valor ao campo correspondente
-        for field in fields: software[field] = group_value
-
-    return software  # Retorna o dicionário com os valores atribuídos
-
 class SoftwareFormBase(APIView):
     def handle_software_creation(self, request, is_authenticated):
         # Criação do serializer
@@ -84,7 +19,7 @@ class SoftwareFormBase(APIView):
             software_instance = serializer.save()
 
             # Converte os dados para o formato adequado para o modelo de predição
-            software_data = transform_groups(request.data)
+            software_data = serializer.validate(request.data)
 
             # Verifica se há erro nos dados
             try:
@@ -303,7 +238,76 @@ class ViewUrlFile(APIView):
                     return Response({"message": "Error retrieving URL.", "error": str(e)},
                                     status=status.HTTP_400_BAD_REQUEST)
 
+class UpdateSoftware(APIView):
+    permission_classes = [IsAuthenticated]
+
+    @swagger_auto_schema(
+        operation_description="Update software by ID",
+        request_body=None,  # Não é necessário corpo na requisição para deletar
+        responses={
+            204: openapi.Response(
+                description="Software updated successfully",
+                examples={
+                    'application/json': {
+                        "message": "The software has been successfully updated."
+                    }
+                }
+            ),
+            400: openapi.Response(
+                description="Bad request, invalid data",
+                examples={
+                    'application/json': {
+                        "error": "Invalid software ID or missing parameters."
+                    }
+                }
+            ),
+            404: openapi.Response(
+                description="Software not found",
+                examples={
+                    'application/json': {
+                        "error": "Software with the given ID does not exist."
+                    }
+                }
+            ),
+        },
+        tags=["Software"]
+    )
+    def put(self, request, id):
+        try:
+            software = Software.objects.get(pk=id)
+        except Software.DoesNotExist:
+            return Response({"error": "Software not found."}, status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = UpdateSoftwareSerializer(software, data=request.data, partial=True)
+
+        if serializer.is_valid():
+            software_instance = serializer.save()
+            
+            software_data = serializer.validate(request.data)
+
+            # Verifica se há erro nos dados
+            try:
+                software_data['erro']
+                return Response({
+                    "message": """
+Dados inválidos. Inclua 'name', 'localizacao', 'rede', 'bluetooth', 'armazenamento', 'sistema',
+'message', 'midia_audio', 'biblioteca_classes', 'pacotes' para criar um software.
+                    """
+                }, status=status.HTTP_400_BAD_REQUEST)
+            except Exception: pass
+
+            # Fazendo a predição com o modelo de IA
+            prediction = make_prediction(software_data)
+
+            software_instance.label = prediction
+
+            serializer.save()
+            return Response({"message": "Software updated successfully."}, status=status.HTTP_200_OK)
+
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 class DeleteSoftware(APIView):
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(
         operation_description="Delete software by ID",
         request_body=None,  # Não é necessário corpo na requisição para deletar

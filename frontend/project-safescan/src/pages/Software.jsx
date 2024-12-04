@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import { useMutation, useQuery } from 'react-query';
-import { listSoftwares, createSoftware, checkSoftware } from '../services/softwareService';
-import '../assets/styles/index.css'
-import '../assets/styles/Card.css';
+import { listSoftwares, checkSoftwareUrl } from '../services/softwareService';
+import card from '../assets/styles/Card.module.css';
+import PopupSoftware from '../components/softwarePopup';
 
 const Software = () => {
   const [softwareData, setSoftwareData] = useState(null);
   const [responseData, setResponseData] = useState(null);
   const [softwareUrl, setSoftwareUrl] = useState("");
-  const [softwareName, setSoftwareName] = useState("");
-  const [softwareStatus, setSoftwareStatus] = useState("");
+  const [showPopup, setShowPopup] = useState(false);
 
   const { isLoading, refetch } = useQuery("softwares", listSoftwares, {
     refetchOnWindowFocus: false,
@@ -18,21 +17,9 @@ const Software = () => {
       setSoftwareData(response.data.data); 
     },
   });
-  
-  // Mutação para enviar dados do software
-  const mutationCreateSoftware = useMutation(createSoftware, {
-    onSuccess: (response) => {
-      console.log('Software enviado com sucesso');
-      setResponseData(response.data);
-      refetch()
-    },
-    onError: (error) => {
-      console.error('Erro ao enviar os dados do software:', error);
-    },
-  });
 
   // Mutação para enviar URL do software
-  const mutationCheckUrl = useMutation(checkSoftware, {
+  const mutationCheckUrl = useMutation(checkSoftwareUrl, {
     onSuccess: (response) => {
       console.log('URL verificada com sucesso');
       setResponseData(response.data);
@@ -42,26 +29,13 @@ const Software = () => {
     },
   });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const dataToSend = {};
-
-    if (softwareName && softwareStatus) {
-      dataToSend.name = softwareName;
-      dataToSend.status = softwareStatus;
-    }
-
-    mutationCreateSoftware.mutate(dataToSend);
-  };
-
   const handleSubmitUrl = (event) => {
     event.preventDefault();
-    const dataToSend = {};
-
-    if (softwareUrl) {
-      dataToSend.url = softwareUrl;
+    if (!softwareUrl) {
+      alert("Por favor, insira uma URL válida.");
+      return;
     }
-
+    const dataToSend = { url: softwareUrl };
     mutationCheckUrl.mutate(dataToSend);
   };
 
@@ -70,58 +44,42 @@ const Software = () => {
       <h1>Softwares</h1>
       <div className='cards'>
         {isLoading ? (
-          <p>Carregando...</p>
-        ) : softwareData && softwareData.length > 0 ? (
-          softwareData.map((software, index) => (
-            <div className="card" key={index}>
-              <span>Name: {software.name}</span><br />
-              <span>Status: {software.status}</span><br />
-              <span>Created at: {software.created_at}</span><br />
-              <span>Updated at: {software.updated_at}</span>
-            </div>
-          ))
-        ) : (
-          <span>Nenhum software cadastrado ainda.</span>
+            <div className="spinner">Carregando...</div>
+          ) : softwareData && softwareData.length > 0 ? (
+            softwareData.map((software, index) => (
+              <div className="card" key={index}>
+                <span>Name: {software.name}</span><br />
+                <span>Status: {software.label}</span><br />
+                <span>Created at: {software.created_at}</span><br />
+                <span>Updated at: {software.updated_at}</span>
+              </div>
+            ))
+          ) : (
+            <span>Nenhum software cadastrado ainda.</span>
         )}
       </div>
 
       <h3>Check software by data or URL</h3>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="name">Software name</label>
-          <input
-            type="text"
-            id="name"
-            value={softwareName}
-            onChange={(e) => setSoftwareName(e.target.value)}
-          />
-        </div>
-        <div>
-          <label htmlFor="software-status">Software status</label>
-          <input
-            type="text"
-            id="software-status"
-            value={softwareStatus}
-            onChange={(e) => setSoftwareStatus(e.target.value)}
-          />
-        </div>
-        <button type="submit" disabled={mutationCreateSoftware.isLoading}>
-          {mutationCreateSoftware.isLoading ? 'Enviando...' : 'Enviar'}
-        </button>
-        {mutationCreateSoftware.isError && <p style={{ color: 'red' }}>Erro: {mutationCreateSoftware.error.message}</p>}
-        {mutationCreateSoftware.isSuccess && <p style={{ color: 'green' }}>Software enviado com sucesso!</p>}
-      </form><br/>
+      <button onClick={() => {
+        setShowPopup(true); 
+      }}>Create software</button>
+
+      {showPopup && (
+        <PopupSoftware 
+          method="create" 
+          onClose={() => setShowPopup(false)}
+          refetch={refetch}
+        />
+      )}
 
       {responseData && (
-        <pre>
-          <div className="card">
-            <span>Informações da URL:</span>
-            <span>Malicious: {JSON.stringify(responseData.data.malicious, null, 2)}</span>
-            <span>Suspicious: {JSON.stringify(responseData.data.suspicious, null, 2)}</span>
-            <span>Harmless: {JSON.stringify(responseData.data.harmless, null, 2)}</span>
-            <span>Undetected: {JSON.stringify(responseData.data.undetected, null, 2)}</span>
-          </div><br/>
-        </pre>
+        <div className="card">
+          <h4>Informações da URL</h4>
+          <p><strong>Malicious:</strong> {responseData.data.malicious.toString()}</p>
+          <p><strong>Suspicious:</strong> {responseData.data.suspicious.toString()}</p>
+          <p><strong>Harmless:</strong> {responseData.data.harmless.toString()}</p>
+          <p><strong>Undetected:</strong> {responseData.data.undetected.toString()}</p>
+        </div>
       )}
 
       <form onSubmit={handleSubmitUrl}>

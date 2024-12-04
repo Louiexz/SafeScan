@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/authService';  // Importa a função de login
-import '../assets/styles/Card.css'
+import card from '../assets/styles/Card.module.css'
 
 const Login = () => {
   const [name, setName] = useState('');

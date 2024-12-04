@@ -3,14 +3,17 @@ import { useQuery, useMutation } from 'react-query';
 import { fetchProfile, updateProfile } from '../services/profileService';
 import { logout } from '../services/authService';
 import { deleteSoftware } from '../services/softwareService';
+import PopupSoftware from '../components/softwarePopup';
 
 const Profile = () => {
+  const [softwareToUpdate, setSoftwareToUpdate] = useState(null);
+  const [showPopup, setShowPopup] = useState(false);
   const [profileData, setProfileData] = useState({});
   const [name, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   
-  const { data: response, error, isLoading } = useQuery('profile', fetchProfile, {
+  const { data: response, error, isLoading, refetch } = useQuery('profile', fetchProfile, {
     refetchOnWindowFocus: false,
     onSuccess: (response) => {
       setProfileData(response.data);
@@ -24,27 +27,24 @@ const Profile = () => {
   const logoutMutation = useMutation(logout);
 
   const handleUpdate = () => {
-    if (name !== profileData.username || password !== '' || email !== profileData.email) {
+    if (name !== profileData.username ||
+        email !== profileData.email) {
       const updatedData = { name, password, email };
       updateMutation.mutate(updatedData);
     } else {
-      alert("Os valores não devem ser iguais aos anteriores");
+      alert("Deve ter pelo menos um valor diferente.");
     }
   };
 
   const handleDelete = (id) => {
-    deleteSoftware(id)
-      .then((response) => {
-        console.log('Software deletado com sucesso');
-        // Atualize a lista de softwares após a exclusão
-        setProfileData((prevData) => ({
-          ...prevData,
-          softwares: prevData.softwares.filter((software) => software.id !== id),
-        }));
-      })
-      .catch((error) => {
-        console.error('Erro ao deletar software:', error);
-      });
+  deleteSoftware(id)
+    .then(() => {
+      console.log('Software deletado com sucesso');
+      window.location.reload()
+    })
+    .catch((error) => {
+      console.error('Erro ao deletar software:', error);
+    });
   };
 
   if (isLoading) return <p className="content">Carregando perfil...</p>;
@@ -81,9 +81,11 @@ const Profile = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
       </label><br/>
+
       <button onClick={handleUpdate}>
         {updateMutation.isLoading ? 'Atualizando...' : 'Atualizar Perfil'}
       </button><br/>
+      
       {updateMutation.isError && <p style={{ color: 'red' }}>Erro: {updateMutation.error.message}</p>}
       {updateMutation.isSuccess && <p style={{ color: 'green' }}>Perfil atualizado com sucesso!</p>}
       <br/>
@@ -95,6 +97,19 @@ const Profile = () => {
               <span>Status: {software.label}</span><br />
               <span>Criado em: {software.created_at}</span><br />
               <span>Atualizado em: {software.updated_at}</span><br />
+              <button onClick={() => {
+                setShowPopup(true);
+                setSoftwareToUpdate(software)
+              }}>Update software</button>
+
+              {showPopup && (
+                <PopupSoftware 
+                  method="update"
+                  data={softwareToUpdate}
+                  onClose={() => setShowPopup(false)}
+                  refetch={refetch}
+                />
+              )}
               <button onClick={() => handleDelete(software.id)}>Deletar</button>
             </div>
           ))}
