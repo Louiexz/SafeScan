@@ -13,26 +13,28 @@ body {
 
 }
 .fundoSoft{
-  background-image: url('../assets/fundoSoft.png');
+  background-image: 
+  linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+  url('../assets/abstract-techno-background-with-connecting-lines.jpg');
   object-fit: cover;
+  background-position: center;
   justify-content: center;
   display: flex;
-  height: 800px;
   align-items: center;
 }
 .popup-perfil {
   background: linear-gradient(
       to bottom,
-      #09762A 0%, 
-      #0DA93C 25%, 
-      #0FC245 47%, 
-      #09762A 82%
+      #145b2ca1 1%,
+      #1f834085 10%,
+      #165a2b9f 40%,
+      #18582b5c 80%
   );
   display: block;
   border-radius: 15px;
   padding: 20px;
-  width: 60%;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  margin: 20px;
+  box-shadow: 0px 10px 5px rgba(0, 0, 0, 0.9);
 }
 
 .popup-form-perfil {
@@ -42,7 +44,7 @@ body {
 }
 
 .group-perfil {
-  margin-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .title-perg {
@@ -54,7 +56,6 @@ body {
 .input-perfil {
   display: flex;
   align-items: center;
-  width: 400px;
   margin-top: 10px;
   gap: 9px;
 }
@@ -84,6 +85,7 @@ input {
   grid-template-columns: repeat(2, 1fr);
   gap: 10px;
 }
+
 
 .radio-group {
   display: flex;
@@ -136,4 +138,11 @@ input {
 .save-button:hover {
   background-color:#0B0A0A;
   color: #ffffff; 
+}
+
+@media (max-width: 450px) {
+  .form-grid {
+    display: flex;
+    flex-direction: column;
+  }
 }

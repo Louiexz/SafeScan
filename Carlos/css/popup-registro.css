@@ -12,12 +12,12 @@
 
 .popup-content {
     background: linear-gradient(
-        to bottom, 
-        #09762A 0%, 
-        #0DA93C 25%, 
-        #0FC245 47%, 
-        #10DC4F 82%
-    ); 
+        to bottom,
+        #145b2ccc 1%,
+        #1f8340c2 10%,
+        #165a2cc4 40%,
+        #18582bb7 80%
+    );
     border-radius: 10px;
     padding: 30px 80px;
     width: 550px;

@@ -12,11 +12,12 @@ body {
 
 .banner {
   background: linear-gradient(
-    to right,
-    #09762a 0%,
-    #0da93c 25%,
-    #0fc245 47%,
-    #10dc4f 82%
+    to bottom,
+    #1a3522 1%,
+    #266138 10%,
+    #22c759 40%,
+    #22c759 60%,
+    #1a3522 100%
   );
   color: #fff;
   padding: 30px 20px;
@@ -75,6 +76,7 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0);
   font-family: sans-serif;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.616);
 }
 
 .label-login {
