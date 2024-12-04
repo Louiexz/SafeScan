@@ -71,62 +71,105 @@
       </div>
     </div>
 
-    <!-- Seção Formulário com ID 'formulario' -->
-    <div id="formulario" class="formulario">
-      <div class="grid-container">
-        <div class="left-grid">
-          <h1>FIND OUT IF YOUR SOFTWARE IS FREE OF MALWARE!</h1>
-          <div class="comentar">
-            <h2>Software name: </h2>
-            <textarea name="" id=""></textarea>
-            <p>After installing the software, do you still have <br> access to the following features?</p>
+   <div class="fundoSoft">
+    <div class="popup-perfil">
+      <form class="popup-form-perfil">
+          <div class="group-perfil">
+              <label class="title-perg" for="software-name">Software name</label>
+              <div class="input-perfil">
+                  <input type="text" id="software-name" placeholder="Enter the name of the software" readonly>
+                  <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+              </div>
           </div>
+          <div class="form-grid">
+              <div class="form-group">
+                  <label class="title-perg">Location?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
 
-          <div class="questions">
-            <div class="question">
-              <span>Location and network?</span>
-              <div class="buttons">
-                <button>Yes</button>
-                <button>No</button>
+              <div class="form-group">
+                  <label class="title-perg">Network?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
               </div>
-            </div>
-            <div class="question">
-              <span>Messages and calls?</span>
-              <div class="buttons">
-                <button>Yes</button>
-                <button>No</button>
+
+              <div class="form-group">
+                  <label class="title-perg">External storage?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
               </div>
-            </div>
-            <div class="question">
-              <span>System modifications and process control?</span>
-              <div class="buttons">
-                <button>Yes</button>
-                <button>No</button>
+
+              <div class="form-group">
+                  <label class="title-perg">Messages?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
               </div>
-            </div>
-            <div class="question">
-              <span>Audio recording and hardware control?</span>
-              <div class="buttons">
-                <button>Yes</button>
-                <button>No</button>
+
+              <div class="form-group">
+                  <label class="title-perg">Bluetooth?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
               </div>
-            </div>
-            <div class="question">
-              <span>Storage and execution of external code?</span>
-              <div class="buttons">
-                <button>Yes</button>
-                <button>No</button>
+
+              <div class="form-group">
+                  <label class="title-perg">Modifications to the system and process control?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
               </div>
-            </div>
-            <div class="submit"><button>Enviar</button></div>
+
+              <div class="form-group">
+                  <label class="title-perg">Code execution?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="title-perg">Packages?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="title-perg">Audio recording or vibration?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
           </div>
-        </div>
-        <div class="right-grid">
-          <img src="./assets/img-formulario.png" alt="">
-        </div>
-      </div>
-    </div>
-
+          <div class="form-actions">
+              <button type="submit" class="save-button">Salvar</button>
+             
+          </div>
+      </form>
+  </div>
+</div>
     <footer>
       <div class="footer-container">
         <div class="logo-section">
