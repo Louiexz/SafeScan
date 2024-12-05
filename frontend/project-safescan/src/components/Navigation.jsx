@@ -1,39 +1,42 @@
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Home from '../pages/Home';
-import Software from "../pages/Software";
-import About from '../pages/About';
 import Login from '../pages/Login';
-import Register from '../pages/Register';
 import Profile from '../pages/Profile';
 import Forgot from '../pages/Forgot';
 import Confirm from '../pages/Confirm';
 import PrivateRoute from './PrivateRoute';  // Importe o PrivateRoute
 
+import '../index.css'
+
 const Navigation = () => {
     return (
         <Router>
             <div>
-                <nav>
-                <Link to="/">Home</Link>
-                <Link to="/Software">Software</Link>
-                <Link to="/login">Login</Link>
-                <Link to="/register">Register</Link>
-                <Link to="/profile">Profile</Link>
-                <Link to="/about">About</Link>
+                <nav className='navbar'>
+                {window.location.pathname.includes('confirm') ? null : (
+                    <>
+                        <Link to="/">Home</Link>
+                        {!localStorage.getItem('token') ? <Link to="/login">Login</Link> : null}
+                        {window.location.pathname === '/' && (
+                            <>
+                                <a href="#sobre">About</a>
+                                <a href="#formulario">Form</a>
+                            </>
+                        )}
+                        <Link to="/profile">Profile</Link>
+                    </>
+                )}
                 </nav>
 
-                <div id="app">
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/software" element={<Software />} />
-                    <Route path="/about" element={<About />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/forgot" element={<Forgot />} />
-                    <Route path="/confirm/:uidb64/:token" element={<Confirm />} />
-                    {/* Proteger a rota do perfil */}
-                    <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
-                </Routes>
+                <div className="app">
+                    <Routes>
+                        <Route path="/" element={<Home />} />
+                        <Route path="/login" element={<Login />} />
+                        <Route path="/forgot" element={<Forgot />} />
+                        <Route path="/confirm/:uidb64/:token" element={<Confirm />} />
+                        {/* Proteger a rota do perfil */}
+                        <Route path="/profile" element={<PrivateRoute><Profile /></PrivateRoute>} />
+                    </Routes>
                 </div>
             </div>
         </Router>

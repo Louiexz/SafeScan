@@ -3,46 +3,51 @@ import { createSoftware, updateSoftware } from '../services/softwareService';
 import Radio from './inputRadio';
 import { useMutation } from 'react-query';
 import Modal from 'react-modal'; // Biblioteca para modal
-import '../assets/styles/Modal.css';
+import soft from '../assets/styles/Home/Soft.module.css'
 
-const PopupSoftware = ({ method, data, onClose, refetch }) => {
+const PopupSoftware = ({ method, data, onClose, softName, refetch }) => {
   const [softwareName, setSoftwareName] = useState("");
   const [fields, setFields] = useState([
-    { name: "localizacao", label: "Software localização", value: false },
-    { name: "rede", label: "Software rede", value: false },
-    { name: "bluetooth", label: "Software bluetooth", value: false },
-    { name: "armazenamento", label: "Software armazenamento", value: false },
-    { name: "sistema", label: "Software sistema", value: false },
-    { name: "message", label: "Software message", value: false },
-    { name: "midia_audio", label: "Software midia-audio", value: false },
-    { name: "biblioteca_classes", label: "Software biblioteca-class", value: false },
-    { name: "pacotes", label: "Software pacotes", value: false },
+    { name: "localizacao", label: "Location?", value: false },
+    { name: "armazenamento", label: "External storage?", value: false },
+    { name: "bluetooth", label: "Bluetooth?", value: false },
+    { name: "biblioteca_classes", label: "Code execution?", value: false },
+    { name: "midia_audio", label: "Audio recording or vibration?", value: false },
+    { name: "rede", label: "Network?", value: false },
+    { name: "sistema", label: "Messages?", value: false },
+    { name: "message", label: "Modifications to the system and process control?", value: false },
+    { name: "pacotes", label: "Packages?", value: false },
   ]);
 
   const mutationCreateSoftware = useMutation(createSoftware, {
     onSuccess: () => {
-      console.log('Software criado com sucesso');
-      refetch(); // Trigger refetch after creation
+      {refetch ? refetch() : null }
+      console.log('Software created succesfully');
     },
-    onError: (error) => console.error('Erro ao criar software:', error),
+    onError: (error) => console.error('Erro creating software:', error),
   });
 
   const mutationUpdateSoftware = useMutation(updateSoftware, {
     onSuccess: () => {
-      console.log('Software atualizado com sucesso');
-      refetch(); // Trigger refetch after update
+      {refetch ? refetch() : null }
+      console.log('Software updated succesfully');
     },
-    onError: (error) => console.error('Erro ao atualizar software:', error),
+    onError: (error) => console.error('Erro updating software:', error),
   });
 
   const getMutationState = (method) =>
     method === 'create' ? mutationCreateSoftware : mutationUpdateSoftware;
 
+  const [feedbackMessage, setFeedbackMessage] = useState(null);
+  const [feedbackType, setFeedbackType] = useState(null); // 'success' ou 'error'
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(fields)
+    setFeedbackMessage(null); // Reseta mensagem ao submeter
+
     if (!softwareName || fields.some(field => field.value === null || field.value === "")) {
-      console.error('Todos os campos precisam ser preenchidos.');
+      setFeedbackMessage("Please write all fields.");
+      setFeedbackType("error");
       return;
     }
 
@@ -55,9 +60,21 @@ const PopupSoftware = ({ method, data, onClose, refetch }) => {
       dataToSend.id = data.id;
     }
 
-    method === "create"
-      ? mutationCreateSoftware.mutate(dataToSend)
-      : mutationUpdateSoftware.mutate(dataToSend);
+    const mutation = method === "create"
+      ? mutationCreateSoftware
+      : mutationUpdateSoftware;
+
+    mutation.mutate(dataToSend, {
+      onSuccess: () => {
+        setFeedbackMessage("Operation succesfully!");
+        setFeedbackType("success");
+        onClose();
+      },
+      onError: (error) => {
+        setFeedbackMessage(`Error: ${error.message}`);
+        setFeedbackType("error");
+      },
+    });
   };
 
   useEffect(() => {
@@ -79,53 +96,77 @@ const PopupSoftware = ({ method, data, onClose, refetch }) => {
       isOpen={true} // Use um estado para controlar a visibilidade
       contentLabel="Software Form"
       ariaHideApp={false} // Para evitar warning do React Modal
+      style={{
+        overlay: {
+          backgroundColor: 'rgba(0, 0, 0, 0.8)', // Fundo semi-transparente
+        },
+        content: {
+          background: 'transparent', // Cor do conteúdo do modal
+          border: 'transparent',
+          padding: '20px',
+          maxWidth: '500px',
+          margin: 'auto',
+        },
+      }}
     >
-      <form onSubmit={handleSubmit} id="form">
-        <div>
-          <label htmlFor="name">Software name</label>
-          <input
-            type="text"
-            id="name"
-            value={softwareName}
-            onChange={(e) => setSoftwareName(e.target.value)}
-          />
-        </div>
+      <div className={soft.popupPerfil}>
+        <form onSubmit={handleSubmit} id="form" className={soft.popupFormPerfil}>
+          <div className={soft.groupPerfil}>
+            <label className={soft.titlePerg} htmlFor="name">Software name</label>
+            <div className={soft.inputPerfil}>
+              <input
+                type="text"
+                id="name"
+                value={softwareName}
+                placeholder="Enter the name of the software"
+                onChange={(e) => setSoftwareName(e.target.value)}
+              />
+            </div>
+          </div>
 
-        {fields.map(({ name, label, value }) => (
-          <Radio
-            key={name}
-            pergunta={label}
-            nome={name}
-            value={value}
-            onchange={(val) =>
-              setFields((prevFields) =>
-                prevFields.map((field) =>
-                  field.name === name ? { ...field, value: val } : field
-                )
-              )
-            }
-            checked={value ? value : 0 }
-          />
-        ))}
+          {fields.map(({ name, label, value }) => (
+            <div key={name} className={soft.formGrid}>
+              <div className={soft.formGroup}>
+                <Radio
+                  pergunta={label}
+                  nome={name}
+                  value={value}
+                  softName={softName}
+                  onchange={(val) =>
+                    setFields((prevFields) =>
+                      prevFields.map((field) =>
+                        field.name === name ? { ...field, value: val } : field
+                      )
+                    )
+                  }
+                  checked={value ? value : 0}
+                />
+              </div>
+            </div>
+          ))}
 
-        <button type="submit" disabled={mutation.isLoading}>
-          {mutation.isLoading
-            ? 'Loading...'
-            : method === 'create'
-            ? 'Create'
-            : 'Update'}
-        </button>
+          <div className={soft.formActions}>
+            <button className={soft.saveButton} type="submit" disabled={mutation.isLoading}>
+              {mutation.isLoading
+                ? 'Loading...'
+                : method === 'create'
+                ? 'Create'
+                : 'Update'}
+            </button>
+            <button className={soft.saveButton} type="button"
+              onClick={onClose}
+              disabled={mutation.isLoading}>
+              Back
+            </button>
+          </div>
 
-        <button type="button" onClick={() => onClose()}>
-          Voltar
-        </button>
-
-        <p style={{ color: mutation.isError ? 'red' : 'green' }}>
-          {mutation.isError
-            ? `Error: ${mutation.error?.message || 'Unknown error'}`
-            : mutation.isSuccess && 'Operation successful!'}
-        </p>
-      </form>
+          {feedbackMessage && (
+            <p className={soft.message} style={{ color: feedbackType === 'error' ? 'red' : 'green' }}>
+              {feedbackMessage}
+            </p>
+          )}
+        </form>
+      </div>
     </Modal>
   );
 };

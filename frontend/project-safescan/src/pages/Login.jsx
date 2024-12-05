@@ -1,22 +1,26 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/authService';  // Importa a função de login
-import card from '../assets/styles/Card.module.css'
+import Register from '../components/Register';
+
+import style from '../assets/styles/Login.module.css'
+
+import robo from "../assets/images/img-ia-login.png"
 
 const Login = () => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
 
   const mutation = useMutation(login, {
     onSuccess: (data) => {
-      console.log('Login bem-sucedido:', data);
+      console.log('Login succesfully:', data);
       navigate('/profile');  // Redireciona o usuário para o perfil após login
-      window.location.reload()
     },
     onError: (error) => {
-      console.error('Erro ao enviar os dados:', error);
+      console.error('Error sending data:', error);
     },
   });
 
@@ -31,41 +35,84 @@ const Login = () => {
     mutation.mutate(dataToSend);
   };
 
-  return (
-    <div className='content'>
-      <h1>Login</h1>
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "Enter" && username && password) {
+        document.getElementByID('login').click();
+        // Coloque a ação desejada aqui
+      }
+    };
 
-      {mutation.isSuccess && <p style={{ color: 'green' }}>Login bem-sucedido!</p>}
-      <form onSubmit={handleSubmit}>
+    // Adiciona o listener ao montar o componente
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Remove o listener ao desmontar o componente
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []); // O array vazio garante que o efeito seja executado apenas uma vez (no mount e unmount)
+
+  return (
+    <section className={style.banner}>
+      <div className={style.left}>
         <div>
-          <label htmlFor="name">Username</label>
-          <input
-            type="text"
-            id="name"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            required
-          />
+            <span className={style.linhaWhite}>Your First Line of Defense</span><br/>
+            <span className={style.linhaBlack}>Against Digital Threats.</span>
         </div>
-        <div>
-          <label htmlFor="password">Password</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
+        <p>Developed with cutting-edge AI technology detecting and<br/>
+            fighting malware with efficiency and precision.</p>
+        <div className={style.secaoForm}>
+          {mutation.isSuccess && <p style={{ color: 'green' }}>Login succesfully!</p>}
+          <form className={style.formLogin} onSubmit={handleSubmit}>
+            <label className={style.labelLogin} htmlFor="name">Username</label>
+            <input
+              className={style.inputLogin}
+              type="text"
+              id="name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              placeholder="Enter your username"
+              required
+            />
+            <label className={style.labelLogin} htmlFor="password">Password</label>
+            <input
+              className={style.inputLogin}
+              type="password"
+              id="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="Enter your password"
+              required
+            />
+            <div className={style.links}>
+              <button type="button" onClick={() => navigate('/forgot')}>
+                Forgot password?
+              </button>
+              <button onClick={() => {
+                setShowPopup(true); 
+              }}>Sign up</button>
+
+              {showPopup && (
+                <Register
+                  onClose={() => setShowPopup(false)}
+                />
+              )}
+            </div>
+            <button className={style.buttonLogin} type="submit" id='login' disabled={mutation.isLoading}>
+              {mutation.isLoading ? 'Signing in...' : 'Sign in'}
+            </button>
+            {mutation.isError && <p style={{ color: 'red' }}>Erro: {mutation.error.message}</p>}
+          </form>
         </div>
-        <button type="submit" disabled={mutation.isLoading}>
-          {mutation.isLoading ? 'Enviando...' : 'Enviar'}
-        </button>
-        {mutation.isError && <p style={{ color: 'red' }}>Erro: {mutation.error.message}</p>}
-      </form>
-      <button type="button" onClick={() => navigate('/forgot')}>
-        Forgot password
-      </button>
-    </div>
+      </div>
+      <div className={style.right}>
+          <div className={style.secaoImg}>
+              <div className={style.containerImg}>
+                  <img className={style.imgRobo} src={robo} alt="Desktop verde com cabeça de robô tech"/>
+              </div>
+          </div>
+      </div>
+    </section>
   );
 };
 

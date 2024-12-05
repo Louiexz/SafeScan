@@ -8,7 +8,6 @@ export const listSoftwares = () => {
 // Função para criar um novo software (com ou sem login)
 export const createSoftware = (data) => {
   const token = localStorage.getItem('token');
-  console.log(data)
   return api.post(token? '/software_form_auth' : '/software_form_unauth', data,
     { withCredentials: token? true : false });
 };
@@ -22,7 +21,6 @@ export const checkSoftwareUrl = (data) => {
 export const updateSoftware = (data) => {
   const id = data.id
   delete data.id
-  console.log(data)
   return api.put(`/software-update/${id}/`, data);
 }
 

@@ -12,7 +12,7 @@ const Confirm = () => {
 
   const mutation = useMutation(
     async (data) => {
-      const response = await axios.patch(`http://127.0.0.1:8000/api/reset-password/${uidb64}/${token}/`, data, {
+      const response = await axios.patch(`https://safescan.onrender.com/api/reset-password/${uidb64}/${token}/`, data, {
         headers: {
           'Content-Type': 'application/json',
         },
@@ -41,17 +41,17 @@ const Confirm = () => {
   };
 
   return (
-    <div class="banner-confirm">
+    <div className={styles.bannerConfirm}>
       <h2>
-        <span class="span1-confirm">Reset Your Password And</span><br/>
-        <span class="span2-confirm">Log Back In With Peace Of Mind!</span>
+        <span className={styles.span1Confirm}>Reset Your Password And</span><br/>
+        <span className={styles.span2Confirm}>Log Back In With Peace Of Mind!</span>
       </h2>
-      <div class="secao-confirm">
-        <form class="form-confirm" onSubmit={handleSubmit} method="POST">
-          <label class="label-confirm" for="password">New password</label>
+      <div className={styles.secaoConfirm}>
+        <form className={styles.formConfirm} onSubmit={handleSubmit} method="POST">
+          <label className={styles.labelConfirm} for="password">New password</label>
 
           <input
-            class="input-confirm"
+            className={styles.inputConfirm}
             type="password"
             id="password"
             value={password}
@@ -60,9 +60,9 @@ const Confirm = () => {
             required
           />
 
-          <label class="label-confirm" for="confirm-password">Confirm password</label>
+          <label className={styles.labelConfirm} for="confirm-password">Confirm password</label>
           <input
-            class="input-confirm"
+            className={styles.inputConfirm}
             type="password"
             id="confirm-password"
             name="confirm-password"
@@ -72,7 +72,7 @@ const Confirm = () => {
             required
           />
 
-          <button type="submit" disabled={mutation.isLoading}>
+          <button className={styles.buttonConfirm} type="submit" disabled={mutation.isLoading}>
             {mutation.isLoading ? 'Sending...' : 'To send'}
           </button>
           {mutation.isError && <p style={{ color: 'red' }}>Erro: {mutation.error.message}</p>}

@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { useMutation } from 'react-query';
 import axios from 'axios';
 
+import recover from '../assets/styles/recoverPassword.module.css'
+import robo from '../assets/images/img-robo-recover.png'
+
 const postData = async (data) => {
-  const response = await axios.post('http://127.0.0.1:8000/api/forgot-password', data, {
+  const response = await axios.post('https://safescan.onrender.com/api/forgot-password', data, {
     headers: {
       'Content-Type': 'application/json',
     },
@@ -36,25 +39,45 @@ const Forgot = () => {
   };
 
   return (
-    <div className='content'>
-      <h1>Forgot password</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
+    <div className={recover.bannerRecover}>
+      <div>
+        <h2>
+            <span>Recover Your<br/>Account Safely</span>
+        </h2>
+        <div className={recover.secaoRecover}>
+          <form className={recover.formRecover} onSubmit={handleSubmit}>
+            <div>
+              <label
+                className={recover.labelRecover}
+                htmlFor="email">Registered email</label><br/>
+              <input
+                className={recover.inputRecover}
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Enter your registered email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+            <button className={recover.buttonRecover} type="submit" disabled={mutation.isLoading}>
+              {mutation.isLoading ? 'Sending...' : 'To send'}
+            </button>
+            {mutation.isError && <p style={{ color: 'red' }}>Erro: {mutation.error.message}</p>}
+            {mutation.isSuccess && <p style={{ color: 'green' }}>Dados enviados com sucesso!</p>}
+
+          </form>
+          <p className={recover.infoParagraph}>
+            We will send you an email with a link to reset your password. Check your inbox and follow the instructions!
+          </p>
+          <div className={recover.sectionImgRecover}>
+            <div className={recover.containerImgRecover}>
+              <img src={robo} alt="Desktop verde tech"/>
+            </div>
+          </div>
         </div>
-        <button type="submit" disabled={mutation.isLoading}>
-          {mutation.isLoading ? 'Enviando...' : 'Enviar'}
-        </button>
-        {mutation.isError && <p style={{ color: 'red' }}>Erro: {mutation.error.message}</p>}
-        {mutation.isSuccess && <p style={{ color: 'green' }}>Dados enviados com sucesso!</p>}
-      </form>
+      </div>
     </div>
   );
 };
