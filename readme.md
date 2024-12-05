@@ -1,11 +1,13 @@
-# SafeScan
+# Soft.ai
 
-RestFul API/Backend/Server para o website SafeScan, voltado para verificação de malware por meio da utilização de IA.<br>
+Website Soft.ai, voltado para verificação de malware por meio da utilização de IA.<br>
 Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT - PE, 4º período, curso Análise e Desenvolvimento de Sistemas.
 
 # Pré-requisitos
 ## Certifique-se de ter o seguinte instalado antes de começar:
+
     Python3
+    npm
 
 ## Funcionalidades
 
@@ -17,13 +19,13 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
 
 1. Acesse:
 
-    https://safescan.vercel.app/
+    https://soft.ai.vercel.app/
 
 2. Ou clone o repositorio:
 
-        git clone https://github.com/Louiexz/SafeScan.git
+        git clone https://github.com/Louiexz/Soft.ai.git
 
-        cd SafeScan
+        cd Soft.ai
 
 3. Instale as dependências:
 
@@ -31,29 +33,43 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
 
         python install -r requirements.txt
 
-        cd backend
+        cd backend ou cd frontend
 
+4. Para o backend:
+        - Crie um arquivo .env e declare as seguintes secrets :
 
-4. Crie um arquivo .env e declare as seguintes secrets:
+                SECRET_KEY
+                DEBUG
+                ALLOWED_HOSTS
+                EMAIL_HOST_USER
+                EMAIL_HOST_PASSWORD
+                DEFAULT_FROM_EMAIL
+                API_KEY
+        
+        - Realize a migração:
 
-        SECRET_KEY
-        DEBUG
-        ALLOWED_HOSTS
-        EMAIL_HOST_USER
-        EMAIL_HOST_PASSWORD
-        DEFAULT_FROM_EMAIL
-        API_KEY
+                python manage.py migrate
+        
+        - Efetue os testes:
 
-5. Execute a aplicação:
+                pytest
 
+        - Execute a aplicação e Acesse:
+        
+                python manage.py runserver
 
-        python manage.py migrate
+                http://127.0.0.1:8000/
 
-        python manage.py runserver
+5. No Frontend:
 
-5. Acesse:
+        - Execute a aplicação:
 
-    http://127.0.0.1:8000/
+                npm install
+                npm run preview
+        
+        - Acesse:
+
+                http://localhost:5173/
 
 
 ## Estrutura do projeto
@@ -61,32 +77,46 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
         backend/
         │
         ├── backend/          # Diretório do projeto
-        │   ├── __init__.py
         │   ├── settings.py     # Configurações do projeto
         │   ├── urls.py         # Mapeamento de URLs
         │   ├── asgi.py         # Configuração para ASGI
         │   └── wsgi.py         # Configuração para WSGI
         │
-        ├── safescan/         # Aplicativo Django
+        ├── soft/         # Aplicativo Django
         │   ├── migrations/     # Arquivos de migração de banco de dados
         │   ├── model/          # Diretório dos modelos de db
         │   ├── serializer/     # Diretório dos modelos de serializers dos modelos de db
+        │   ├── test/           # Diretório de testes das views
         │   ├── view/           # Diretório das lógicas de visualizações
         │   ├── admin.py        # Configurações do admin
         │   ├── apps.py         # Configurações do aplicativo
-        │   ├── tests.py        # Testes do aplicativo
         │   └── urls.py         # URLs específicas do aplicativo
         │
+        ├── pytest.ini        # Script de testes
+        |
         ├── manage.py         # Script de gerenciamento do projeto
         │
         ├── requirements.txt  # Dependências do projeto
         │
         └── db.sqlite3        # Banco de dados SQLite (Criado com o migrate)
-
+        frontend/
+        |
+        └── project-safescan/
+            ├──
+            └── src/
+                ├── assets/        # Diretório de imagens e arquivos css
+                ├── components/    # Diretório de componentes comuns das páginas
+                ├── pages/         # Diretório de componentes das páginas
+                ├── services/      # Diretório de serviços usadas nas páginas
+                ├── App.css        # Estilos da rota
+                ├── App.jsx        # Componente de rotas do projeto
+                ├── index.css      # Estilos da aplicação
+                └── main.jsx       # Chamada da aplicação
+          
 ## Autores e contribuições:
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues ou pull requests.
 
-Artur Ramos<br>
+Artur Ramos - [@Arturdev05](https://github.com/Arturdev05)<br>
 Carlos Eduardo - [@carlos-1ima](https://github.com/carlos-1ima)<br>
 Luiz Augusto - [@Louiexz](https://github.com/Louiexz)<br>
 Paulo Arthur -<br>
