@@ -55,6 +55,7 @@ CORS_ALLOW_METHODS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    'https://softai.vercel.app'
 ]
 
 CORS_ALLOW_HEADERS = [
