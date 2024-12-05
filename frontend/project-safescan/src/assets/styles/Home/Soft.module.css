@@ -99,7 +99,7 @@ input:focus {
 
 .radioGroup {
   display: flex;
-  align-items: center;
+  align-items: sp;
   gap: 10px;
 }
 
@@ -151,7 +151,6 @@ input:focus {
   background-color: #ddd;
   color: #333;
   font-weight: 500;
-  margin-right: 865px;
 }
 
 .saveButton:hover, .backButton:hover {

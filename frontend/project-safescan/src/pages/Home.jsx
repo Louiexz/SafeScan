@@ -120,7 +120,7 @@ const Home = () => {
             />
           </div><br/>
           <button className={soft.saveButton} type="submit" disabled={mutationCheckUrl.isLoading}>
-            {mutationCheckUrl.isLoading ? 'Verifying...' : 'To verify'}
+            {mutationCheckUrl.isLoading ? 'Verifying...' : 'Verify'}
           </button>
           {mutationCheckUrl.isError && <p className={soft.message} style={{ color: 'red' }}>Error: {mutationCheckUrl.error.message}</p>}
           {mutationCheckUrl.isSuccess && <p className={soft.message} style={{ color: 'green' }}>Url verified sucessfully!</p>}
