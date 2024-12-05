@@ -245,7 +245,7 @@ class ForgotPassword(APIView):
         try:
             uid = urlsafe_base64_encode(force_bytes(user.pk))
             token = token_generator.make_token(user)
-            reset_link = f"https://soft.ai.vercel.app/confirm/{uid}/{token}"
+            reset_link = f"http://localhost:5173/confirm/{uid}/{token}"
      
             send_mail(
                 "Recuperação de senha",
