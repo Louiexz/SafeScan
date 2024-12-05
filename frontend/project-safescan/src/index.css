@@ -1,10 +1,9 @@
 .app {
   margin: 0;
   padding: 0;
-  width: 100%; /* Ocupa 100% da largura do contêiner */
-  height: 100%; /* Opcional, define altura total */
+  min-height: min-content; /* Altura dinâmica para navegadores modernos */
+  height: auto; /* Adapta a altura ao conteúdo */
   max-width: 100%; /* Impede que exceda o tamanho do contêiner */
-  max-height: 100%; /* Impede que exceda o tamanho vertical */
   box-sizing: border-box; /* Inclui padding e borda no tamanho total */
   overflow: hidden;
 }
@@ -26,5 +25,10 @@
 
   a:hover {
     text-decoration: underline;
+  }
+}
+@media (max-width: 1000px) {
+  .app {
+    width: calc(100vw);
   }
 }

@@ -1,18 +1,18 @@
-.profileBody{
-    margin: 0;
-    min-height: 100dvh;
-    width: 98.9vmax;
-    padding: 0;
-    background: linear-gradient(
-        to bottom, 
-        #09762A 0%, 
-        #0DA93C 25%, 
-        #0FC245 47%, 
-        #10DC4F 82%, 
-        #10DC4F 100%
-    );
-    color: whitesmoke;
-    padding: 0px 100px
+.profileBody {
+  min-height: 100vh; /* Fallback para navegadores antigos */
+  min-height: 100dvh; /* Altura dinâmica para navegadores modernos */
+  height: auto; /* Adapta a altura ao conteúdo */
+  width: 100%; /* Garante que o elemento ocupe 100% da largura do container */
+  background: linear-gradient(
+      to bottom, 
+      #09762A 0%, 
+      #0DA93C 25%, 
+      #0FC245 47%, 
+      #10DC4F 82%, 
+      #10DC4F 100%
+  );
+  color: whitesmoke;
+  padding: 0px 50px
 }
 
 .buttonProfile, .backButton {
@@ -70,7 +70,7 @@
     border-radius: 5px;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    padding: 15px;
   }
   #iconPencil {
     padding: 1px;
@@ -118,14 +118,14 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 45px;
+    padding-bottom: 45px;
   }
   
   #programs {
     font-size: 40px;
     font-family: "Albert Sans", sans-serif;
     color: #ffff;
-    margin-bottom: 20px;
+    padding-bottom: 20px;
     width: 100%;
     max-width: 1000px;
     display: flex;
@@ -134,15 +134,18 @@
 
   .errorMessage {
     color: red;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 200;
   }
   
   .successMessage {
     color: green;
-    font-size: 14px;
+    font-size: 16px;
+    font-weight: 200;
   }
   
   .verification {
+    min-width: 60vw;
     display: flex;
     background: #1e1e1e;
     max-width: 1000px;
@@ -151,7 +154,7 @@
     justify-content: space-between;
     align-items: center;
     height: 69px;
-    margin: 10px 0;
+    padding: 10px 20px;
   }
   
   .verification p {

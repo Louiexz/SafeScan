@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
 import { login } from '../services/authService';  // Importa a função de login
@@ -16,12 +16,11 @@ const Login = () => {
 
   const mutation = useMutation(login, {
     onSuccess: (data) => {
-      console.log('Login bem-sucedido:', data);
+      console.log('Login succesfully:', data);
       navigate('/profile');  // Redireciona o usuário para o perfil após login
-      window.location.reload()
     },
     onError: (error) => {
-      console.error('Erro ao enviar os dados:', error);
+      console.error('Error sending data:', error);
     },
   });
 
@@ -36,6 +35,23 @@ const Login = () => {
     mutation.mutate(dataToSend);
   };
 
+  useEffect(() => {
+    const handleKeyPress = (event) => {
+      if (event.key === "Enter" && username && password) {
+        document.getElementByID('login').click();
+        // Coloque a ação desejada aqui
+      }
+    };
+
+    // Adiciona o listener ao montar o componente
+    window.addEventListener("keydown", handleKeyPress);
+
+    // Remove o listener ao desmontar o componente
+    return () => {
+      window.removeEventListener("keydown", handleKeyPress);
+    };
+  }, []); // O array vazio garante que o efeito seja executado apenas uma vez (no mount e unmount)
+
   return (
     <section className={style.banner}>
       <div className={style.left}>
@@ -46,7 +62,7 @@ const Login = () => {
         <p>Developed with cutting-edge AI technology detecting and<br/>
             fighting malware with efficiency and precision.</p>
         <div className={style.secaoForm}>
-          {mutation.isSuccess && <p style={{ color: 'green' }}>Login bem-sucedido!</p>}
+          {mutation.isSuccess && <p style={{ color: 'green' }}>Login succesfully!</p>}
           <form className={style.formLogin} onSubmit={handleSubmit}>
             <label className={style.labelLogin} htmlFor="name">Username</label>
             <input
@@ -82,8 +98,8 @@ const Login = () => {
                 />
               )}
             </div>
-            <button className={style.buttonLogin} type="submit" disabled={mutation.isLoading}>
-              {mutation.isLoading ? 'Signing...' : 'Sign in'}
+            <button className={style.buttonLogin} type="submit" id='login' disabled={mutation.isLoading}>
+              {mutation.isLoading ? 'Signing in...' : 'Sign in'}
             </button>
             {mutation.isError && <p style={{ color: 'red' }}>Erro: {mutation.error.message}</p>}
           </form>

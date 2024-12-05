@@ -19,7 +19,7 @@ const Register = ({onClose}) => {
       navigate('/login');  // Redireciona para a página de login após o registro
     },
     onError: (error) => {
-      console.error('Erro ao enviar os dados:', error);
+      console.error('Error sending data:', error);
     },
   });
 
@@ -131,13 +131,13 @@ const Register = ({onClose}) => {
               /><br/>
               <div className={style.botoes}>
                 <button className={style.botaoRegistro} type="submit" disabled={mutation.isLoading}>
-                  {mutation.isLoading ? 'Registing...' : 'Sign up'}
+                  {mutation.isLoading ? 'Signing up...' : 'Sign up'}
                 </button>
                 {mutation.isError && (
                   <p style={{ color: 'red' }}>Erro: {mutation.error.message}</p>
                 )}
                 <button className={style.botaoVoltarRegistro} type="button" onClick={() => onClose()}>
-                  Voltar
+                  Back
                 </button>
               </div>
             </form>

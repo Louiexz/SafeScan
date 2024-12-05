@@ -12,13 +12,12 @@ import pencil from '../assets/images/profile/pencil-square 3.png'
 import imageOne from '../assets/images/profile/image 1.png'
 
 const Profile = () => {
-  const [softwareToUpdate, setSoftwareToUpdate] = useState(null);
-  const [showPopup, setShowPopup] = useState(false);
+  const [softwareToUpdate, setSoftwareToUpdate] = useState(null); // Armazena o software que será atualizado
   const [profileData, setProfileData] = useState({});
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
-  
+
   const { data: response, error, isLoading, refetch } = useQuery('profile', fetchProfile, {
     refetchOnWindowFocus: false,
     onSuccess: (response) => {
@@ -27,34 +26,36 @@ const Profile = () => {
       setEmail(response.data.data.email);
       setPassword(''); // Esvazia o campo de senha por segurança
     },
+    onError: () => {
+      window.location.reload();
+    },
   });
 
   const updateMutation = useMutation(updateProfile);
   const logoutMutation = useMutation(logout);
 
   const handleUpdate = () => {
-    if (username !== profileData.username ||
-        email !== profileData.email) {
+    if (username !== profileData.username || email !== profileData.email) {
       const updatedData = { username, password, email };
       updateMutation.mutate(updatedData);
     } else {
-      alert("Deve ter pelo menos um valor diferente.");
+      alert("May have one different value.");
     }
   };
 
   const handleDelete = (id) => {
-  deleteSoftware(id)
-    .then(() => {
-      console.log('Software deletado com sucesso');
-      refetch();
-    })
-    .catch((error) => {
-      console.error('Erro ao deletar software:', error);
-    });
+    deleteSoftware(id)
+      .then(() => {
+        console.log('Software deleted successfully');
+        refetch();
+      })
+      .catch((error) => {
+        console.error('Error to delete software:', error);
+      });
   };
 
-  if (isLoading) return <p >Carregando perfil...</p>;
-  if (error) return <p >Erro ao carregar perfil: {error.message}</p>;
+  if (isLoading) return <p>Loading profile...</p>;
+  if (error) return <p>Error loading profile: {error.message}</p>;
 
   return (
     <div className={style.profileBody}>
@@ -66,19 +67,21 @@ const Profile = () => {
                 <h1>Profile</h1>
             </div>
             <div className={style.user}>
-              <h1>HELLO, <br/> {name}</h1>
+              <h1>HELLO, <br/> {username}</h1>
               <div className={style.descricao}>
-                <label htmlFor="name">
-                  Nome:
+                <label htmlFor="username">
+                  User:
+                  <br/>
                   <input
                     className={style.inputs}
                     value={username}
-                    id="name"
+                    id="username"
                     onChange={(e) => setUsername(e.target.value)}
                   />
                 </label><br/>
                 <label htmlFor="email">
                   Email:
+                  <br/>
                   <input
                     className={style.inputs}
                     value={email}
@@ -87,7 +90,8 @@ const Profile = () => {
                   />
                 </label><br/>
                 <label htmlFor="password">
-                  Senha:
+                  Password:
+                  <br/>
                   <input
                     type="password"
                     className={style.inputs}
@@ -101,14 +105,14 @@ const Profile = () => {
                 </button><br/>
                 
                 {updateMutation.isError && (
-                  <p className={style.errorMessage}>Erro: {updateMutation.error.message}</p>
+                  <p className={style.errorMessage}>Error: All data required or invalid values.</p>
                 )}
                 {updateMutation.isSuccess && (
-                  <p className={style.successMessage}>Perfil atualizado com sucesso!</p>
+                  <p className={style.successMessage}>Profile updated sucessfully!</p>
                 )}
 
                 <button className={style.backButton} onClick={() => logoutMutation.mutate()}>
-                  {logoutMutation.isLoading ? 'Exiting...' : 'Sign out'}
+                  {logoutMutation.isLoading ? 'Signing out...' : 'Sign out'}
                 </button><br/>
               </div>
             </div>
@@ -117,37 +121,41 @@ const Profile = () => {
         </div>
       </div>
       <div className={style.programs}>
-        <h1 id="programs"> Registered Programs</h1>
+        <h1 id="programs">Registered Programs</h1>
         {profileData.softwares && profileData.softwares.length > 0 ? (
           <div>
             {profileData.softwares.map((software) => (
               <div className={style.verification} key={software.id}>
                 <span>Name: {software.name}</span><br />
                 <span>Status: {software.label}</span><br />
-                <span>Created at: {software.created_at}</span><br />
-                <span>Updated at: {software.updated_at}</span><br />
-                <button className={style.buttonProfile} onClick={() => {
-                  setShowPopup(true);
-                  setSoftwareToUpdate(software)
-                }}>Update software</button>
 
-                {showPopup && (
+                <button
+                  className={style.buttonProfile}
+                  onClick={() => setSoftwareToUpdate(software)}
+                >
+                  Update software
+                </button>
+
+                {softwareToUpdate && softwareToUpdate.id === software.id && (
                   <PopupSoftware
                     method="update"
                     data={softwareToUpdate}
-                    onClose={() => {
-                      setShowPopup(false);
-                      setSoftwareToUpdate(null); // Limpa o software selecionado
-                      refetch(); // Recarrega os dados
-                    }}
+                    onClose={() => setSoftwareToUpdate(null)}
+                    softName={software.name}
+                    refetch={refetch}
                   />
                 )}
-                <button className={style.buttonProfile} onClick={() => handleDelete(software.id)}>Deletar</button>
+                <button
+                  className={style.buttonProfile}
+                  onClick={() => handleDelete(software.id)}
+                >
+                  Delete
+                </button>
               </div>
             ))}
           </div>
         ) : (
-          <span>User don't have softwares.</span>
+          <span>User doesn't have any software.</span>
         )}
       </div>
     </div>

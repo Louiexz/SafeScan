@@ -5,7 +5,7 @@ import { useMutation } from 'react-query';
 import Modal from 'react-modal'; // Biblioteca para modal
 import soft from '../assets/styles/Home/Soft.module.css'
 
-const PopupSoftware = ({ method, data, onClose, refetch }) => {
+const PopupSoftware = ({ method, data, onClose, softName, refetch }) => {
   const [softwareName, setSoftwareName] = useState("");
   const [fields, setFields] = useState([
     { name: "localizacao", label: "Location?", value: false },
@@ -21,16 +21,16 @@ const PopupSoftware = ({ method, data, onClose, refetch }) => {
 
   const mutationCreateSoftware = useMutation(createSoftware, {
     onSuccess: () => {
+      {refetch ? refetch() : null }
       console.log('Software created succesfully');
-      refetch(); // Trigger refetch after creation
     },
     onError: (error) => console.error('Erro creating software:', error),
   });
 
   const mutationUpdateSoftware = useMutation(updateSoftware, {
     onSuccess: () => {
+      {refetch ? refetch() : null }
       console.log('Software updated succesfully');
-      refetch(); // Trigger refetch after update
     },
     onError: (error) => console.error('Erro updating software:', error),
   });
@@ -68,7 +68,6 @@ const PopupSoftware = ({ method, data, onClose, refetch }) => {
       onSuccess: () => {
         setFeedbackMessage("Operation succesfully!");
         setFeedbackType("success");
-        refetch();
         onClose();
       },
       onError: (error) => {
@@ -132,6 +131,7 @@ const PopupSoftware = ({ method, data, onClose, refetch }) => {
                   pergunta={label}
                   nome={name}
                   value={value}
+                  softName={softName}
                   onchange={(val) =>
                     setFields((prevFields) =>
                       prevFields.map((field) =>
@@ -156,7 +156,7 @@ const PopupSoftware = ({ method, data, onClose, refetch }) => {
             <button className={soft.saveButton} type="button"
               onClick={onClose}
               disabled={mutation.isLoading}>
-              Voltar
+              Back
             </button>
           </div>
 

@@ -20,18 +20,18 @@ const Home = () => {
   // Mutação para enviar URL do software
   const mutationCheckUrl = useMutation(checkSoftwareUrl, {
     onSuccess: (response) => {
-      console.log('URL verificada com sucesso');
+      console.log('Url verified sucessfully!');
       setResponseData(response.data);
     },
     onError: (error) => {
-      console.error('Erro ao verificar a URL:', error);
+      console.error('Error verifying URL:', error);
     },
   });
 
   const handleSubmitUrl = (event) => {
     event.preventDefault();
     if (!softwareUrl) {
-      alert("Por favor, insira uma URL válida.");
+      alert("Please, insert a valide URL.");
       return;
     }
     const dataToSend = { url: softwareUrl };
@@ -91,19 +91,17 @@ const Home = () => {
       <div id="formulario" className={soft.fundoSoft}>
         <div>
           <h3>Check software by data or URL</h3><br/>
-          <button className={soft.saveButton} onClick={() => {
-            setShowPopup(true); 
-          }}>New software</button>
-
-          {showPopup && (
-            <PopupSoftware 
+          <button className={soft.saveButton} onClick={() => 
+            { setShowPopup(true); }}>Create software</button>
+            {showPopup && (
+              <PopupSoftware
+              method="create"
               onClose={() => setShowPopup(false)}
-            />
-          )}
+          /> )}
         </div><br/>
         {responseData && (
           <div className="card">
-            <h4>Informações da URL</h4>
+            <h4>Url informations</h4>
             <p><strong>Malicious:</strong> {responseData.data.malicious.toString()}</p>
             <p><strong>Suspicious:</strong> {responseData.data.suspicious.toString()}</p>
             <p><strong>Harmless:</strong> {responseData.data.harmless.toString()}</p>
@@ -122,10 +120,10 @@ const Home = () => {
             />
           </div><br/>
           <button className={soft.saveButton} type="submit" disabled={mutationCheckUrl.isLoading}>
-            {mutationCheckUrl.isLoading ? 'Verificando...' : 'Verificar'}
+            {mutationCheckUrl.isLoading ? 'Verifying...' : 'To verify'}
           </button>
-          {mutationCheckUrl.isError && <p className={soft.message} style={{ color: 'red' }}>Erro: {mutationCheckUrl.error.message}</p>}
-          {mutationCheckUrl.isSuccess && <p className={soft.message} style={{ color: 'green' }}>URL verificada com sucesso!</p>}
+          {mutationCheckUrl.isError && <p className={soft.message} style={{ color: 'red' }}>Error: {mutationCheckUrl.error.message}</p>}
+          {mutationCheckUrl.isSuccess && <p className={soft.message} style={{ color: 'green' }}>Url verified sucessfully!</p>}
         </form>
       </div>
     </div>
