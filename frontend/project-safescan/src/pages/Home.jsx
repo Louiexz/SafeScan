@@ -98,7 +98,6 @@ const Home = () => {
               method="create"
               onClose={() => setShowPopup(false)}
           /> )}
-        </div><br/>
         {responseData && (
           <div className="card">
             <h4>Url informations</h4>
@@ -111,6 +110,7 @@ const Home = () => {
         )}
         <form onSubmit={handleSubmitUrl}>
           <div>
+            <br/>
             <label htmlFor="url">Software URL</label><br/>
             <input
               type="url"
@@ -125,6 +125,7 @@ const Home = () => {
           {mutationCheckUrl.isError && <p className={soft.message} style={{ color: 'red' }}>Error: {mutationCheckUrl.error.message}</p>}
           {mutationCheckUrl.isSuccess && <p className={soft.message} style={{ color: 'green' }}>Url verified sucessfully!</p>}
         </form>
+        </div>
       </div>
     </div>
   );

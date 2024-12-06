@@ -16,14 +16,14 @@ const Navigation = () => {
                 {window.location.pathname.includes('confirm') ? null : (
                     <>
                         <Link to="/">Home</Link>
-                        {!localStorage.getItem('token') ? <Link to="/login">Login</Link> : null}
                         {window.location.pathname === '/' && (
                             <>
                                 <a href="#sobre">About</a>
                                 <a href="#formulario">Form</a>
                             </>
                         )}
-                        <Link to="/profile">Profile</Link>
+                        {localStorage.getItem('token') ? <Link to="/profile">Profile</Link> : null}
+                        {!localStorage.getItem('token') ? <Link to="/login">Login</Link> : null}
                     </>
                 )}
                 </nav>
