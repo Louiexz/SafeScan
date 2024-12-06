@@ -20,7 +20,7 @@ Projeto criado para a 2º unidade da cadeira de Desenvolvimento Backend na UNIT 
 
 1. Acesse:
 
-    https://soft.ai.vercel.app/
+    https://softai.vercel.app/
 
 2. Ou clone o repositorio:
 
