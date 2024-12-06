@@ -12,3 +12,7 @@ pytest-django==4.9.0
 python-decouple==3.8
 sqlparse==0.5.1
 vt-py==0.18.4
+joblib
+pandas
+scikit-learn
+drf-yasg

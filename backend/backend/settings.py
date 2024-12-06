@@ -1,25 +1,25 @@
 from pathlib import Path
 from decouple import config, Csv
+import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = config("SECRET_KEY")
 
-DEBUG = config("DEBUG", default=False)
+DEBUG = True
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv(), default="127.0.0.1")
-
 # Application definition
 
 MY_APPS = [
-    "safescan.apps.SafeScanConfig",
+    "soft.apps.SoftConfig",
 ]
 THIRD_APPS = [
     'rest_framework',
-    'django_vite',
     'corsheaders',
     'rest_framework.authtoken',
     'django_extensions',
+    'drf_yasg',
 ]
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -40,6 +40,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 CORS_ALLOW_CREDENTIALS = True
 CSRF_COOKIE_HTTPONLY = False  # Permite o acesso ao CSRF cookie por JavaScript
 CSRF_COOKIE_NAME = "csrftoken"  # O nome do cookie CSRF, que será acessado pelo frontend
@@ -54,11 +55,7 @@ CORS_ALLOW_METHODS = [
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
-    "http://127.0.0.1:8000",
-]
-CORS_ORIGINS_WHITELIST = [
-    "http://localhost:5173",
-    "http://127.0.0.1:8000",
+    'https://softai.vercel.app'
 ]
 
 CORS_ALLOW_HEADERS = [
@@ -71,16 +68,38 @@ CORS_ALLOW_HEADERS = [
 ]
 SESSION_COOKIE_AGE = 1800
 SESSION_COOKIE_SAMESITE = 'None'  # Permite o envio de cookies em requisições cross-origin
-SESSION_COOKIE_SECURE = True  # Garante que o cookie só será enviado sobre HTTPS
-
+SESSION_COOKIE_SECURE = True  # Somente em HTTPS
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True
 
+SWAGGER_SETTINGS = {
+    'USE_SESSION_AUTH': False,  # Disable session authentication for Swagger UI
+    'TAGS': [
+        {
+            'name': 'Profile',
+            'description': 'Operations related to profile management.',
+        },
+        {
+            'name': 'Software',
+            'description': 'Operations related to software.',
+        },
+        {
+            'name': 'User',
+            'description': 'Operations related to user management.',
+        },
+    ],
+    'OPERATIONS_SORTER': 'method',  # Sorts operations by HTTP method in the Swagger UI
+    'PERSIST_AUTH': True,  # Ensures that the session stays after reloading the page
+    'DOC_EXPANSION': 'none',  # Keeps API documentation collapsed by default
+}
+
 ROOT_URLCONF = 'backend.urls'
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ],
 }
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -140,21 +159,17 @@ USE_TZ = True
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    BASE_DIR / 'safescan/static',  # Diretório onde os arquivos do Vite serão gerados para desenvolvimento
-]
+STATIC_URL = 'static/'
 
-# Defina o STATIC_ROOT para produção
-STATIC_ROOT = BASE_DIR / 'safescan/static/.vite/'  # Local onde 'collectstatic' colocará os arquivos em produção 'django.db.models.BigAutoField'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 
-VITE_MANIFEST_PATH = BASE_DIR / '/static/'
+"""VITE_MANIFEST_PATH = BASE_DIR / 'static/'
 VITE_APP_DIR = BASE_DIR.parent / 'frontend'          # Diretório onde o Vite está configurado (frontend)
 VITE_DEV_MODE = DEBUG                          # Ativa o modo de desenvolvimento do Vite quando DEBUG está True
-VITE_STATIC_ROOT = BASE_DIR / 'safescan/static'     # Diretório onde o Vite deve colocar os arquivos em produção
+VITE_STATIC_ROOT = BASE_DIR / 'soft/static'     # Diretório onde o Vite deve colocar os arquivos em produção
 
 if VITE_APP_DIR is None or not VITE_APP_DIR.exists():
     raise ValueError("VITE_APP_DIR não está configurado corretamente.")
     
 if VITE_STATIC_ROOT is None or not VITE_STATIC_ROOT.exists():
-    raise ValueError("VITE_STATIC_ROOT não está configurado corretamente.")
+    raise ValueError("VITE_STATIC_ROOT não está configurado corretamente.")"""
