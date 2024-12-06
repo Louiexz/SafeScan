@@ -98,19 +98,19 @@ const Home = () => {
               method="create"
               onClose={() => setShowPopup(false)}
           /> )}
-        </div><br/>
         {responseData && (
           <div className="card">
+            <br/>
             <h4>Url informations</h4>
             <p><strong>Malicious:</strong> {responseData.data.malicious.toString()}</p>
             <p><strong>Suspicious:</strong> {responseData.data.suspicious.toString()}</p>
             <p><strong>Harmless:</strong> {responseData.data.harmless.toString()}</p>
             <p><strong>Undetected:</strong> {responseData.data.undetected.toString()}</p>
-            <br/>
           </div>
         )}
         <form onSubmit={handleSubmitUrl}>
           <div>
+            <br/>
             <label htmlFor="url">Software URL</label><br/>
             <input
               type="url"
@@ -120,11 +120,12 @@ const Home = () => {
             />
           </div><br/>
           <button className={soft.saveButton} type="submit" disabled={mutationCheckUrl.isLoading}>
-            {mutationCheckUrl.isLoading ? 'Verifying...' : 'To verify'}
+            {mutationCheckUrl.isLoading ? 'Verifying...' : 'Verify'}
           </button>
           {mutationCheckUrl.isError && <p className={soft.message} style={{ color: 'red' }}>Error: {mutationCheckUrl.error.message}</p>}
           {mutationCheckUrl.isSuccess && <p className={soft.message} style={{ color: 'green' }}>Url verified sucessfully!</p>}
         </form>
+        </div>
       </div>
     </div>
   );

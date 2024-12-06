@@ -4,6 +4,7 @@ import { fetchProfile, updateProfile } from '../services/profileService';
 import { logout } from '../services/authService';
 import { deleteSoftware } from '../services/softwareService';
 import PopupSoftware from '../components/softwarePopup';
+import { useNavigate } from 'react-router-dom';
 
 import style from '../assets/styles/Profile.module.css'
 
@@ -17,6 +18,7 @@ const Profile = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const navigate = useNavigate();
 
   const { data: response, error, isLoading, refetch } = useQuery('profile', fetchProfile, {
     refetchOnWindowFocus: false,
@@ -27,7 +29,8 @@ const Profile = () => {
       setPassword(''); // Esvazia o campo de senha por segurança
     },
     onError: () => {
-      window.location.reload();
+      navigate('/');
+      navigate('/profile');
     },
   });
 
@@ -54,9 +57,36 @@ const Profile = () => {
       });
   };
 
-  if (isLoading) return <p>Loading profile...</p>;
-  if (error) return <p>Error loading profile: {error.message}</p>;
-
+  if (isLoading) return (
+    <div className={style.profileBody}>
+      <div className={style.gridPerfil}>
+        <div className={style.containerPerfil}>
+          <div className={style.infoPerfil}>
+            <div className={style.logo}>
+              <h1>Loading profile...</h1>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+  if (error) {
+    navigate('/')
+    window.location.reload()
+    return (
+      <div className={style.profileBody}>
+        <div className={style.gridPerfil}>
+          <div className={style.containerPerfil}>
+            <div className={style.infoPerfil}>
+              <div className={style.logo}>
+                <h1>Fetching profile...</h1>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    )
+  }
   return (
     <div className={style.profileBody}>
       <div className={style.gridPerfil}>

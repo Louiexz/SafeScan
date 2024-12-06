@@ -19,7 +19,7 @@ export const logout = async () => {
     await api.delete('/sign-out');
     
     // Depois que a requisição for bem-sucedida, redirecione para a página de login
-    window.location.href = '/login';
+    window.location.href = '/';
   } catch (error) {
     console.error("Erro ao tentar fazer logout:", error);
   }

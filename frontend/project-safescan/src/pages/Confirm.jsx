@@ -76,7 +76,7 @@ const Confirm = () => {
             {mutation.isLoading ? 'Sending...' : 'To send'}
           </button>
           {mutation.isError && <p style={{ color: 'red' }}>Erro: {mutation.error.message}</p>}
-          {mutation.isSuccess && <p style={{ color: 'green' }}>Senha redefinida com sucesso!</p>}
+          {mutation.isSuccess && <p style={{ color: 'green' }}>Password recovered sucessfully!</p>}
         </form>
       </div>
     </div>

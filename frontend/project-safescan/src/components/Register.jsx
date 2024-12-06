@@ -14,7 +14,7 @@ const Register = ({onClose}) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate();
 
-  const mutation = useMutation(register, {
+  const registerMutation = useMutation(register, {
     onSuccess: () => {
       navigate('/login');  // Redireciona para a página de login após o registro
     },
@@ -27,7 +27,7 @@ const Register = ({onClose}) => {
     event.preventDefault();
     if (email!== "" && password !== "" &&
         email === confirmEmail && password === confirmPassword) {
-      mutation.mutate({ username, email, password });
+        registerMutation.mutate({ username, email, password });
     }
   };
 
@@ -130,16 +130,23 @@ const Register = ({onClose}) => {
                 required
               /><br/>
               <div className={style.botoes}>
-                <button className={style.botaoRegistro} type="submit" disabled={mutation.isLoading}>
-                  {mutation.isLoading ? 'Signing up...' : 'Sign up'}
+                <button className={style.botaoRegistro} type="submit" disabled={registerMutation.isLoading}>
+                  {registerMutation.isLoading ? 'Signing up...' : 'Sign up'}
                 </button>
-                {mutation.isError && (
-                  <p style={{ color: 'red' }}>Erro: {mutation.error.message}</p>
-                )}
                 <button className={style.botaoVoltarRegistro} type="button" onClick={() => onClose()}>
                   Back
                 </button>
-              </div>
+              </div><br/>
+              {registerMutation.isError && (
+                <p style={
+                  { color: 'red',
+                    fontSize: '16px',
+                    fontWeight: "200" }}>Error: {registerMutation.error.message}</p>
+              )}
+              {registerMutation.isSuccess && <p style={
+                {color: '#00EE90',
+                fontSize: '16px',
+                fontWeight: "200" }}>Account created sucessfully!</p>}
             </form>
           </div>
         </div>

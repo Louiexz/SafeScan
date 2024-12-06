@@ -153,9 +153,8 @@ const PopupSoftware = ({ method, data, onClose, softName, refetch }) => {
                 ? 'Create'
                 : 'Update'}
             </button>
-            <button className={soft.saveButton} type="button"
-              onClick={onClose}
-              disabled={mutation.isLoading}>
+            <button className={soft.backButton} type="button"
+              onClick={onClose}>
               Back
             </button>
           </div>

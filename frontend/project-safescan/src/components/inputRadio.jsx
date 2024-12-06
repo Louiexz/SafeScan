@@ -2,9 +2,9 @@ import soft from '../assets/styles/Home/Soft.module.css'
 
 const Radio = ({ pergunta, nome, softName, value, onchange }) => {
     return (
-        <fieldset>
+        <div>
             <legend>{pergunta}</legend>
-            <div>
+            <div className={soft.radioGroup}>
                 <input
                 type="radio"
                 className={soft.radioButton}
@@ -31,7 +31,7 @@ const Radio = ({ pergunta, nome, softName, value, onchange }) => {
                 </label>
                 <button type="button" className={soft.editButton}><i className="bi-pencil-square"></i></button>
             </div>
-        </fieldset>
+        </div>
     );
 };
 
