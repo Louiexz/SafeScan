@@ -1,0 +1,133 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Albert Sans", sans-serif;
+    font-weight: 500;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.popup-perfil {
+    background: linear-gradient(
+        to bottom,
+        #09762A 0%, 
+        #0DA93C 25%, 
+        #0FC245 47%, 
+        #09762A 82%
+    );
+    display: block;
+    border-radius: 15px;
+    padding: 20px;
+    width: 70%;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.popup-form-perfil {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.group-perfil {
+    margin-bottom: 20px;
+}
+
+.title-perg {
+    margin-bottom: 10px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.input-perfil {
+    display: flex;
+    align-items: center;
+    width: 400px;
+    margin-top: 10px;
+    gap: 9px;
+}
+
+input {
+    padding: 10px;
+    flex: 1;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-family: "Albert Sans", sans-serif;
+    font-size: 14px;
+    color: #555;
+}
+
+.edit-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    margin-top: 12px;
+    margin-left: 5px;
+    font-size: 16px;
+    color: #fff;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
+.radio-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.radio-button {
+    margin-top: 13px;
+    padding: 8px 20px;
+    background-color: #fff;
+    color: #0B0A0A;
+    font-family: "Albert Sans", sans-serif;
+    font-weight: 650;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.radio-button:hover {
+    background-color: #ddd;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 40px;
+    gap: 15px;
+}
+
+.save-button,
+.back-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-family: "Albert Sans", sans-serif;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.save-button {
+    background-color: #333;
+    color: #fff;
+    font-weight: 300;
+}
+
+.back-button {
+    background-color: #ddd;
+    color: #333;
+    font-weight: 500;
+    margin-right: 865px;
+}

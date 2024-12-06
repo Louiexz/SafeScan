@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Soft.AI</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Aldrich&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,100..900;1,100..900&family=Aldrich&family=Jura:wght@300..700&display=swap');
+    @import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css");
+  </style>
+</head>
+
+<body>
+  <header class="header">
+
+    <div class="navbar">
+      <div class="image">
+        <img src="./assets/logo-SafeScan 1.png" alt="Logo" />
+        <h1>Soft.AI</h1>
+      </div>
+      <div class="menu">
+        <h1><a href="#home">Home</a></h1>
+        <h1><a href="#sobre">About</a></h1>
+        <h1><a href="#formulario">Form</a></h1>
+        <div class="icon">
+          <div class="bar"></div>
+          <div class="dot"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Seção Home com ID 'home' -->
+    <div id="home" class="banner-softAi">
+      <img src="./assets/img-Sobre.png" alt="Hero Image" class="hero-image">
+      <div class="banner-content">
+        <h1>YOUR SECURITY, OUR MISSION</h1>
+        <div class="description">
+          <p>Soft.AI is an innovative digital security verification tool, developed to identify threats in programs in a practical and efficient way. With an approach based on Artificial Intelligence, our technology analyzes responses provided by users in a form, grounded in an extensive malware database.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Seção "Como Funciona?" com ID 'sobre' -->
+    <div id="sobre" class="information">
+      <h1>HOW IT WORKS?</h1>
+      <div class="info">
+        <div class="form">
+          <img id="icon" src="./assets/pencil-fill 1.png" alt="">
+          <h2>Fill out the form</h2>
+          <p> Answer the questions about the program <br> you wish to analyze. Provide as much <br> information as possible for an accurate <br> analysis.</p>
+        </div>
+
+        <div class="respostas">
+          <img id="icon" src="./assets/send-arrow-up 1.png" alt="">
+          <h2>Submit Answers</h2>
+          <p>After filling out all the questions, click <br> on 'Submit' so that our AI can start the <br> analysis and provide you with the best security <br> for your browsing.</p>
+        </div>
+
+        <div class="resultados">
+          <img id="icon" src="./assets/graph-up-arrow 2.png" alt="">
+          <h2>Receive the Result</h2>
+          <p>In a few seconds, you will receive <br> a diagnosis informing whether the program <br> is safe or if it shows signs of <br> malware.</p>
+        </div>
+      </div>
+    </div>
+
+   <div class="fundoSoft">
+    <div class="popup-perfil">
+      <form class="popup-form-perfil">
+          <div class="group-perfil">
+              <label class="title-perg" for="software-name">Software name</label>
+              <div class="input-perfil">
+                  <input type="text" id="software-name" placeholder="Enter the name of the software" readonly>
+                  <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+              </div>
+          </div>
+          <div class="form-grid">
+              <div class="form-group">
+                  <label class="title-perg">Location?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="title-perg">Network?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="title-perg">External storage?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="title-perg">Messages?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="title-perg">Bluetooth?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="title-perg">Modifications to the system and process control?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="title-perg">Code execution?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="title-perg">Packages?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
+
+              <div class="form-group">
+                  <label class="title-perg">Audio recording or vibration?</label>
+                  <div class="radio-group">
+                      <button type="button" class="radio-button">Sim</button>
+                      <button type="button" class="radio-button">Não</button>
+                      <button type="button" class="edit-button"><i class="bi-pencil-square"></i></button>
+                  </div>
+              </div>
+          </div>
+          <div class="form-actions">
+              <button type="submit" class="save-button">Salvar</button>
+             
+          </div>
+      </form>
+  </div>
+</div>
+    <footer>
+      <div class="footer-container">
+        <div class="logo-section">
+          <img class="footer-logo" src="./assets/logo-SafeScan 1.png" alt="Logo Soft.IA">
+          <h1>Soft.AI</h1>
+        </div>
+        <div class="contato">
+          <p>(81) 1122-3344</p>
+          <p>support@softai.com</p>
+          <a href="https://www.instagram.com"><i class="bi-instagram"></i></a>
+          <a href="https://www.facebook.com/login/?locale=pt_BR"><i class="bi-facebook"></i></a>
+          <a href="https://x.com/?lang=pt-br"><i class="bi-twitter-x"></i></a>
+        </div>
+        <div class="endereco">
+          <p>123, Security Avenue</p>
+          <p>Recife, PE, 12345678, BR</p>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,17 @@
+@import url('./banner.css');
+@import url('./header.css');
+@import url('./info.css');
+@import url('./footer.css');
+@import url('./formulario.css');
+
+
+body {
+  margin: 0;
+  padding: 0;
+  background: #1a1717;
+  color: white;
+
+
+}
+
+

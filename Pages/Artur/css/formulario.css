@@ -1,0 +1,148 @@
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} 
+
+body {
+  font-family: "Albert Sans", sans-serif;
+  font-weight: 500;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+
+}
+.fundoSoft{
+  background-image: 
+  linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), 
+  url('../assets/abstract-techno-background-with-connecting-lines.jpg');
+  object-fit: cover;
+  background-position: center;
+  justify-content: center;
+  display: flex;
+  align-items: center;
+}
+.popup-perfil {
+  background: linear-gradient(
+      to bottom,
+      #145b2ca1 1%,
+      #1f834085 10%,
+      #165a2b9f 40%,
+      #18582b5c 80%
+  );
+  display: block;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0px 10px 5px rgba(0, 0, 0, 0.9);
+}
+
+.popup-form-perfil {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.group-perfil {
+  padding-bottom: 20px;
+}
+
+.title-perg {
+  margin-bottom: 10px;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.input-perfil {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 9px;
+}
+
+input {
+  padding: 10px;
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-family: "Albert Sans", sans-serif;
+  font-size: 14px;
+  color: #555;
+}
+
+.edit-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-top: 12px;
+  margin-left: 5px;
+  font-size: 16px;
+  color: #fff;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+
+.radio-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.radio-button {
+  margin-top: 13px;
+  padding: 8px 20px;
+  background-color: #fff;
+  color: #0B0A0A;
+  font-family: "Albert Sans", sans-serif;
+  font-weight: 650;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.radio-button:hover {
+  background-color: #0B0A0A;
+  color: #fff;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 40px;
+  gap: 15px;
+}
+
+.save-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  font-family: "Albert Sans", sans-serif;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.save-button {
+  background-color: #333;
+  color: #fff;
+  font-weight: 300;
+  padding: 10px 20px;  
+  border: none; 
+  cursor: pointer; 
+}
+
+.save-button:hover {
+  background-color:#0B0A0A;
+  color: #ffffff; 
+}
+
+@media (max-width: 450px) {
+  .form-grid {
+    display: flex;
+    flex-direction: column;
+  }
+}
