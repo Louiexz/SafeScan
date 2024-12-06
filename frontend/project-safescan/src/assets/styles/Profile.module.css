@@ -1,0 +1,206 @@
+.profileBody {
+  min-height: 100vh; /* Fallback para navegadores antigos */
+  min-height: 100dvh; /* Altura dinâmica para navegadores modernos */
+  height: auto; /* Adapta a altura ao conteúdo */
+  width: 100%; /* Garante que o elemento ocupe 100% da largura do container */
+  background: linear-gradient(
+      to bottom, 
+      #09762A 0%, 
+      #0DA93C 25%, 
+      #0FC245 47%, 
+      #10DC4F 82%, 
+      #10DC4F 100%
+  );
+  color: whitesmoke;
+  padding: 0px 50px
+}
+
+.buttonProfile, .backButton {
+  background: linear-gradient(
+    to bottom,
+    #09762a 0%,
+    #0da93c 25%,
+    #0fc245 47%,
+    #10dc4f 82%
+  );
+  margin-top: 10px;
+  padding: 10px;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-family: sans-serif;
+  font-size: 16px;
+}
+
+.buttonProfile:hover {
+  background: linear-gradient(to left, #0da93c 5%, #0fc245 27%, #10dc4f 50%);
+}
+
+.backButton {
+  background: none;
+  background-color: #ddd;
+  color: #333;
+  font-weight: 500;
+}
+
+.backButton:hover {
+  background-color: #0B0A0A;
+  color: #fff;
+}
+
+.logo {
+    display: flex;
+    margin-bottom: 30px;
+  }
+  
+  .infoPerfil span {
+    font-size: 40px;
+    font-family: "Albert Sans", sans-serif;
+    color: #ffff;
+    font-weight: 100px;
+  }
+  .user .inputs {
+    width: 300px;
+    overflow: hidden;
+    height: 10px;
+    resize: none;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+  }
+  #iconPencil {
+    padding: 1px;
+    margin-left: 5px;
+  }
+  .descricao {
+    margin-bottom: 40px;
+  
+  }
+  .user h1 {
+    font-size: 50px;
+    font-family: "Aldrich", sans-serif;
+    font-weight: lighter;
+    color: #1e1e1e;
+    margin: 0;
+  }
+  .user h2 {
+    font-size: 16px;
+    font-family: "Albert Sans", sans-serif;
+    color: #ffff;
+  }
+  .foto {
+    max-width: 300px;
+    height: auto;
+  }
+  .containerPerfil {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 100%;
+    margin: 0 auto;
+    gap: 200px;
+    align-items: center;
+  
+    box-sizing: border-box;
+  }
+  .gridPerfil {
+    padding-top: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+  }
+  .programs {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 45px;
+  }
+  
+  #programs {
+    font-size: 40px;
+    font-family: "Albert Sans", sans-serif;
+    color: #ffff;
+    padding-bottom: 20px;
+    width: 100%;
+    max-width: 1000px;
+    display: flex;
+    justify-content: start;
+  }
+
+  .errorMessage {
+    color: red;
+    font-size: 16px;
+    font-weight: 200;
+  }
+  
+  .successMessage {
+    color: green;
+    font-size: 16px;
+    font-weight: 200;
+  }
+  
+  .verification {
+    min-width: 60vw;
+    display: flex;
+    background: #1e1e1e;
+    max-width: 1000px;
+    width: 100%;
+    border-radius: 10px;
+    justify-content: space-between;
+    align-items: center;
+    height: 69px;
+    padding: 10px 20px;
+  }
+  
+  .verification p {
+    color: #ffff;
+    margin-left: 10px;
+    font-size: 16px;
+    font-family: "Albert Sans", sans-serif;
+  }
+  
+  .verification span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    object-fit: cover;
+    margin-right: 5px;
+  }
+  .containerPerfil img{
+    box-shadow: #1e1e1e;
+  }
+  @media (max-width: 1000px) {
+    .containerPerfil {
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      box-sizing: border-box;
+    }
+    .containerPerfil img{
+      order: -1;
+    }
+  
+    #programs {
+      justify-content: center;
+      text-align: center;
+    }
+  
+    .user {
+      text-align: center;
+    }
+  
+    .programs {
+      padding-left: 10px;
+      padding-right: 10px;
+    }
+  
+    .logo {
+      padding: 10px;
+    }
+  }
+  

@@ -1,0 +1,171 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Albert Sans", sans-serif;
+  font-weight: 500;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fundoSoft {
+  background: linear-gradient(
+      rgba(0, 0, 0, 0.7), 
+      rgba(0, 0, 0, 0.7)
+    ), 
+    url('../../images/home/abstract-techno-background-with-connecting-lines.jpg') center/cover no-repeat;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+.popupPerfil {
+  background: linear-gradient(
+    to bottom,
+    #145b2ca1 1%,
+    #1f834085 10%,
+    #165a2b9f 40%,
+    #18582b5c 80%
+  );
+  border-radius: 15px;
+  padding: 20px;
+  margin: 20px;
+  box-shadow: 0px 10px 5px rgba(0, 0, 0, 0.3);
+  color: whitesmoke
+}
+
+.popupFormPerfil {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+}
+
+.groupPerfil {
+  padding-bottom: 20px;
+}
+
+.titlePerg {
+  margin-bottom: 10px;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.inputPerfil {
+  display: flex;
+  align-items: center;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+input {
+  padding: 10px;
+  flex: 1;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 1rem;
+  color: #555;
+}
+
+input:focus {
+  border-color: #1f8340;
+  outline: none;
+}
+
+.editButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.editButton:hover {
+  color: #1f8340;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.radioGroup {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.radioLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 8px 16px;
+  background: #fff;
+  color: #0B0A0A;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 650;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.radioLabel:hover {
+  background-color: #0B0A0A;
+  color: #fff;
+}
+
+.radioButton {
+  display: none;
+}
+
+.radioButton:checked + .radioLabel {
+  background-color: #1f8340;
+  color: #fff;
+}
+
+.formActions {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+}
+
+.saveButton, .backButton {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  background-color: #333;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 300;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.backButton {
+  background-color: #ddd;
+  color: #333;
+  font-weight: 500;
+  margin-right: 865px;
+}
+
+.saveButton:hover, .backButton:hover {
+  background-color: #0B0A0A;
+  color: #fff;
+}
+
+.message {
+  font-size: 18px;
+  font-weight: 200;
+}
+
+@media (max-width: 450px) {
+  .formGrid {
+    grid-template-columns: 1fr;
+  }
+}

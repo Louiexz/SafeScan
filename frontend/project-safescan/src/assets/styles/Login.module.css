@@ -1,0 +1,198 @@
+  
+  .banner {
+    min-width: 98.9vmax;
+    background: linear-gradient(
+      to bottom,
+      #1a3522 1%,
+      #266138 10%,
+      #22c759 40%,
+      #22c759 60%,
+      #1a3522 100%
+    );
+    color: #fff;
+    padding: 30px 20px;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    column-gap: 200px;
+    align-self: center;
+  }
+  
+  .banner h2 {
+    font-size: 28px;
+    line-height: 1.2;
+    text-align: left;
+    margin-left: 80px;
+  }
+  
+  .banner p {
+    font-family: "Albert Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #fff;
+    margin-left: 80px;
+  }
+  
+  .banner .linhaWhite {
+    font-family: "Aldrich", sans-serif;
+    font-size: 42px;
+    font-weight: normal;
+    color: #fff;
+    margin-left: 80px;
+  }
+  
+  .banner .linhaBlack {
+    font-family: "Aldrich", sans-serif;
+    font-size: 42px;
+    font-weight: normal;
+    color: rgba(0, 0, 0, 0.78);
+    margin-left: 80px;
+  }
+  
+  .secaoForm {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    margin-left: 80px;
+    margin-top: 20px;
+  }
+  
+  .formLogin {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    background: #0b0a0a;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0);
+    font-family: sans-serif;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.616);
+  }
+  
+  .labelLogin {
+    color: #fff;
+    font-weight: normal;
+  }
+  
+  .inputLogin {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  form .links {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+  }
+  
+  form .links button {
+    color: #28a745;
+    font-weight: normal;
+    cursor: pointer;
+    text-decoration: underline;
+    background-color: transparent;
+    border: transparent
+  }
+
+  form .links button:hover {
+    background: none
+  }
+  
+  .buttonLogin {
+    background: linear-gradient(
+      to bottom,
+      #09762a 0%,
+      #0da93c 25%,
+      #0fc245 47%,
+      #10dc4f 82%
+    );
+    margin-top: 10px;
+    padding: 10px;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-size: 16px;
+  }
+  
+  form button:hover {
+    background: linear-gradient(to left, #0da93c 5%, #0fc245 27%, #10dc4f 50%);
+  }
+  
+  .secaoImg {
+    flex: 1;
+    min-width: 300px;
+    max-width: 400px;
+    display: flex;
+    justify-content: center;
+    position: relative;
+  }
+  
+  .imgRobo {
+    max-width: 550px;
+    height: auto;
+    position: relative;
+    left: -15px;
+    filter: drop-shadow(10px 10px 15px rgba(0, 0, 0, 0.5)); /* Sombra */
+  }
+  
+  .containerImg {
+    justify-self: center;
+    align-self: center;
+  }
+  
+  .right {
+    align-content: center;
+  }
+  
+  @media (max-width: 1345px) {
+    .banner {
+      column-gap: 150px;
+      align-self: center;
+    }
+  }
+  
+  @media (max-width: 1295px) {
+    .banner {
+      column-gap: 100px;
+      align-self: center;
+    }
+  }
+  
+  @media (max-width: 1250px) {
+    .banner {
+      column-gap: 50px;
+      align-self: center;
+    }
+  }
+  
+  @media (max-width: 1195px) {
+    .banner {
+      column-gap: 20px;
+      align-self: center;
+      justify-content: center;
+      text-align: center;
+    }
+  
+    .right {
+      display: none;
+    }
+  
+    .banner .linhaWhite {
+      margin-left: 0px;
+    }
+    .banner .linhaBlack {
+      margin-left: 0px;
+    }
+  
+    .banner p {
+      margin-left: 0px;
+    }
+  
+    .left {
+      justify-content: center;
+    }
+  }
+  

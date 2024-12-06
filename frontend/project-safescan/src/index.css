@@ -1,0 +1,34 @@
+.app {
+  margin: 0;
+  padding: 0;
+  min-height: min-content; /* Altura dinâmica para navegadores modernos */
+  height: auto; /* Adapta a altura ao conteúdo */
+  max-width: 100%; /* Impede que exceda o tamanho do contêiner */
+  box-sizing: border-box; /* Inclui padding e borda no tamanho total */
+  overflow: hidden;
+}
+.navbar {
+  height: 0px;
+  display: flex;
+  float: right;
+  gap: 20px;
+  padding: 0px 20px;
+
+  a {
+    font-size: 18px;
+    text-decoration: none;
+    position: relative;
+    top: -50px;
+    text-decoration: none;
+    color: white;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
+}
+@media (max-width: 1000px) {
+  .app {
+    width: calc(100vw);
+  }
+}

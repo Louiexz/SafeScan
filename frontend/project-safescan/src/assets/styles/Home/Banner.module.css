@@ -1,0 +1,81 @@
+.container {
+    color: white;
+  }
+  
+  .bannerSoftAi {
+    background: linear-gradient(
+      to right,
+      #38b963 1%,
+      #22c759 10%,
+      #266138 40%,
+      #1a3522 80%
+    );
+    padding: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .heroImage {
+    width: 100%;
+    height: auto;
+    max-width: 675px;
+  }
+  
+  .bannerContent {
+    padding: 35px;
+    box-sizing: border-box;
+  }
+  
+  .bannerContent .headline {
+    font-size: 50px;
+    text-transform: uppercase;
+    font-family: "Aldrich", sans-serif;
+    line-height: 65px;
+  }
+  
+  .bannerContent .description {
+    font-size: 22px;
+    font-family: "Albert Sans", sans-serif;
+    font-weight: bold;
+    text-align: left;
+    padding: 15px;
+  }
+  .bannerContent h1 {
+    font-family: "aldrich", sans-serif;
+    font-weight: lighter;
+    font-size: 50px;
+    text-align: center;
+  }
+  .bannerContent p {
+    width: 100%;  
+    word-wrap: break-word; 
+  }
+  
+  @media (max-width: 1080px) {
+    .bannerSoftAi {
+      display: flex;
+      flex-direction: column;
+    }
+  
+    .heroImage {
+      width: 100%;
+      width: 675px;
+      max-height: 493px;
+    }
+  
+    .bannerContent h1 {
+      text-align: center;
+    }
+    .bannerContent p {
+      text-align: center;
+    }
+  }
+  
+  @media (max-width: 730px) {
+    .heroImage {
+      width: 100%;
+      height: auto;
+      max-width: 500px;
+    } 
+  }

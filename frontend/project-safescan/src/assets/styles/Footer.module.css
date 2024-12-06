@@ -1,0 +1,78 @@
+footer {
+    width: 100vw;
+    background-color: #0b0a0a;
+    color: #fff;
+    padding: 60px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .footerContainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-left: 100px;
+    padding-right: 100px;
+  }
+  
+  .logoSection {
+    display: flex;
+    align-items: center;
+  }
+  
+  .footerLogo {
+    width: 80px;
+    height: 80px;
+    margin-right: 10px;
+  }
+  
+  .logoSection h1 {
+    font-family: "Jura", sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    color: #fff;
+    margin-left: -8px;
+  }
+  
+  .contato,
+  .endereco {
+    font-family: "Albert Sans", sans-serif;
+    font-size: 16px;
+    font-weight: 300;
+    text-align: left;
+    line-height: 2.2;
+  }
+  
+  .contato {
+    position: relative;
+  }
+  
+  .biInstagram,
+  .biTwitterX,
+  .biFacebook {
+    font-size: 22px;
+    color: #fff;
+    padding: 8px;
+    position: relative;
+    top: 5px;
+  }
+  @media (max-width: 1000px) {
+    .footerContainer {
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      text-align: center;
+    }
+  
+    .contato,
+    .endereco {
+      text-align: center;
+    }
+  }
+  @media (max-width: 1000px) {
+    .footer {
+      width: calc(100vw - 1.3vw);
+    }
+  }
